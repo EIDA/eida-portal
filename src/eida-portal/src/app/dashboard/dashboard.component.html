@@ -1,13 +1,70 @@
+<style>
+  input[type="radio"],
+  .tab-pane {
+    display: none;
+  }
+
+  #stations:checked~.tab-content>.content-stations,
+  #events:checked~.tab-content>.content-events,
+  #request:checked~.tab-content>.content-request,
+  #console:checked~.tab-content>.content-console {
+    display: block;
+  }
+
+</style>
+
 <div class="section">
   <div class="tile is-ancestor">
     <div class="tile is-4 is-vertical is-parent">
-      <div class="tile is-child">
-        <p class="title">Stations</p>
-        <app-stations></app-stations>
+      <!-- Nav tabs -->
+      <input type="radio" id="stations" name="nav-tab">
+      <input type="radio" id="events" name="nav-tab">
+      <input type="radio" id="request" name="nav-tab">
+      <input type="radio" id="console" name="nav-tab" checked="checked">
+
+      <div class="tabs">
+        <ul>
+          <li>
+            <label for="stations">
+              <a>Stations</a>
+            </label>
+          </li>
+          <li>
+            <label for="events">
+              <a>Events</a>
+            </label>
+          </li>
+          <li>
+            <label for="request">
+              <a>Request</a>
+            </label>
+          </li>
+          <li>
+            <label for="console">
+              <a>Console</a>
+            </label>
+          </li>
+        </ul>
       </div>
-      <div class="tile is-child">
-        <p class="title">Events</p>
-        <app-events></app-events>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane content-stations">
+          <div class="tile is-child">
+            <app-stations></app-stations>
+          </div>
+        </div>
+        <div class="tab-pane content-events">
+          <div class="tile is-child">
+            <app-events></app-events>
+          </div>
+        </div>
+        <div class="tab-pane content-request">
+          <app-request></app-request>
+        </div>
+        <div class="tab-pane content-console">
+          <app-console></app-console>
+        </div>
       </div>
     </div>
     <div class="tile is-parent">

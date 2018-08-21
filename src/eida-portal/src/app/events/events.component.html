@@ -1,4 +1,82 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Catalog</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="select">
+        <select>
+          <option>EIDA</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Minimum magnitude</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="1">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Date from</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="YYYY-MM-DD">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Date to</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="YYYY-MM-DD">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Depth from</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="0">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Depth to</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="999">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Coordinates (N)</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="90">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Coordinates (S)</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="-90">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Coordinates (E)</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="180">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Coordinates (W)</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="-180">
+  </div>
+</div>
+
 <div class="buttons">
-  <span class="button is-success">Search</span>
-  <span class="button is-danger">Reset</span>
+  <span class="button is-success" (click)="search();">Search</span>
+  <span class="button is-danger" (click)="reset();">Reset</span>
 </div>

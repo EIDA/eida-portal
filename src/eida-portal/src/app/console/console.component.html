@@ -1,3 +1,8 @@
-<p>
-  console works!
-</p>
+<button class="button is-danger is-outlined is-fullwidth" (click)="consoleService.clear()">Clear</button>
+<table class="table table-sm table-striped" width="100%">
+  <tbody>
+    <tr *ngFor='let message of consoleService.messages'>
+      <td>{{ message }}</td>
+    </tr>
+  </tbody>
+</table>

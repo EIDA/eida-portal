@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConsoleService } from '../console.service';
 
 @Component({
   selector: 'app-request',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestComponent implements OnInit {
 
-  constructor() { }
+  constructor(public consoleService: ConsoleService) { }
 
   ngOnInit() {
+    this.consoleService.add('Request initiated');
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConsoleService } from '../console.service';
 
 @Component({
   selector: 'app-map',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(public consoleService: ConsoleService) { }
 
   ngOnInit() {
+    this.consoleService.add('Map initiated');
   }
 
 }

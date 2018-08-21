@@ -1,4 +1,118 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Year from</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Year to</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Network type</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="select">
+        <select>
+          <option>All network types</option>
+          <option>Virtual networks</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Network code</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="select">
+        <select>
+          <option>All networks</option>
+          <option>NL 1993</option>
+          <option>Z3 2015</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinates (N)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinates (S)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinates (E)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinates (W)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="buttons">
-  <span class="button is-success">Search</span>
-  <span class="button is-danger">Reset</span>
+  <span class="button is-success" (click)="search();">Search</span>
+  <span class="button is-danger" (click)="reset();">Reset</span>
 </div>

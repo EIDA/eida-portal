@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConsoleService } from '../console.service';
 
 @Component({
   selector: 'app-console',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsoleComponent implements OnInit {
 
-  constructor() { }
+  constructor(public consoleService: ConsoleService) { }
 
   ngOnInit() {
+    this.consoleService.add('Console initiated');
   }
 
 }
