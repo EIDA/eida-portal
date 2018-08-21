@@ -5,16 +5,24 @@ import { AppComponent } from './app.component';
 import { StationsComponent } from './stations/stations.component';
 import { EventsComponent } from './events/events.component';
 import { ConsoleComponent } from './console/console.component';
+import { MapComponent } from './map/map.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { RequestComponent } from './request/request.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StationsComponent,
     EventsComponent,
-    ConsoleComponent
+    ConsoleComponent,
+    MapComponent,
+    DashboardComponent,
+    RequestComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
