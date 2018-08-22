@@ -16,10 +16,11 @@ export class StationsComponent implements OnInit {
   }
 
   search() {
-    this.consoleService.add('Stations/search clicked');
+    this.consoleService.add('Stations/search clicked ' + this.stationsModel.toString())
   }
 
   reset() {
+    this.stationsModel = new StationsModel();
     this.consoleService.add('Stations/reset clicked');
   }
 }

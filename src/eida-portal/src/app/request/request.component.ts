@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
+import { RequestModel } from '../models'
 
 @Component({
   selector: 'app-request',
   templateUrl: './request.component.html',
 })
 export class RequestComponent implements OnInit {
+  @Input() requestModel = new RequestModel();
 
   constructor(public consoleService: ConsoleService) { }
 
@@ -13,4 +15,11 @@ export class RequestComponent implements OnInit {
     this.consoleService.add('Request initiated');
   }
 
+  review() {
+    this.consoleService.add('Request/review clicked');
+  }
+
+  submit() {
+    this.consoleService.add('Request/submit clicked ' + this.requestModel.toString());
+  }
 }

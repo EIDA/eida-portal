@@ -1,7 +1,7 @@
 <div class="field">
   <label class="label">Datetime from</label>
   <div class="control">
-    <input class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+    <input [(ngModel)]="requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
   </div>
   <p class="help">Example: "2017-01-01T12:00:00"</p>
 </div>
@@ -9,26 +9,31 @@
 <div class="field">
   <label class="label">Datetime to</label>
   <div class="control">
-    <input class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+    <input [(ngModel)]="requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
   </div>
   <p class="help">Example: "2018-01-01T12:00:00"</p>
 </div>
 
-<div class="control">
-  <label class="label">FDSN request type</label>
-  <p>
-    <label class="radio">
-      <input type="radio" name="rsvp"> Waveform (Mini-SEED)
-    </label>
-  </p>
-  <p>
-    <label class="radio">
-      <input type="radio" name="rsvp"> Metadata (StationXML)
-    </label>
-  </p>
-  <p>
-    <label class="radio">
-      <input type="radio" name="rsvp"> Metadata (Text)
-    </label>
-  </p>
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">FDSN request type</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="select">
+        <select [(ngModel)]="requestModel.selectedFdsnRequestType">
+          <option *ngFor="let t of requestModel.fdsnRequestType" [ngValue]="t">{{t.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column is-half">
+    <span class="button is-info is-fullwidth" (click)="review();">Review</span>
+  </div>
+  <div class="column is-half">
+    <span class="button is-success is-fullwidth" (click)="submit();">Submit</span>
+  </div>
 </div>

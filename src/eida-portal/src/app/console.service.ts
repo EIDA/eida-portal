@@ -15,4 +15,8 @@ export class ConsoleService {
   clear() {
     this.messages = [];
   }
+
+  getMsgCount() {
+    return this.messages.length;
+  }
 }

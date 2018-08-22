@@ -5,78 +5,136 @@
   <div class="field-body">
     <div class="field">
       <div class="select">
-        <select>
-          <option>EIDA</option>
+        <select [(ngModel)]="eventsModel.selectedCatalog">
+          <option *ngFor="let c of eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
         </select>
       </div>
     </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Minimum magnitude</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="1">
+<div class="field is-horizontal">
+  <div class="field-label">
+    <label class="label">Minimum magnitude</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Date from</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="YYYY-MM-DD">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Date from</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.dateFrom" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Date to</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="YYYY-MM-DD">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Date to</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.dateTo" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Depth from</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="0">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Depth from</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.depthFrom" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Depth to</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="999">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Depth to</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.depthTo" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Coordinates (N)</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="90">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinate (N)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.coordinateN" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Coordinates (S)</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="-90">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinate (S)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.coordinateS" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Coordinates (E)</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="180">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinate (E)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.coordinateE" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="field">
-  <label class="label">Coordinates (W)</label>
-  <div class="control">
-    <input class="input" type="text" placeholder="-180">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Coordinate (W)</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input [(ngModel)]="eventsModel.coordinateW" class="input" type="text" placeholder="1">
+      </div>
+    </div>
   </div>
 </div>
-
-<div class="buttons">
-  <span class="button is-success" (click)="search();">Search</span>
-  <span class="button is-danger" (click)="reset();">Reset</span>
+<hr>
+<div class="columns">
+  <div class="column is-half">
+    <span class="button is-danger is-fullwidth" (click)="reset();">Reset</span>
+  </div>
+  <div class="column is-half">
+    <span class="button is-success is-fullwidth" (click)="search();">Search</span>
+  </div>
 </div>
