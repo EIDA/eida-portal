@@ -20,6 +20,6 @@ export class RequestComponent implements OnInit {
   }
 
   submit() {
-    this.consoleService.add('Request/submit clicked ' + this.requestModel.toString());
+    this.consoleService.add('Request/submit clicked >>> ' + this.requestModel.toString());
   }
 }

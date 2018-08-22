@@ -16,7 +16,7 @@ export class EventsComponent implements OnInit {
   }
 
   search() {
-    this.consoleService.add('Events/search clicked ' + this.eventsModel.toString());
+    this.consoleService.add('Events/search clicked >>> ' + this.eventsModel.toString());
   }
 
   reset() {

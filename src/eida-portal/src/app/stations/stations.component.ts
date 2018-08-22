@@ -16,7 +16,7 @@ export class StationsComponent implements OnInit {
   }
 
   search() {
-    this.consoleService.add('Stations/search clicked ' + this.stationsModel.toString())
+    this.consoleService.add('Stations/search clicked >>> ' + this.stationsModel.toString())
   }
 
   reset() {
