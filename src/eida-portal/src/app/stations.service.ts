@@ -1,34 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { EidaService } from './eida.service';
+import { FdsnNetwork, FdsnStation } from './models'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StationsService {
-  private routingUrl = 'http://orfeus-eu.org/eidaws/routing/1/query?network=*&format=json';
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
 
   constructor(
-    private http: HttpClient) { }
+    private eidaService: EidaService
+  ) { }
 
-  getNetworks() {
-    this.http.get(this.routingUrl).subscribe(data => console.log(data));
+  private networksUrl = 'http://127.0.0.1:49160/n';
+
+  getNetworks(): Observable<FdsnNetwork[]> {
+    return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
+      .pipe(
+        tap(_ => this.eidaService.log('fetched data')),
+        catchError(this.eidaService.handleError('getNetworks', []))
+      );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

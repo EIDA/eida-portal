@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div class="field is-horizontal">
+<!-- <div class="field is-horizontal">
   <div class="field-label is-normal">
     <label class="label">Network type</label>
   </div>
@@ -38,7 +38,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="field is-horizontal">
   <div class="field-label is-normal">
@@ -47,8 +47,8 @@
   <div class="field-body">
     <div class="field">
       <div class="select">
-        <select [(ngModel)]="stationsModel.selectedNetworkCode">
-          <option *ngFor="let n of stationsModel.networkCodes" [ngValue]="n">{{n.name}}</option>
+        <select [(ngModel)]="stationsModel.selectedNetworkCode" style="width:100%;">
+          <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} {{n.start}} ({{n.desc}})</option>
         </select>
       </div>
     </div>

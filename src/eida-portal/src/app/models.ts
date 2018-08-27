@@ -103,3 +103,22 @@ export class RequestModel {
         request type: ${this.selectedFdsnRequestType.name}`;
     }
 }
+
+export class FdsnNetwork {
+    code: string;
+    desc: string;
+    start: string;
+    end: string;
+    stations: FdsnStation[];
+}
+
+export class FdsnStation {
+    net: string;
+    stat: string;
+    lat: string;
+    lon: string;
+    elev: string;
+    name: string;
+    start: string;
+    end: string;
+}

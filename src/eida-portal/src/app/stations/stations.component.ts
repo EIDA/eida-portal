@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { StationsModel } from '../models'
 import { StationsService } from '../stations.service';
+import { FdsnNetwork, FdsnStation } from '../models'
 
 @Component({
   selector: 'app-stations',
@@ -9,9 +10,14 @@ import { StationsService } from '../stations.service';
 })
 export class StationsComponent implements OnInit {
   @Input() stationsModel = new StationsModel();
+  networks: FdsnNetwork[];
 
   constructor(private stationsService: StationsService,
-    public consoleService: ConsoleService) { }
+    public consoleService: ConsoleService) {
+      this.stationsService.getNetworks().subscribe(
+        ns => this.networks = ns
+      )
+    }
 
   ngOnInit() {
     this.consoleService.add('Stations initiated');
@@ -24,6 +30,5 @@ export class StationsComponent implements OnInit {
   reset() : void {
     this.stationsModel = new StationsModel();
     this.consoleService.add('Stations/reset clicked');
-    this.stationsService.getNetworks();
   }
 }

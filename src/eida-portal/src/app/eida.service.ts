@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
 import { ConsoleService } from './console.service'
 
 @Injectable({
@@ -10,10 +9,15 @@ import { ConsoleService } from './console.service'
 export class EidaService {
 
   constructor(
+    public http: HttpClient,
     private consoleService: ConsoleService
   ) { }
 
-  private log(message: string) {
+  public httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  public log(message: string) {
     this.consoleService.add(`EidaService: ${message}`);
   }
 
@@ -23,7 +27,7 @@ export class EidaService {
   * @param operation - name of the operation that failed
   * @param result - optional value to return as the observable result
   */
-  private handleError<T>(operation = 'operation', result?: T) {
+  public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
