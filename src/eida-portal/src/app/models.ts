@@ -1,39 +1,26 @@
 export class StationsModel {
     yearFrom: string;
     yearTo: string;
-    networkTypes: {};
-    networkCodes: {};
     coordinateN: number;
     coordinateS: number;
     coordinateE: number;
     coordinateW: number;
-    selectedNetworkType;
-    selectedNetworkCode;
+    selectedNetwork: FdsnNetwork;
+    selectedStation: FdsnStation;
 
     constructor() {
-        this.yearFrom = "1980";
-        this.yearTo = "2018";
-        this.networkTypes = [
-            {'id': 0, 'name': 'All networks'},
-            {'id': 1, 'name': 'Virtual networks'}
-        ];
-        this.networkCodes = [
-            {'id': 0, 'name': 'All networks'},
-            {'id': 1, 'name': 'NL 1993'},
-            {'id': 2, 'name': 'Z3 2015'}
-        ];
+        this.yearFrom = "1900";
+        this.yearTo = "2100";
         this.coordinateN = 90.0;
         this.coordinateS = -90.0;
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
-        this.selectedNetworkType = this.networkTypes[0];
-        this.selectedNetworkCode = this.networkCodes[0];
+        this.selectedNetwork = null;
+        this.selectedStation = null;
     }
 
     toString() {
         return `Year: ${this.yearFrom} - ${this.yearTo}, 
-        network type: ${this.selectedNetworkType.name},
-        network code: ${this.selectedNetworkCode.name},
         coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W`;
     }
 }
@@ -110,6 +97,14 @@ export class FdsnNetwork {
     start: string;
     end: string;
     stations: FdsnStation[];
+
+    constructor() {
+        this.code = 'ALL';
+        this.desc = 'All networks';
+        this.start = '';
+        this.end = '';
+        this.stations = [];
+    }
 }
 
 export class FdsnStation {
@@ -121,4 +116,15 @@ export class FdsnStation {
     name: string;
     start: string;
     end: string;
+
+    constructor() {
+        this.net = 'ALL';
+        this.stat = 'ALL';
+        this.lat = '0.0';
+        this.lon = '0.0';
+        this.elev = '0.0';
+        this.name = 'All stations';
+        this.start = '';
+        this.end = '';
+    }
 }

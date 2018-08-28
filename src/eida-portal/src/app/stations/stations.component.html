@@ -40,20 +40,58 @@
   </div>
 </div> -->
 
+<!-- <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Network search</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
+      </div>
+    </div>
+  </div>
+</div>
+
+<span *ngFor="let n of networks_search$ | async" class="tag">
+  {{ n.code }} ({{ n.start }})
+</span> -->
+
 <div class="field is-horizontal">
   <div class="field-label is-normal">
-    <label class="label">Network code</label>
+    <label class="label">Network</label>
   </div>
   <div class="field-body">
     <div class="field">
       <div class="select">
-        <select [(ngModel)]="stationsModel.selectedNetworkCode" style="width:100%;">
-          <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} {{n.start}} ({{n.desc}})</option>
+        <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
+          <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
         </select>
       </div>
     </div>
   </div>
 </div>
+<div class="field is-horizontal">
+<button class="button is-fullwidth" (click)="allNetworks();">All networks</button>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Station</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="select">
+        <select [(ngModel)]="stationsModel.selectedStation" style="width:100%;">
+          <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="field is-horizontal">
+  <button class="button is-fullwidth" (click)="allStations();">All stations</button>
+  </div>
 
 <div class="field is-horizontal">
   <div class="field-label is-normal">
