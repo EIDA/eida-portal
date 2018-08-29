@@ -3,9 +3,11 @@ import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
-import { ConsoleService } from '../console.service';
+
 import { StationsModel } from '../models'
+import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
+import { MapService } from '../map.service'
 import { FdsnNetwork, FdsnStation } from '../models'
 
 @Component({
@@ -16,22 +18,23 @@ export class StationsComponent implements OnInit {
   @Input() stationsModel = new StationsModel();
   networks: FdsnNetwork[];
   stations: FdsnStation[];
-  _filteredStations: FdsnStation[];
+  filteredStations: FdsnStation[];
   networks_search$: Observable<FdsnNetwork[]>;
   private searchTerms = new Subject<string>();
 
   constructor(
     private stationsService: StationsService,
-    public consoleService: ConsoleService) {
-      this.stationsService.getNetworks().subscribe(
-        n => this.networks = n
-      )
-      this.stationsService.getStations().subscribe(
-        s => this.stations = s
-      )
-    }
+    private mapService: MapService,
+    public consoleService: ConsoleService) { }
 
   ngOnInit() {
+    this.stationsService.getNetworks().subscribe(
+      n => this.networks = n
+    );
+    this.stationsService.getStations().subscribe(
+      s => this.stations = s
+    );
+
     this.consoleService.add('Stations initiated');
 
     this.networks_search$ = this.searchTerms.pipe(
@@ -41,22 +44,8 @@ export class StationsComponent implements OnInit {
     );
   }
 
-  get filteredStations(): FdsnStation[] {
-    if (this.stationsModel.selectedNetwork) {
-      return this._filteredStations;
-    } else {
-      return this.stations;
-    }
-  }
-
   search_network(term: string): void {
     this.searchTerms.next(term);
-  }
-
-  search() {
-    this.consoleService.add(
-      'Stations/search clicked >>> ' + this.stationsModel.toString()
-    )
   }
 
   allNetworks() : void {
@@ -64,13 +53,32 @@ export class StationsComponent implements OnInit {
   }
 
   allStations() : void {
+    this.stationsModel.selectedNetwork = new FdsnNetwork();
     this.stationsModel.selectedStation = new FdsnStation();
+    this.filteredStations = this.stations;
   }
 
   networkChanged(n) {
-    this._filteredStations = this.stations.filter(
-      s => s.net === n.code
-    );
+    if (n === 'All') {
+      this.filteredStations = this.stations.filter(
+        s => s.net
+      )
+    } else {
+      this.filteredStations = this.stations.filter(
+        s => s.net === n.code
+      );
+    }
+  }
+
+  stationChanged(s) {
+    this.stationsModel.selectedStation = s;
+  }
+
+  search() {
+    this.mapService.updateStations(this.stationsModel);
+    this.consoleService.add(
+      'Stations/search clicked >>> ' + this.stationsModel.toString()
+    )
   }
 
   reset() : void {

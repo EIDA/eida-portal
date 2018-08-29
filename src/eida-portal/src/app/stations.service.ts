@@ -37,10 +37,11 @@ export class StationsService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl).pipe(
-      tap(_ => this.eidaService.log(`found heroes matching "${term}"`)),
-      catchError(this.eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
-    );
+    return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
+      .pipe(
+        tap(_ => this.eidaService.log(`found heroes matching "${term}"`)),
+        catchError(this.eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
+      );
   }
 
   getNetworksStations(): Observable<FdsnNetwork[]> {

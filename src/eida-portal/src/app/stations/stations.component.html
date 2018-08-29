@@ -65,15 +65,16 @@
     <div class="field">
       <div class="select">
         <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
+          <option selected>All</option>
           <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
         </select>
       </div>
     </div>
   </div>
 </div>
-<div class="field is-horizontal">
+<!-- <div class="field is-horizontal">
 <button class="button is-fullwidth" (click)="allNetworks();">All networks</button>
-</div>
+</div> -->
 
 <div class="field is-horizontal">
   <div class="field-label is-normal">
@@ -82,16 +83,17 @@
   <div class="field-body">
     <div class="field">
       <div class="select">
-        <select [(ngModel)]="stationsModel.selectedStation" style="width:100%;">
+        <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
+          <option selected>All</option>
           <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
         </select>
       </div>
     </div>
   </div>
 </div>
-<div class="field is-horizontal">
+<!-- <div class="field is-horizontal">
   <button class="button is-fullwidth" (click)="allStations();">All stations</button>
-  </div>
+</div> -->
 
 <div class="field is-horizontal">
   <div class="field-label is-normal">
