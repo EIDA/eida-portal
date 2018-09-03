@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { EidaService } from './eida.service';
-import { FdsnNetwork, FdsnStation } from './models'
+import { FdsnNetwork, FdsnStation } from './models';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class StationsService {
     private eidaService: EidaService
   ) { }
 
-  private networksUrl = 'http://127.0.0.1:49160/n';
-  private stationsUrl = 'http://127.0.0.1:49160/s';
-  private networksStationsUrl = 'http://127.0.0.1:49160/ns';
+  private networksUrl =  environment.networksUrl;
+  private stationsUrl = environment.stationsUrl;
+  private networksStationsUrl = environment.networksStationsUrl;
 
   getNetworks(): Observable<FdsnNetwork[]> {
     return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl)

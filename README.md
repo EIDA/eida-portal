@@ -9,6 +9,10 @@ $ docker run -p 49160:3000 -d eida/backend
 ```
 $ cd eida-portal-frontend/
 $ docker build -t eida/frontend .
-$ docker run -p 49160:4200 -d eida/frontend
+$ docker run -p 49161:4200 -d eida/frontend
 ```
 ## Docker-compose:
+```
+$ cd src/
+$ docker-compose -p 'eidaportal' up -d
+```

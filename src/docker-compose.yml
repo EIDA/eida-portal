@@ -1,0 +1,22 @@
+version: '2'
+services:
+  epback:
+    restart: always
+    build: ./eida-portal-backend/
+    ports:
+      - "49160:3000"
+    networks:
+      - ep_net
+
+  epfront:
+    restart: always
+    build: ./eida-portal-frontend/
+    depends_on:
+      - epback
+    ports:
+      - "49161:4200"
+    networks:
+      - ep_net
+
+networks:
+  ep_net:
