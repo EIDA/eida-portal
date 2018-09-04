@@ -6,8 +6,9 @@ import OSM from 'ol/source/OSM';
 import { MapService } from '../map.service'
 import { ConsoleService } from '../console.service';
 import { projection } from '@angular/core/src/render3/instructions';
-import { StationsModel, FdsnNetwork } from '../models';
+import { StationsModel, FdsnNetwork, FdsnStation } from '../models';
 import { switchMap } from 'rxjs/operators';
+import { and } from '@angular/router/src/utils/collection';
 
 declare var jquery: any;
 declare var $: any;
@@ -20,11 +21,12 @@ declare var ol: any;
 })
 export class MapComponent implements OnInit {
   stationsModel: StationsModel;
-  private vectorSource = new ol.source.Vector({
+  private _mapStations = new Array<FdsnStation>();
+  private _vectorSource = new ol.source.Vector({
     features: []
   });
   private vectorLayer = new ol.layer.Vector({
-    source: this.vectorSource
+    source: this._vectorSource
   });
 
   constructor(
@@ -92,19 +94,26 @@ export class MapComponent implements OnInit {
   }
 
   updateStationsMap(s: StationsModel) {
+    // If station already has been selected, skip adding it
+    if (this._mapStations.find(p => 
+      p.net === s.selectedStation.net 
+      && p.stat === s.selectedStation.stat)) {
+      return;
+    }
     console.log(`Updating station ${s}`);
     var point = new ol.Feature({
       geometry: new ol.geom.Point(
         ol.proj.fromLonLat([+s.selectedStation.lon, +s.selectedStation.lat])
       ),
-      name: 'hello marker'
+      name: `Network code: ${s.selectedStation.net}, Station code: ${s.selectedStation.stat}`
     });
 
     point.setStyle(new ol.style.Style({
       image: new ol.style.Icon({
         src: "../../assets/img/markers/triangle-green.png"
       })
-    })), this.vectorSource.addFeature(point)
+    })), this._vectorSource.addFeature(point)
+    this._mapStations.push(s.selectedStation);
   }
 
 }
