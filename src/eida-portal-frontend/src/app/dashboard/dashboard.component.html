@@ -1,47 +1,59 @@
 <style>
   input[type="radio"],
-  .tab-pane {
-    display: none;
-  }
-
-  #stations:checked~.tab-content>.content-stations,
-  #events:checked~.tab-content>.content-events,
-  #request:checked~.tab-content>.content-request,
-  #console:checked~.tab-content>.content-console {
-    display: block;
-  }
-
-</style>
+    .tab-pane {
+      display: none;
+    }
+  
+    #stations:checked~.tab-content>.content-stations,
+    #events:checked~.tab-content>.content-events,
+    #request:checked~.tab-content>.content-request,
+    #console:checked~.tab-content>.content-console {
+      display: block;
+    }
+  
+  </style>
 
 <div class="section">
   <div class="tile is-ancestor">
-    <div class="tile is-6 is-vertical is-parent">
+    <div class="tile is-5 is-vertical is-parent">
       <!-- Nav tabs -->
       <input type="radio" id="stations" name="nav-tab">
       <input type="radio" id="events" name="nav-tab">
       <input type="radio" id="request" name="nav-tab">
       <input type="radio" id="console" name="nav-tab" checked="checked">
 
-      <div class="tabs">
+      <div class="tabs is-boxed is-fullwidth">
         <ul>
-          <li>
+          <li id="stationsTab">
             <label for="stations">
-              <a>Stations</a>
+              <a (click)="tabSelected('#stationsTab')">
+                <span class="icon"><i class="icon ion-md-globe"></i></span>
+                <span>Stations</span>
+              </a>
             </label>
           </li>
-          <li>
+          <li id="eventsTab">
             <label for="events">
-              <a>Events</a>
+              <a (click)="tabSelected('#eventsTab')">
+                <span class="icon"><i class="icon ion-md-pulse"></i></span>
+                <span>Events</span>
+              </a>
             </label>
           </li>
-          <li>
+          <li id="requestTab">
             <label for="request">
-              <a>Request</a>
+              <a (click)="tabSelected('#requestTab')">
+                <span class="icon"><i class="icon ion-md-cloud-download"></i></span>
+                <span>Request</span>
+              </a>
             </label>
           </li>
-          <li>
+          <li class="is-active" id="consoleTab">
             <label for="console">
-              <a>Console ({{consoleService.getMsgCount()}})</a>
+              <a (click)="tabSelected('#consoleTab')">
+                <span class="icon"><i class="icon ion-md-paper"></i></span>
+                <span>Console ({{consoleService.getMsgCount()}})</span>
+              </a>
             </label>
           </li>
         </ul>

@@ -1,158 +1,181 @@
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Year from</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Year to</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- <div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Network type</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="select">
-        <select [(ngModel)]="stationsModel.selectedNetworkType">
-          <option *ngFor="let t of stationsModel.networkTypes" [ngValue]="t">{{t.name}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Network search</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
-      </div>
-    </div>
-  </div>
-</div>
-
-<span *ngFor="let n of networks_search$ | async" class="tag">
-  {{ n.code }} ({{ n.start }})
-</span> -->
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Network</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="select">
-        <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
-          <option selected>All</option>
-          <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- <div class="field is-horizontal">
-<button class="button is-fullwidth" (click)="allNetworks();">All networks</button>
-</div> -->
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Station</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="select">
-        <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
-          <option selected>All</option>
-          <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- <div class="field is-horizontal">
-  <button class="button is-fullwidth" (click)="allStations();">All stations</button>
-</div> -->
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (N)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (S)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (E)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (W)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="columns">
-  <div class="column is-half">
-    <button class="button is-danger is-fullwidth" (click)="reset();">Reset</button>
+  <div class="column">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Year from</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Year to</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Network type</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+          <select [(ngModel)]="stationsModel.selectedNetworkType">
+            <option *ngFor="let t of stationsModel.networkTypes" [ngValue]="t">{{t.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+    <!-- <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Network search</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="column is-half">
-    <button class="button is-success is-fullwidth" (click)="search();">Search</button>
+  
+  <span *ngFor="let n of networks_search$ | async" class="tag">
+    {{ n.code }} ({{ n.start }})
+  </span> -->
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Network</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="select">
+            <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
+              <option selected>All</option>
+              <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="field is-horizontal">
+  <button class="button is-fullwidth" (click)="allNetworks();">All networks</button>
+  </div> -->
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Station</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="select">
+            <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
+              <option selected>All</option>
+              <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="field is-horizontal">
+    <button class="button is-fullwidth" (click)="allStations();">All stations</button>
+  </div> -->
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (N)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (S)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (E)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (W)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-half">
+        <button class="button is-danger is-fullwidth" (click)="reset();">Reset</button>
+      </div>
+      <div class="column is-half">
+        <button class="button is-success is-fullwidth" (click)="search();">Search</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="column">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Station</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let station of selectedStations">
+          <th><a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a></th>
+          <th><button class="button is-small is-inverted">Toggle select</button></th>
+          <th><button class="button is-small is-danger is-inverted">Remove</button></th>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

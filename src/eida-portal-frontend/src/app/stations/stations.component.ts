@@ -19,12 +19,12 @@ export class StationsComponent implements OnInit {
   networks: FdsnNetwork[];
   stations: FdsnStation[];
   filteredStations: FdsnStation[];
+  selectedStations: FdsnStation[];
   networks_search$: Observable<FdsnNetwork[]>;
   private searchTerms = new Subject<string>();
 
   constructor(
     private stationsService: StationsService,
-    private mapService: MapService,
     public consoleService: ConsoleService) { }
 
   ngOnInit() {
@@ -42,17 +42,21 @@ export class StationsComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term: string) => this.stationsService.searchNetwork(term)),
     );
+
+    this.stationsService.selectedStations.subscribe(
+      s => this.updateSelectedStationsTable(s)
+    );
   }
 
   search_network(term: string): void {
     this.searchTerms.next(term);
   }
 
-  allNetworks() : void {
+  allNetworks(): void {
     this.stationsModel.selectedNetwork = null;
   }
 
-  allStations() : void {
+  allStations(): void {
     this.stationsModel.selectedNetwork = new FdsnNetwork();
     this.stationsModel.selectedStation = new FdsnStation();
     this.filteredStations = this.stations;
@@ -70,18 +74,23 @@ export class StationsComponent implements OnInit {
     }
   }
 
+  updateSelectedStationsTable(s: FdsnStation[]) {
+    this.selectedStations = s;
+  }
+
+  focusOnStation(s: FdsnStation) {
+    this.stationsService.updateFocusedStation(s);
+  }
+
   stationChanged(s) {
     this.stationsModel.selectedStation = s;
   }
 
   search() {
-    this.mapService.updateStations(this.stationsModel);
-    this.consoleService.add(
-      'Stations/search clicked >>> ' + this.stationsModel.toString()
-    )
+    this.stationsService.addSelectedStation(this.stationsModel.selectedStation);
   }
 
-  reset() : void {
+  reset(): void {
     this.stationsModel = new StationsModel();
     this.consoleService.add('Stations/reset clicked');
   }

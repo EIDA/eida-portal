@@ -32,3 +32,5 @@ $ cd eida-portal-frontend/
 $ npm install
 $ npm start
 ```
+# CDN dependencies
+* Frontend is using icons from https://ionicons.com/
