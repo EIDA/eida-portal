@@ -40,7 +40,9 @@ export class MapComponent implements OnInit {
       target: document.getElementById('map'),
       layers: [
         new ol.layer.Tile({
-          source: new ol.source.OSM()
+          source: new ol.source.OSM({
+            "url" : "https://maps-cdn.salesboard.biz/styles/klokantech-3d-gl-style/{z}/{x}/{y}.png"
+          })
         }), this.vectorLayer
       ],
       view: new ol.View({
