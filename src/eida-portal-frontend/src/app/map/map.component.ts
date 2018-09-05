@@ -120,7 +120,7 @@ export class MapComponent implements OnInit {
     this._map.getView().animate({
       center: ol.proj.fromLonLat([+s.lon, +s.lat]),
       duration: 1000,
-      zoom: 10
+      zoom: 13
     })
   }
 

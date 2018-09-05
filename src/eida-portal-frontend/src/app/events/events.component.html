@@ -1,140 +1,163 @@
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Catalog</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="select">
-        <select [(ngModel)]="eventsModel.selectedCatalog">
-          <option *ngFor="let c of eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label">
-    <label class="label">Minimum magnitude</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Date from</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.dateFrom" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Date to</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.dateTo" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Depth from</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.depthFrom" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Depth to</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.depthTo" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (N)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.coordinateN" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (S)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.coordinateS" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (E)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.coordinateE" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">Coordinate (W)</label>
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <div class="control">
-        <input [(ngModel)]="eventsModel.coordinateW" class="input" type="text" placeholder="1">
-      </div>
-    </div>
-  </div>
-</div>
-<hr>
 <div class="columns">
-  <div class="column is-half">
-    <span class="button is-danger is-fullwidth" (click)="reset();">Reset</span>
+  <div class="column">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Catalog</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="select">
+            <select [(ngModel)]="eventsModel.selectedCatalog">
+              <option *ngFor="let c of eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">Minimum magnitude</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Date from</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.dateFrom" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Date to</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.dateTo" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Depth from</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.depthFrom" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Depth to</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.depthTo" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (N)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.coordinateN" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (S)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.coordinateS" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (E)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.coordinateE" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Coordinate (W)</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.coordinateW" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="columns">
+      <div class="column is-half">
+        <span class="button is-danger is-fullwidth" (click)="reset();">Reset</span>
+      </div>
+      <div class="column is-half">
+        <span class="button is-success is-fullwidth" (click)="search();">Search</span>
+      </div>
+    </div>
+
   </div>
-  <div class="column is-half">
-    <span class="button is-success is-fullwidth" (click)="search();">Search</span>
+  <div class="column">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th><a>Id: 1234567890</a></th>
+          <th><button class="button is-small is-inverted">Deselect</button></th>
+          <th><button class="button is-small is-danger is-inverted">Remove</button></th>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
