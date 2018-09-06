@@ -7,7 +7,6 @@ import {
 import { StationsModel } from '../models'
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
-import { MapService } from '../map.service'
 import { FdsnNetwork, FdsnStation } from '../models'
 
 @Component({
@@ -16,10 +15,9 @@ import { FdsnNetwork, FdsnStation } from '../models'
 })
 export class StationsComponent implements OnInit {
   @Input() stationsModel = new StationsModel();
-  networks: FdsnNetwork[];
-  stations: FdsnStation[];
+  
   filteredStations: FdsnStation[];
-  selectedStations: FdsnStation[];
+  selectedStations = new Array<FdsnStation>();
   networks_search$: Observable<FdsnNetwork[]>;
   private searchTerms = new Subject<string>();
 
@@ -29,10 +27,10 @@ export class StationsComponent implements OnInit {
 
   ngOnInit() {
     this.stationsService.getNetworks().subscribe(
-      n => this.networks = n
+      n => this.stationsService.allNetworks = n
     );
     this.stationsService.getStations().subscribe(
-      s => this.stations = s
+      s => this.stationsService.allStations = s
     );
 
     this.consoleService.add('Stations initiated');
@@ -53,22 +51,21 @@ export class StationsComponent implements OnInit {
   }
 
   allNetworks(): void {
-    this.stationsModel.selectedNetwork = null;
+    this.stationsModel.selectedNetwork = new FdsnNetwork();
   }
 
   allStations(): void {
     this.stationsModel.selectedNetwork = new FdsnNetwork();
     this.stationsModel.selectedStation = new FdsnStation();
-    this.filteredStations = this.stations;
+    this.filteredStations = this.stationsService.allStations;
   }
 
   networkChanged(n) {
     if (n === 'All') {
-      this.filteredStations = this.stations.filter(
-        s => s.net
-      )
+      this.filteredStations = this.stationsService.allStations;
     } else {
-      this.filteredStations = this.stations.filter(
+      this.stationsModel.selectedNetwork = n;
+      this.filteredStations = this.stationsService.allStations.filter(
         s => s.net === n.code
       );
     }
@@ -86,8 +83,8 @@ export class StationsComponent implements OnInit {
     this.stationsModel.selectedStation = s;
   }
 
-  search() {
-    this.stationsService.addSelectedStation(this.stationsModel.selectedStation);
+  add() {
+    this.stationsService.addSelectedStation(this.stationsModel);
   }
 
   reset(): void {

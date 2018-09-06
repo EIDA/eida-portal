@@ -13,8 +13,8 @@ exports.sync_networks = function (request, fs) {
                     networks.push({
                         'code': values[0],
                         'desc': values[1],
-                        'start': values[2].substr(0,4),
-                        'end': values[3].substr(0,4),
+                        'start': values[2].substr(0, 4),
+                        'end': values[3].substr(0, 4),
                         'stations': []
                     });
             }
@@ -49,8 +49,8 @@ exports.sync_stations = function (request, fs) {
                         'lon': values[3],
                         'elev': values[4],
                         'name': values[5],
-                        'start': values[6].substr(0,4),
-                        'end': values[7].substr(0,4)
+                        'start': values[6].substr(0, 4),
+                        'end': values[7].substr(0, 4)
                     });
             }
             fs.writeFile(
@@ -58,7 +58,7 @@ exports.sync_stations = function (request, fs) {
                 JSON.stringify(stations),
                 function (err) {
                     if (err) throw err;
-            });
+                });
         })
     }
 };

@@ -4,6 +4,7 @@ var express = require('express'),
 var cors = require('cors')
 var CronJob = require('cron').CronJob;
 var fdsn_worker = require('./fdsn/fdsn_worker')
+var NWorker = require('./fdsn/networkWorker');
 var request = require('request');
 var fs = require('fs');
 var routes = require('./routes/networksRoutes');
@@ -21,8 +22,12 @@ var srv = app.listen(port, function() {
     console.log('EIDA Backend listening at http://127.0.0.1:%s', port);
 });
 
-new CronJob('* * * * * *', function () {
+new CronJob('*/3 * * * * *', function () {
     console.log('EIDA Portal backend sync started');
-    fdsn_worker.sync_networks(request, fs);
-    fdsn_worker.sync_stations(request, fs);
+    var nw = new NWorker();
+    nw.getNetworks(request, fs);
+    nw.mergeNetworks(fs);
+    nw.saveNetworks(fs);
+    // fdsn_worker.sync_networks(request, fs);
+    // fdsn_worker.sync_stations(request, fs);
 }, null, true);

@@ -10,6 +10,8 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class StationsService {
+  public allNetworks: FdsnNetwork[];
+  public allStations: FdsnStation[];
   public selectedStations = new Subject<FdsnStation[]>();
   public focuedStation = new Subject<FdsnStation>();
   private _mapStations = new Array<FdsnStation>();
@@ -46,13 +48,21 @@ export class StationsService {
       );
   }
 
-  addSelectedStation(s: FdsnStation) {
-    if (this._mapStations.find(p =>
-      p.net === s.net
-      && p.stat === s.stat)) {
-      return;
+  // Add selected station(s) to map and notify subscribers
+  addSelectedStation(s: StationsModel) {
+    if (s.selectedNetwork === 'All' && s.selectedStation === 'All') {
+      this._mapStations = this.allStations;
+    } else if (s.selectedStation !== 'All'
+      && !this._mapStations.find(
+        m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
+      this._mapStations.push(s.selectedStation);
+    } else {
+      for (let st of this.allStations.filter(m => m.net === s.selectedNetwork.code)) {
+        if (!this._mapStations.find(x => x.net === st.net && x.stat === st.stat)) {
+          this._mapStations.push(st);
+        }
+      }
     }
-    this._mapStations.push(s);
     this.updateStations(this._mapStations);
   }
 

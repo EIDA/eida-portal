@@ -5,8 +5,8 @@ export class StationsModel {
     coordinateS: number;
     coordinateE: number;
     coordinateW: number;
-    selectedNetwork: FdsnNetwork;
-    selectedStation: FdsnStation;
+    selectedNetwork;
+    selectedStation;
 
     constructor() {
         this.yearFrom = "1900";
@@ -15,8 +15,8 @@ export class StationsModel {
         this.coordinateS = -90.0;
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
-        this.selectedNetwork = null;
-        this.selectedStation = null;
+        this.selectedNetwork = 'All';
+        this.selectedStation = 'All';
     }
 
     toString() {
@@ -101,7 +101,7 @@ export class FdsnNetwork {
 
     constructor() {
         this.code = 'ALL';
-        this.desc = 'All networks';
+        this.desc = 'ALL';
         this.start = '';
         this.end = '';
         this.stations = [];
@@ -117,6 +117,7 @@ export class FdsnStation {
     name: string;
     start: string;
     end: string;
+    selected: boolean;
 
     constructor() {
         this.net = 'ALL';
@@ -127,5 +128,6 @@ export class FdsnStation {
         this.name = 'All stations';
         this.start = '';
         this.end = '';
+        this.selected = true;
     }
 }

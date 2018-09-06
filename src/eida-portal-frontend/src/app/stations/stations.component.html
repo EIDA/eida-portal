@@ -68,15 +68,12 @@
           <div class="select">
             <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
               <option selected>All</option>
-              <option *ngFor="let n of networks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
+              <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
             </select>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="field is-horizontal">
-  <button class="button is-fullwidth" (click)="allNetworks();">All networks</button>
-  </div> -->
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
@@ -93,9 +90,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="field is-horizontal">
-    <button class="button is-fullwidth" (click)="allStations();">All stations</button>
-  </div> -->
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
@@ -155,7 +149,7 @@
         <button class="button is-danger is-fullwidth" (click)="reset();">Reset</button>
       </div>
       <div class="column is-half">
-        <button class="button is-success is-fullwidth" (click)="search();">Search</button>
+        <button class="button is-success is-fullwidth" (click)="add();">Add</button>
       </div>
     </div>
 
@@ -164,7 +158,7 @@
     <table class="table is-fullwidth">
       <thead>
         <tr>
-          <th>Station</th>
+          <th>Stations ({{ selectedStations.length }})</th>
           <th></th>
           <th></th>
         </tr>
