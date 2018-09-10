@@ -165,9 +165,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let station of selectedStations">
-          <th><a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a></th>
-          <th><button class="button is-small is-inverted">Deselect</button></th>
-          <th><button class="button is-small is-danger is-inverted">Remove</button></th>
+          <th>
+            <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
+          </th>
+          <th>
+            <button (click)="stationsService.toggleStationSelection(station)"
+            [ngClass]="station.selected ? 'button is-warning' : 'button is-success'">
+            {{station.selected ? "Deselect" : "Select"}}</button>
+          </th>
+          <th>
+            <button (click)="stationsService.removeStationSelection(station)"
+            class="button is-small is-danger is-inverted">Remove</button>
+          </th>
         </tr>
       </tbody>
     </table>

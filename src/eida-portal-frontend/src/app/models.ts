@@ -117,7 +117,6 @@ export class FdsnStation {
     name: string;
     start: string;
     end: string;
-    selected: boolean;
 
     constructor() {
         this.net = 'ALL';
@@ -128,6 +127,14 @@ export class FdsnStation {
         this.name = 'All stations';
         this.start = '';
         this.end = '';
+    }
+}
+
+export class FdsnStationExt extends FdsnStation {
+    selected: boolean;
+
+    constructor() {
+        super();
         this.selected = true;
     }
 }

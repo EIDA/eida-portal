@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { EidaService } from './eida.service';
-import { FdsnNetwork, FdsnStation, StationsModel } from './models';
+import { FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel } from './models';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -11,10 +11,10 @@ import { environment } from '../environments/environment';
 })
 export class StationsService {
   public allNetworks: FdsnNetwork[];
-  public allStations: FdsnStation[];
-  public selectedStations = new Subject<FdsnStation[]>();
-  public focuedStation = new Subject<FdsnStation>();
-  private _mapStations = new Array<FdsnStation>();
+  public allStations = new Array<FdsnStationExt>();
+  public selectedStations = new Subject<FdsnStationExt[]>();
+  public focuedStation = new Subject<FdsnStationExt>();
+  private _mapStations = new Array<FdsnStationExt>();
 
   constructor(
     private eidaService: EidaService
@@ -24,11 +24,27 @@ export class StationsService {
   private stationsUrl = environment.stationsUrl;
   private networksStationsUrl = environment.networksStationsUrl;
 
-  updateStations(s: FdsnStation[]) {
+  addAllStations(fs: FdsnStation[]) {
+    for (let f of fs) {
+      let tmp = new FdsnStationExt();
+      tmp.net = f.net;
+      tmp.stat = f.stat;
+      tmp.lat = f.lat;
+      tmp.lon = f.lon;
+      tmp.elev = f.elev;
+      tmp.name = f.name;
+      tmp.start = f.start;
+      tmp.end = f.end;
+      tmp.selected = true;
+      this.allStations.push(tmp);
+    }
+  }
+
+  updateStations(s: FdsnStationExt[]) {
     this.selectedStations.next(s);
   }
 
-  updateFocusedStation(s: FdsnStation) {
+  updateFocusedStation(s: FdsnStationExt) {
     this.focuedStation.next(s);
   }
 
@@ -66,8 +82,19 @@ export class StationsService {
     this.updateStations(this._mapStations);
   }
 
-  removeStation(s: FdsnStation) {
-    this.eidaService.log('Remove station station service clicked');
+  toggleStationSelection(s: FdsnStationExt) {
+    this._mapStations.find(
+      p => p.net === s.net && p.stat === s.stat
+    ).selected = !s.selected;
+    this.updateStations(this._mapStations);
+  }
+
+  removeStationSelection(s: FdsnStation) {
+    let i = this._mapStations.indexOf(
+      this._mapStations.find(p => p.net === s.net && p.stat === s.stat)
+    );
+    this._mapStations.splice(i, 1);
+    this.updateStations(this._mapStations);
   }
 
   searchNetwork(term: string): Observable<FdsnNetwork[]> {

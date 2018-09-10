@@ -7,7 +7,7 @@ import {
 import { StationsModel } from '../models'
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
-import { FdsnNetwork, FdsnStation } from '../models'
+import { FdsnNetwork, FdsnStationExt } from '../models'
 
 @Component({
   selector: 'app-stations',
@@ -16,8 +16,8 @@ import { FdsnNetwork, FdsnStation } from '../models'
 export class StationsComponent implements OnInit {
   @Input() stationsModel = new StationsModel();
   
-  filteredStations: FdsnStation[];
-  selectedStations = new Array<FdsnStation>();
+  filteredStations: FdsnStationExt[];
+  selectedStations = new Array<FdsnStationExt>();
   networks_search$: Observable<FdsnNetwork[]>;
   private searchTerms = new Subject<string>();
 
@@ -30,7 +30,7 @@ export class StationsComponent implements OnInit {
       n => this.stationsService.allNetworks = n
     );
     this.stationsService.getStations().subscribe(
-      s => this.stationsService.allStations = s
+      s => this.stationsService.addAllStations(s)
     );
 
     this.consoleService.add('Stations initiated');
@@ -56,7 +56,7 @@ export class StationsComponent implements OnInit {
 
   allStations(): void {
     this.stationsModel.selectedNetwork = new FdsnNetwork();
-    this.stationsModel.selectedStation = new FdsnStation();
+    this.stationsModel.selectedStation = new FdsnStationExt();
     this.filteredStations = this.stationsService.allStations;
   }
 
@@ -71,11 +71,11 @@ export class StationsComponent implements OnInit {
     }
   }
 
-  updateSelectedStationsTable(s: FdsnStation[]) {
+  updateSelectedStationsTable(s: FdsnStationExt[]) {
     this.selectedStations = s;
   }
 
-  focusOnStation(s: FdsnStation) {
+  focusOnStation(s: FdsnStationExt) {
     this.stationsService.updateFocusedStation(s);
   }
 

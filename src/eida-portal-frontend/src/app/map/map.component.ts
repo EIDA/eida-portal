@@ -7,7 +7,9 @@ import { MapService } from '../map.service';
 import { StationsService } from '../stations.service';
 import { ConsoleService } from '../console.service';
 import { projection } from '@angular/core/src/render3/instructions';
-import { StationsModel, FdsnNetwork, FdsnStation } from '../models';
+import { 
+  StationsModel, FdsnNetwork, FdsnStationExt
+ } from '../models';
 import { switchMap } from 'rxjs/operators';
 import { and } from '@angular/router/src/utils/collection';
 
@@ -99,7 +101,7 @@ export class MapComponent implements OnInit {
     this.consoleService.add('Map initiated');
   }
 
-  updateStationsMap(stations: FdsnStation[]) {
+  updateStationsMap(stations: FdsnStationExt[]) {
     this.removeStationMarkers();
 
     for (let s of stations) {
@@ -118,7 +120,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  focusStation(s: FdsnStation) {
+  focusStation(s: FdsnStationExt) {
     this._map.getView().animate({
       center: ol.proj.fromLonLat([+s.lon, +s.lat]),
       duration: 1000,
@@ -134,7 +136,7 @@ export class MapComponent implements OnInit {
     })
   }
 
-  removeStation(s: FdsnStation): void {
+  removeStation(s: FdsnStationExt): void {
     console.log(s.stat);
   }
 
