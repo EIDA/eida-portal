@@ -97,6 +97,11 @@ export class StationsService {
     this.updateStations(this._mapStations);
   }
 
+  removeAllStations() {
+    this._mapStations.splice(0, this._mapStations.length);
+    this.updateStations(this._mapStations);
+  }
+
   searchNetwork(term: string): Observable<FdsnNetwork[]> {
     if (!term.trim()) {
       return of([]);

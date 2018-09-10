@@ -91,4 +91,8 @@ export class StationsComponent implements OnInit {
     this.stationsModel = new StationsModel();
     this.consoleService.add('Stations/reset clicked');
   }
+
+  removeAllStations(): void {
+    this.stationsService.removeAllStations();
+  }
 }

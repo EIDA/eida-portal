@@ -1,5 +1,5 @@
 <div class="columns">
-  <div class="column">
+  <div class="column is-5">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Year from</label>
@@ -68,7 +68,8 @@
           <div class="select">
             <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
               <option selected>All</option>
-              <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) - {{n.desc}}</option>
+              <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
+                {{n.desc}}</option>
             </select>
           </div>
         </div>
@@ -152,33 +153,29 @@
         <button class="button is-success is-fullwidth" (click)="add();">Add</button>
       </div>
     </div>
-
+    <div *ngIf="selectedStations.length > 0">
+      <button class="button is-warning is-fullwidth" (click)="removeAllStations();">Remove all stations ({{ selectedStations.length }})</button>
+    </div>
   </div>
+  <!-- List of stations -->
   <div class="column">
     <table class="table is-fullwidth">
-      <thead>
-        <tr>
-          <th>Stations ({{ selectedStations.length }})</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
       <tbody>
         <tr *ngFor="let station of selectedStations">
           <th>
             <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
+            <p class="is-size-7">{{station.name}}</p>
           </th>
           <th>
-            <button style="width: 100%" (click)="stationsService.toggleStationSelection(station)"
-            [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
-            {{station.selected ? "Selected" : "Skipped"}}</button>
+            <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
+              {{station.selected ? "Selected" : "Skipped"}}</button>
           </th>
           <th>
-            <button style="width: 100%" (click)="stationsService.removeStationSelection(station)"
-            class="button is-small is-danger is-inverted">Remove</button>
+            <button style="width: 100%" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted">Remove</button>
           </th>
         </tr>
       </tbody>
     </table>
   </div>
+  <!-- /List of stations -->
 </div>
