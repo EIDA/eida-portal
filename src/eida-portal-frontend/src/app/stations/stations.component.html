@@ -169,12 +169,12 @@
             <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
           </th>
           <th>
-            <button (click)="stationsService.toggleStationSelection(station)"
-            [ngClass]="station.selected ? 'button is-warning' : 'button is-success'">
-            {{station.selected ? "Deselect" : "Select"}}</button>
+            <button style="width: 100%" (click)="stationsService.toggleStationSelection(station)"
+            [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
+            {{station.selected ? "Selected" : "Skipped"}}</button>
           </th>
           <th>
-            <button (click)="stationsService.removeStationSelection(station)"
+            <button style="width: 100%" (click)="stationsService.removeStationSelection(station)"
             class="button is-small is-danger is-inverted">Remove</button>
           </th>
         </tr>
