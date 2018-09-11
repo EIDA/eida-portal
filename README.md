@@ -33,4 +33,4 @@ $ npm install
 $ npm start
 ```
 # CDN dependencies
-* Frontend is using icons from https://ionicons.com/
+* Frontend is using icons from http://fontawesome.com/
