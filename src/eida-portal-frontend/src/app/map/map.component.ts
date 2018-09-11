@@ -109,7 +109,7 @@ export class MapComponent implements OnInit {
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([+s.lon, +s.lat])
         ),
-        name: `<b>Network:</b> ${s.net}<br><b>Station:</b> ${s.stat}<br>`
+        name: `<b>Network:</b> ${s.net}<br><b>Station:</b> ${s.stat}<br><b>Name:</b> ${s.name}`
       });
 
       point.setStyle(new ol.style.Style({
