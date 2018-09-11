@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class PaginatorService {
   private _currentPage: number = 0;
-  private _pageSize: number = 10;
+  private _pageSize: number = 15;
   private _pages = new Array();
 
   constructor() { }
@@ -38,7 +38,19 @@ export class PaginatorService {
   }
 
   getCurrentPageNumber(): number {
-    return this._currentPage;
+    return this._currentPage + 1;
+  }
+
+  getPreviousPageNumber(): number {
+    return this.getCurrentPageNumber() - 1;
+  }
+
+  getNextPageNumber(): number {
+    return this.getCurrentPageNumber() + 1;
+  }
+
+  getLastPageNumber(): number {
+    return this._pages.length;
   }
 
   getNextPage() {
@@ -52,6 +64,16 @@ export class PaginatorService {
     if (this._currentPage > 0) {
       this._currentPage--;
     }
+    return this._pages[this._currentPage];
+  }
+
+  getFirstPage() {
+    this._currentPage = 0;
+    return this._pages[this._currentPage];
+  }
+
+  getLastPage() {
+    this._currentPage = this._pages.length - 1;
     return this._pages[this._currentPage];
   }
 

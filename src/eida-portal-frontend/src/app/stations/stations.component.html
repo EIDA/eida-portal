@@ -166,6 +166,20 @@
       </div>
     </article>
     <div *ngIf="paginator.getTotalPages() > 0">
+      <nav class="pagination is-right" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
+        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+        <ul class="pagination-list">
+          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1" (click)="paginator.getFirstPage()">1</a></li>
+          <li><span *ngIf="paginator.previousPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <!-- <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 45">45</a></li> -->
+          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <!-- <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 47">47</a></li> -->
+          <li><span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86" (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
+        </ul>
+      </nav>
+      <hr>
       <table class="table is-fullwidth" id="stationsTable">
         <tbody>
           <tr *ngFor="let station of paginator.getCurrentPage()">
@@ -183,19 +197,7 @@
           </tr>
         </tbody>
       </table>
-      <nav class="pagination is-small" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
-        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
-        <ul class="pagination-list">
-          <li><a class="pagination-link" aria-label="Goto page 0">0</a></li>
-          <li><span class="pagination-ellipsis">&hellip;</span></li>
-          <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
-          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
-          <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
-          <li><span class="pagination-ellipsis">&hellip;</span></li>
-          <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
-        </ul>
-      </nav>
+
     </div>
   </div>
   <!-- /List of stations -->
