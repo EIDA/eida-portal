@@ -153,29 +153,50 @@
         <button class="button is-success is-fullwidth" (click)="add();">Add</button>
       </div>
     </div>
-    <div *ngIf="selectedStations.length > 0">
-      <button class="button is-warning is-fullwidth" (click)="removeAllStations();">Remove all stations ({{ selectedStations.length }})</button>
+    <div *ngIf="paginator.getTotalPages() > 0">
+      <button class="button is-warning is-fullwidth" (click)="removeAllStations();">Remove all stations ({{
+        selectedStations.length }})</button>
     </div>
   </div>
   <!-- List of stations -->
   <div class="column">
-    <table class="table is-fullwidth">
-      <tbody>
-        <tr *ngFor="let station of selectedStations">
-          <th>
-            <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
-            <p class="is-size-7">{{station.name}}</p>
-          </th>
-          <th>
-            <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
-              {{station.selected ? "Selected" : "Skipped"}}</button>
-          </th>
-          <th>
-            <button style="width: 100%" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted">Remove</button>
-          </th>
-        </tr>
-      </tbody>
-    </table>
+    <article *ngIf="paginator.getTotalPages() === 0" class="message is-info">
+      <div class="message-body">
+        Selected stations will appear here.
+      </div>
+    </article>
+    <div *ngIf="paginator.getTotalPages() > 0">
+      <table class="table is-fullwidth" id="stationsTable">
+        <tbody>
+          <tr *ngFor="let station of paginator.getCurrentPage()">
+            <td>
+              <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
+              <p class="is-size-7">{{station.name}}</p>
+            </td>
+            <td>
+              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
+                {{station.selected ? "Selected" : "Skipped"}}</button>
+            </td>
+            <td>
+              <button style="width: 100%" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <nav class="pagination is-small" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
+        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+        <ul class="pagination-list">
+          <li><a class="pagination-link" aria-label="Goto page 0">0</a></li>
+          <li><span class="pagination-ellipsis">&hellip;</span></li>
+          <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
+          <li><span class="pagination-ellipsis">&hellip;</span></li>
+          <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+        </ul>
+      </nav>
+    </div>
   </div>
   <!-- /List of stations -->
 </div>

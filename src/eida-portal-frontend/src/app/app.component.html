@@ -1,11 +1,69 @@
-<section class="hero is-light">
-  <div class="hero-body">
-    <h1 class="title">
-      EIDA Portal
-    </h1>
-    <h2 class="subtitle">
-      Stations and Events browser
-    </h2>
+<nav class="navbar is-light">
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <h1 class="title">EIDA Portal</h1>
+    </a>
+    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-</section>
+
+  <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        <span class="icon">
+          <i class="fas fa-home"></i>
+        </span>
+        <span>
+          Dashboard
+        </span>
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          <span class="icon">
+            <i class="fas fa-compass"></i>
+          </span>
+          <span>
+            Menu
+          </span>
+        </a>
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item">
+            Menu entry 1
+          </a>
+          <a class="navbar-item">
+            Menu entry 2
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Menu entry 3
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control">
+            <a class="bd-tw-button button">
+              <span class="icon"><i class="fas fa-coffee"></i></span>
+              <span>
+                Button 1
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button is-info">
+              <span class="icon"><i class="fas fa-cog"></i></span>
+              <span>Button 2</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 <router-outlet></router-outlet>

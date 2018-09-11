@@ -4,10 +4,13 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { StationsModel } from '../models'
+import { StationsModel } from '../models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
-import { FdsnNetwork, FdsnStationExt } from '../models'
+import { FdsnNetwork, FdsnStationExt } from '../models';
+import { PaginatorService } from '../paginator.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-stations',
@@ -19,6 +22,7 @@ export class StationsComponent implements OnInit {
   filteredStations: FdsnStationExt[];
   selectedStations = new Array<FdsnStationExt>();
   networks_search$: Observable<FdsnNetwork[]>;
+  paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
   constructor(
@@ -73,6 +77,7 @@ export class StationsComponent implements OnInit {
 
   updateSelectedStationsTable(s: FdsnStationExt[]) {
     this.selectedStations = s;
+    this.refreshPaginator();
   }
 
   focusOnStation(s: FdsnStationExt) {
@@ -89,10 +94,15 @@ export class StationsComponent implements OnInit {
 
   reset(): void {
     this.stationsModel = new StationsModel();
-    this.consoleService.add('Stations/reset clicked');
   }
 
   removeAllStations(): void {
     this.stationsService.removeAllStations();
+  }
+
+  refreshPaginator(): void {
+    this.paginator.paginate(this.selectedStations);
+    this.paginator.getPages();
+    // $('#previousPageButton').attr('disabled', true);
   }
 }
