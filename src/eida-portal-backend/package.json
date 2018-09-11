@@ -4,6 +4,7 @@
   "description": "EIDA Portal Backend",
   "main": "server.js",
   "dependencies": {
+    "async": "^2.6.1",
     "cors": "^2.8.4",
     "cron": "^1.4.1",
     "express": "^4.16.3",
