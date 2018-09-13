@@ -114,7 +114,7 @@ export class MapComponent implements OnInit {
 
       point.setStyle(new ol.style.Style({
         image: new ol.style.Icon({
-          src: (s.selected ? "../../assets/img/markers/triangle-green.png" : "../../assets/img/markers/triangle-grey.png")
+          src: (s.selected ? 'assets/img/markers/triangle-green.png' : 'assets/img/markers/triangle-grey.png')
         })
       })), this._vectorSource.addFeature(point);
     }
