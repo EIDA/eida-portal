@@ -11,11 +11,6 @@ import { MapComponent } from './map/map.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestComponent } from './request/request.component';
-import { RouterModule, Routes } from '@angular/router';
-
-const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent }
-]
 
 @NgModule({
   declarations: [
@@ -31,11 +26,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: false }
-    )
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
