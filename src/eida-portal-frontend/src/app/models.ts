@@ -111,9 +111,9 @@ export class FdsnNetwork {
 export class FdsnStation {
     net: string;
     stat: string;
-    lat: string;
-    lon: string;
-    elev: string;
+    lat: number;
+    lon: number;
+    elev: number;
     name: string;
     start: string;
     end: string;
@@ -121,9 +121,9 @@ export class FdsnStation {
     constructor() {
         this.net = 'ALL';
         this.stat = 'ALL';
-        this.lat = '0.0';
-        this.lon = '0.0';
-        this.elev = '0.0';
+        this.lat = 0.0;
+        this.lon = 0.0;
+        this.elev = 0.0;
         this.name = 'All stations';
         this.start = '';
         this.end = '';
@@ -136,5 +136,13 @@ export class FdsnStationExt extends FdsnStation {
     constructor() {
         super();
         this.selected = true;
+    }
+
+    getCoordinates() : string {
+        try {
+            return `Lat: ${Number(this.lat).toFixed(2)}, Lon: ${Number(this.lon).toFixed(2)}`;   
+        } catch {
+            return `Lat: ${this.lat}, Lon: ${this.lon}`;
+        }
     }
 }
