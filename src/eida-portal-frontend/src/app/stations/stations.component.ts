@@ -26,7 +26,7 @@ export class StationsComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
   constructor(
-    private stationsService: StationsService,
+    public stationsService: StationsService,
     public consoleService: ConsoleService) { }
 
   ngOnInit() {
