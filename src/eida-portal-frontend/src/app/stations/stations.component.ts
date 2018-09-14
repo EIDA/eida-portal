@@ -72,6 +72,7 @@ export class StationsComponent implements OnInit {
       this.filteredStations = this.stationsService.allStations.filter(
         s => s.net === n.code
       );
+      this.stationsModel.clearStationSelection();
     }
   }
 

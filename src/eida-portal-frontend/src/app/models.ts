@@ -24,6 +24,10 @@ export class StationsModel {
         coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W,
         network: ${this.selectedNetwork.code}, station: ${this.selectedStation.stat}`;
     }
+
+    clearStationSelection() {
+        this.selectedStation = 'All';
+    }
 }
 
 export class EventsModel {

@@ -67,7 +67,11 @@ export class StationsService {
   // Add selected station(s) to map and notify subscribers
   addSelectedStation(s: StationsModel) {
     if (s.selectedNetwork === 'All' && s.selectedStation === 'All') {
-      this._mapStations = this.allStations;
+      this._mapStations = this.allStations.filter(m => m.net);
+    } else if (s.selectedStation !== 'All'
+      && this._mapStations.find(
+        m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
+      return;
     } else if (s.selectedStation !== 'All'
       && !this._mapStations.find(
         m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
