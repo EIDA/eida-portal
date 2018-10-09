@@ -11,6 +11,7 @@ import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
 
 declare var $: any;
+declare var Mousetrap: any;
 
 @Component({
   selector: 'app-stations',
@@ -48,6 +49,11 @@ export class StationsComponent implements OnInit {
     this.stationsService.selectedStations.subscribe(
       s => this.updateSelectedStationsTable(s)
     );
+
+    // Mousetrap keyboard shortcut bindings
+    Mousetrap.bind('a d d', function(e) {
+      console.log('Adding stations to map');
+    });
   }
 
   search_network(term: string): void {
