@@ -30,10 +30,46 @@
 </div>
 
 <div class="columns">
-  <div class="column is-half">
-    <span class="button is-info is-fullwidth" (click)="review();">Review</span>
+  <div class="column">
+    <span class="button is-warning is-fullwidth" (click)="review();">Review</span>
   </div>
-  <div class="column is-half">
-    <span class="button is-success is-fullwidth" (click)="submit();">Submit</span>
+  <div class="column">
+    <span class="button is-success is-fullwidth" (click)="submit();">Download</span>
+  </div>
+  <div class="column">
+      <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();">Prepare for Cloud staging</span>
+    </div>
+</div>
+
+<div id="stageModal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Stage in Cloud</p>
+      <button class="delete" aria-label="close" (click)="toggleModal();"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Node</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
+              <select>
+                <option selected>Node 1</option>
+                <option selected>Node 2</option>
+                <option selected>Node 3</option>
+                <option selected>Node 4</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-info">Stage in cloud</button>
+      <button class="button" (click)="toggleModal();">Cancel</button>
+    </footer>
   </div>
 </div>
