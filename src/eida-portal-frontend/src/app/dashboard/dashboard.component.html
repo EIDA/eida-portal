@@ -1,29 +1,106 @@
 <style>
   input[type="radio"],
-    .tab-pane {
-      display: none;
-    }
-  
-    #events:checked~.tab-content>.content-events,
-    #stations:checked~.tab-content>.content-stations,
-    #request:checked~.tab-content>.content-request,
-    #console:checked~.tab-content>.content-console {
-      display: block;
-    }
-  </style>
+  .tab-pane {
+    display: none;
+  }
+
+  #events:checked~.tab-content>.content-events,
+  #stations:checked~.tab-content>.content-stations,
+  #request:checked~.tab-content>.content-request,
+  #metrics:checked~.tab-content>.content-metrics {
+    display: block;
+  }
+</style>
+
+<nav class="navbar is-light">
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <h1 class="title">EIDA Portal</h1>
+    </a>
+    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-start">
+      <!-- <a class="navbar-item">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+          <span>
+            Dashboard
+          </span>
+        </a> -->
+      <!-- <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <span class="icon">
+              <i class="fas fa-compass"></i>
+            </span>
+            <span>
+              Menu
+            </span>
+          </a>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item">
+              Menu entry 1
+            </a>
+            <a class="navbar-item">
+              Menu entry 2
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Menu entry 3
+            </a>
+          </div>
+        </div> -->
+      <a class="navbar-item" (click)="toggleVisibility('mapToggler', 'mapContainer');">
+        <span class="icon">
+          <i class="fas fa-toggle-on" id="mapToggler"></i>
+        </span>
+        <span>
+          Map
+        </span>
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control">
+            <a class="bd-tw-button button">
+              <span class="icon"><i class="fas fa-lock-open"></i></span>
+              <span>
+                Authenticate
+              </span>
+            </a>
+          </p>
+          <!-- <p class="control">
+              <a class="button is-info">
+                <span class="icon"><i class="fas fa-cog"></i></span>
+                <span>Settings</span>
+              </a>
+            </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
 <div class="section">
   <div class="tile is-ancestor">
-    <div class="tile is-6 is-vertical is-parent">
+    <div class="tile is-vertical is-parent">
       <!-- Nav tabs -->
-      <input type="radio" id="events" name="nav-tab">
+      <input type="radio" id="events" name="nav-tab" checked="checked">
       <input type="radio" id="stations" name="nav-tab">
       <input type="radio" id="request" name="nav-tab">
-      <input type="radio" id="console" name="nav-tab" checked="checked">
+      <input type="radio" id="metrics" name="nav-tab">
 
       <div class="tabs is-boxed is-fullwidth">
         <ul>
-          <li id="eventsTab">
+          <li class="is-active" id="eventsTab">
             <label for="events">
               <a (click)="tabSelected('#eventsTab')">
                 <span class="icon"><i class="fas fa-map"></i></span>
@@ -47,11 +124,11 @@
               </a>
             </label>
           </li>
-          <li class="is-active" id="consoleTab">
-            <label for="console">
-              <a (click)="tabSelected('#consoleTab')">
-                <span class="icon"><i class="fas fa-terminal"></i></span>
-                <span>Console ({{consoleService.getMsgCount()}})</span>
+          <li id="metricsTab">
+            <label for="metrics">
+              <a (click)="tabSelected('#metricsTab')">
+                <span class="icon"><i class="fas fa-chart-bar"></i></span>
+                <span>Metrics</span>
               </a>
             </label>
           </li>
@@ -73,12 +150,12 @@
         <div class="tab-pane content-request">
           <app-request></app-request>
         </div>
-        <div class="tab-pane content-console">
-          <app-console></app-console>
+        <div class="tab-pane content-metrics">
+          <app-metrics></app-metrics>
         </div>
       </div>
     </div>
-    <div class="tile is-parent">
+    <div class="tile is-parent" id="mapContainer">
       <div class="tile is-child">
         <app-map></app-map>
       </div>

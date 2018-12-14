@@ -11,6 +11,7 @@ import { MapComponent } from './map/map.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestComponent } from './request/request.component';
+import { MetricsComponent } from './metrics/metrics.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RequestComponent } from './request/request.component';
     ConsoleComponent,
     MapComponent,
     DashboardComponent,
-    RequestComponent
+    RequestComponent,
+    MetricsComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
 import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
+import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
 declare var $: any;
 declare var Mousetrap: any;

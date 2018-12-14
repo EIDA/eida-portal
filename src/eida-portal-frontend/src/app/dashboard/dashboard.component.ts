@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsoleService } from '../console.service';
 
-declare var jquery: any;
 declare var $: any;
 declare var Mousetrap: any;
 
@@ -19,15 +18,15 @@ export class DashboardComponent implements OnInit {
     Mousetrap.bind('1', function(e) {
       $('li').removeClass('is-active');
       $('tab-pane').prop('checked', false);
-      $('#stationsTab').addClass('is-active');
-      $('#stations').prop('checked', true);
+      $('#eventsTab').addClass('is-active');
+      $('#events').prop('checked', true);
     });
 
     Mousetrap.bind('2', function(e) {
       $('li').removeClass('is-active');
       $('tab-pane').prop('checked', false);
-      $('#eventsTab').addClass('is-active');
-      $('#events').prop('checked', true);
+      $('#stationsTab').addClass('is-active');
+      $('#stations').prop('checked', true);
     });
 
     Mousetrap.bind('3', function(e) {
@@ -36,13 +35,6 @@ export class DashboardComponent implements OnInit {
       $('#requestTab').addClass('is-active');
       $('#request').prop('checked', true);
     });
-
-    Mousetrap.bind('4', function(e) {
-      $('li').removeClass('is-active');
-      $('tab-pane').prop('checked', false);
-      $('#consoleTab').addClass('is-active');
-      $('#console').prop('checked', true);
-    });
   }
 
   tabSelected(s) {
@@ -50,4 +42,12 @@ export class DashboardComponent implements OnInit {
     $(s).addClass('is-active');
   }
 
+  toggleVisibility(toggler, target) {
+    if ($(`#${toggler}`).hasClass('fa-toggle-on')) {
+      $(`#${toggler}`).removeClass('fa-toggle-on').addClass('fa-toggle-off')
+    } else {
+      $(`#${toggler}`).removeClass('fa-toggle-off').addClass('fa-toggle-on')
+    }
+    $(`#${target}`).toggle("fast");
+  }
 }

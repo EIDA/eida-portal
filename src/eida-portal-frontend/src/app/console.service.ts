@@ -9,7 +9,9 @@ export class ConsoleService {
   constructor() { }
 
   add(message: string) {
-    this.messages.push(new Date().toLocaleString() + ' - ' + message);
+    let _date = new Date().toLocaleString();
+    this.messages.push(_date + ' - ' + message);
+    console.log(_date + ' - ' + message);
   }
 
   clear() {

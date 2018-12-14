@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject ,  Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { EidaService } from './eida.service';
 import { FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel } from './models';
 import { environment } from '../environments/environment';

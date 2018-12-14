@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class PaginatorService {
   private _currentPage: number = 0;
-  private _pageSize: number = 15;
+  private _pageSize: number = 10;
   private _pages = new Array();
 
   constructor() { }
