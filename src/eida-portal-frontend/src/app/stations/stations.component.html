@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="tabs is-small is-toggle is-centered">
+    <div class="tabs is-small is-toggle is-fullwidth">
       <ul id="dataSourceTabs">
         <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent')"><a>Browse
             inventory</a></li>
@@ -90,7 +90,7 @@
       <hr>
 
       <h1 class="title is-5">Stations</h1>
-      <div class="tabs is-boxed is-small is-centered">
+      <div class="tabs is-toggle is-small is-centered">
         <ul id="stationsTabs">
           <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By code</a></li>
           <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent');"><a>By region</a></li>
@@ -179,7 +179,7 @@
 
       <h1 class="title is-5">Streams</h1>
 
-      <div class="tabs is-boxed is-small is-centered">
+      <div class="tabs is-toggle is-small is-centered">
         <ul id="streamsTabs">
           <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By code</a></li>
           <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent');"><a>By sampling</a></li>
