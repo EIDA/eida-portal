@@ -47,6 +47,10 @@ export class DashboardComponent implements OnInit {
       $(`#${toggler}`).removeClass('fa-toggle-on').addClass('fa-toggle-off')
     } else {
       $(`#${toggler}`).removeClass('fa-toggle-off').addClass('fa-toggle-on')
+      // When switching off the map, resizing the window enough to enable
+      // mobile experience, going back full screen and enabling the map
+      // does not make it pop-up because the display property is set to 'none'.
+      $(`#${target}`).find('canvas').css("display", "block");
     }
     $(`#${target}`).toggle("fast");
   }
