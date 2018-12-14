@@ -1,163 +1,226 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Year from</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+    <div class="tabs is-small is-toggle is-centered">
+      <ul id="dataSourceTabs">
+        <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent')"><a>Browse
+            inventory</a></li>
+        <li id="userSuppliedTab" (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent')"><a>User
+            supplied</a></li>
+      </ul>
+    </div>
+
+    <div id="browseInventoryContent">
+      <h1 class="title is-5">Networks</h1>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Year from</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Year to</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Year to</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- <div class="field is-horizontal">
-    <div class="field-label">
-      <label class="label">Network type</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="select">
-          <select [(ngModel)]="stationsModel.selectedNetworkType">
-            <option *ngFor="let t of stationsModel.networkTypes" [ngValue]="t">{{t.name}}</option>
+      <!-- <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Network type</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
+              <select [(ngModel)]="stationsModel.selectedNetworkType">
+                <option *ngFor="let t of stationsModel.networkTypes" [ngValue]="t">{{t.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Network search</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <span *ngFor="let n of networks_search$ | async" class="tag">
+        {{ n.code }} ({{ n.start }})
+      </span> -->
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Network</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
+              <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
+                <option selected>All</option>
+                <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
+                  {{n.desc}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h1 class="title is-5">Stations</h1>
+      <div class="tabs is-boxed is-small is-centered">
+        <ul id="stationsTabs">
+          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By code</a></li>
+          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent');"><a>By region</a></li>
+          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent');"><a>By events</a></li>
+        </ul>
+      </div>
+
+      <div id="stationsByCodeContent">
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Station</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
+                  <option selected>All</option>
+                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stationsByRegionContent" hidden>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Coordinate (N)</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Coordinate (S)</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Coordinate (E)</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Coordinate (W)</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="stationsByEventsContent" hidden>
+        stationsByEventsContent
+      </div>
+
+      <hr>
+
+      <h1 class="title is-5">Streams</h1>
+
+      <div class="tabs is-boxed is-small is-centered">
+        <ul id="streamsTabs">
+          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By code</a></li>
+          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent');"><a>By sampling</a></li>
+        </ul>
+      </div>
+
+      <div id="streamsByCodeContent">
+        <div class="select is-multiple is-fullwidth">
+          <select multiple size="8">
+            <option value="0">ABC</option>
+            <option value="1">DEF</option>
+            <option value="2">GHI</option>
+            <option value="3">JKL</option>
           </select>
         </div>
       </div>
-    </div>
-  </div> -->
 
-    <!-- <div class="field is-horizontal">
-    <div class="field-label">
-      <label class="label">Network search</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
+      <div id="streamsBySamplingContent" hidden>
+        streamsBySamplingContent
+      </div>
+
+      <hr>
+      <div class="columns">
+        <div class="column is-half">
+          <button class="button is-danger is-fullwidth" (click)="reset();">Reset</button>
+        </div>
+        <div class="column is-half">
+          <button class="button is-success is-fullwidth" (click)="add();">Add</button>
         </div>
       </div>
+      <div *ngIf="paginator.getTotalPages() > 0">
+        <button class="button is-warning is-fullwidth" (click)="removeAllStations();">Remove all stations ({{
+          selectedStations.length }})</button>
+      </div>
+    </div>
+
+    <div id="userSuppliedContent" hidden>
+      Text!
     </div>
   </div>
   
-  <span *ngFor="let n of networks_search$ | async" class="tag">
-    {{ n.code }} ({{ n.start }})
-  </span> -->
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Network</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="select">
-            <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
-              <option selected>All</option>
-              <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
-                {{n.desc}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Station</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="select">
-            <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
-              <option selected>All</option>
-              <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Coordinate (N)</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Coordinate (S)</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Coordinate (E)</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Coordinate (W)</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="columns">
-      <div class="column is-half">
-        <button class="button is-danger is-fullwidth" (click)="reset();">Reset</button>
-      </div>
-      <div class="column is-half">
-        <button class="button is-success is-fullwidth" (click)="add();">Add</button>
-      </div>
-    </div>
-    <div *ngIf="paginator.getTotalPages() > 0">
-      <button class="button is-warning is-fullwidth" (click)="removeAllStations();">Remove all stations ({{
-        selectedStations.length }})</button>
-    </div>
-  </div>
   <!-- List of stations -->
   <div class="column">
     <article *ngIf="paginator.getTotalPages() === 0" class="message is-info">

@@ -113,4 +113,25 @@ export class StationsComponent implements OnInit {
     this.paginator.getPages();
     // $('#previousPageButton').attr('disabled', true);
   }
+
+  handleGeneralInputTypeChange(btn: string, target: string): void {
+    $('#browseInventoryContent, #userSuppliedContent').hide();
+    $('#dataSourceTabs').find('li').removeClass('is-active');
+    $(`#${btn}`).addClass('is-active');
+    $(`#${target}`).show("fast");
+  }
+
+  handleStationsTabChange(btn: string, target: string): void {
+    $('#stationsByCodeContent, #stationsByRegionContent, #stationsByEventsContent').hide();
+    $('#stationsTabs').find('li').removeClass('is-active');
+    $(`#${btn}`).addClass('is-active');
+    $(`#${target}`).show("fast");
+  }
+
+  handleStreamsTabChange(btn: string, target: string): void {
+    $('#streamsByCodeContent, #streamsBySamplingContent').hide();
+    $('#streamsTabs').find('li').removeClass('is-active');
+    $(`#${btn}`).addClass('is-active');
+    $(`#${target}`).show("fast");
+  }
 }
