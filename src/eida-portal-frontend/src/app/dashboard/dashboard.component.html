@@ -4,8 +4,8 @@
       display: none;
     }
   
-    #stations:checked~.tab-content>.content-stations,
     #events:checked~.tab-content>.content-events,
+    #stations:checked~.tab-content>.content-stations,
     #request:checked~.tab-content>.content-request,
     #console:checked~.tab-content>.content-console {
       display: block;
@@ -16,26 +16,26 @@
   <div class="tile is-ancestor">
     <div class="tile is-6 is-vertical is-parent">
       <!-- Nav tabs -->
-      <input type="radio" id="stations" name="nav-tab">
       <input type="radio" id="events" name="nav-tab">
+      <input type="radio" id="stations" name="nav-tab">
       <input type="radio" id="request" name="nav-tab">
       <input type="radio" id="console" name="nav-tab" checked="checked">
 
       <div class="tabs is-boxed is-fullwidth">
         <ul>
-          <li id="stationsTab">
-            <label for="stations">
-              <a (click)="tabSelected('#stationsTab')">
-                <span class="icon"><i class="fas fa-globe-americas"></i></span>
-                <span>Stations</span>
-              </a>
-            </label>
-          </li>
           <li id="eventsTab">
             <label for="events">
               <a (click)="tabSelected('#eventsTab')">
                 <span class="icon"><i class="fas fa-map"></i></span>
                 <span>Events</span>
+              </a>
+            </label>
+          </li>
+          <li id="stationsTab">
+            <label for="stations">
+              <a (click)="tabSelected('#stationsTab')">
+                <span class="icon"><i class="fas fa-globe-americas"></i></span>
+                <span>Stations</span>
               </a>
             </label>
           </li>
@@ -60,14 +60,14 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane content-stations">
-          <div class="tile is-child">
-            <app-stations></app-stations>
-          </div>
-        </div>
         <div class="tab-pane content-events">
           <div class="tile is-child">
             <app-events></app-events>
+          </div>
+        </div>
+        <div class="tab-pane content-stations">
+          <div class="tile is-child">
+            <app-stations></app-stations>
           </div>
         </div>
         <div class="tab-pane content-request">
