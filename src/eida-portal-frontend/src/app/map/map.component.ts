@@ -50,7 +50,10 @@ export class MapComponent implements OnInit {
       view: new ol.View({
         center: ol.proj.fromLonLat([5.178029, 52.101568]),
         zoom: 2
-      })
+      }),
+      interactions: ol.interaction.defaults(
+        { mouseWheelZoom: false }
+      )
     });
     let popupContainer = document.getElementById('popup');
     let popupContent = document.getElementById('popup-content');
