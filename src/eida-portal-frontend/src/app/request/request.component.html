@@ -1,44 +1,55 @@
-<div class="field">
-  <label class="label">Datetime from</label>
-  <div class="control">
-    <input [(ngModel)]="requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
-  </div>
-  <p class="help">Example: "2017-01-01T12:00:00"</p>
-</div>
-
-<div class="field">
-  <label class="label">Datetime to</label>
-  <div class="control">
-    <input [(ngModel)]="requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
-  </div>
-  <p class="help">Example: "2018-01-01T12:00:00"</p>
-</div>
-
-<div class="field is-horizontal">
-  <div class="field-label is-normal">
-    <label class="label">FDSN request type</label>
-  </div>
-  <div class="field-body">
+<div class="columns">
+  <div class="column is-5">
     <div class="field">
-      <div class="select">
-        <select [(ngModel)]="requestModel.selectedFdsnRequestType">
-          <option *ngFor="let t of requestModel.fdsnRequestType" [ngValue]="t">{{t.name}}</option>
-        </select>
+      <label class="label">Datetime from</label>
+      <div class="control">
+        <input [(ngModel)]="requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+      </div>
+      <p class="help">Example: "2017-01-01T12:00:00"</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Datetime to</label>
+      <div class="control">
+        <input [(ngModel)]="requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+      </div>
+      <p class="help">Example: "2018-01-01T12:00:00"</p>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">FDSN request type</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="select">
+            <select [(ngModel)]="requestModel.selectedFdsnRequestType">
+              <option *ngFor="let t of requestModel.fdsnRequestType" [ngValue]="t">{{t.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <span class="button is-warning is-fullwidth" (click)="review();">Review</span>
+      </div>
+      <div class="column">
+        <span class="button is-success is-fullwidth" (click)="submit();">Download</span>
+      </div>
+      <div class="column">
+        <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();">Cloud staging</span>
       </div>
     </div>
   </div>
-</div>
-
-<div class="columns">
   <div class="column">
-    <span class="button is-warning is-fullwidth" (click)="review();">Review</span>
+    <article class="message is-info">
+      <div class="message-body">
+        Request details will appear here.
+      </div>
+    </article>
   </div>
-  <div class="column">
-    <span class="button is-success is-fullwidth" (click)="submit();">Download</span>
-  </div>
-  <div class="column">
-      <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();">Prepare for Cloud staging</span>
-    </div>
 </div>
 
 <div id="stageModal" class="modal">
@@ -50,7 +61,7 @@
     </header>
     <section class="modal-card-body">
       <div class="field is-horizontal">
-        <div class="field-label is-normal">
+        <div class="field-label">
           <label class="label">Node</label>
         </div>
         <div class="field-body">
