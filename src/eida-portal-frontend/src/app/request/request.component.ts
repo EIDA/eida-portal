@@ -27,4 +27,11 @@ export class RequestComponent implements OnInit {
   toggleModal() {
     $('#stageModal').toggleClass('is-active');
   }
+
+  handleModeChange(btn: string, target: string): void {
+    $('#absoluteModeContent, #relativeModeContent').hide();
+    $('#modesTabs').find('li').removeClass('is-active');
+    $(`#${btn}`).addClass('is-active');
+    $(`#${target}`).show("fast");
+  }
 }

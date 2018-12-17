@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="tabs is-small is-toggle is-fullwidth">
+    <div class="tabs is-toggle is-fullwidth">
       <ul id="dataSourceTabs">
         <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent')"><a>Browse
             inventory</a></li>
@@ -10,7 +10,7 @@
     </div>
 
     <div id="browseInventoryContent">
-      <h1 class="title is-5">Networks</h1>
+      <h1 class="title is-5 has-text-centered">Networks</h1>
 
       <div class="field is-horizontal">
         <div class="field-label">
@@ -89,12 +89,15 @@
 
       <hr>
 
-      <h1 class="title is-5">Stations</h1>
-      <div class="tabs is-toggle is-small is-centered">
+      <h1 class="title is-5 has-text-centered">Stations</h1>
+      <div class="tabs is-toggle is-small is-fullwidth">
         <ul id="stationsTabs">
-          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By code</a></li>
-          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent');"><a>By region</a></li>
-          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent');"><a>By events</a></li>
+          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By
+              code</a></li>
+          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent');"><a>By
+              region</a></li>
+          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent');"><a>By
+              events</a></li>
         </ul>
       </div>
 
@@ -172,17 +175,66 @@
       </div>
 
       <div id="stationsByEventsContent" hidden>
-        stationsByEventsContent
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Distance from</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="0">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Distance to</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="180">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Azimuth from</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="0">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Azimuth to</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="360">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <hr>
 
-      <h1 class="title is-5">Streams</h1>
+      <h1 class="title is-5 has-text-centered">Streams</h1>
 
-      <div class="tabs is-toggle is-small is-centered">
+      <div class="tabs is-toggle is-small is-fullwidth">
         <ul id="streamsTabs">
-          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By code</a></li>
-          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent');"><a>By sampling</a></li>
+          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By
+              code</a></li>
+          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent');"><a>By
+              sampling</a></li>
         </ul>
       </div>
 
@@ -217,10 +269,42 @@
     </div>
 
     <div id="userSuppliedContent" hidden>
-      Text!
+      <h1 class="title is-5 has-text-centered">File upload</h1>
+      <p>You can upload text files in one of the following two formats:</p>
+      <div class="content">
+      <ol type="1">
+        <li>
+          A list of stations previously saved here. (Use the "Save Stations" button in the "Event and Station List").
+        </li>
+        <li>
+            A file retrieved from any FDSN compliant fdsnws-station Web Service in text format.
+        </li>
+      </ol>
+    </div>
+
+      <div class="file has-name">
+        <label class="file-label">
+          <input class="file-input" type="file" name="resume">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+          <span class="file-name">
+            fdsn-dta.txt
+          </span>
+        </label>
+      </div>
+
+      <hr>
+
+      <button style="width: 100%;" class="button is-success is-fullwidth">Send</button>
     </div>
   </div>
-  
+
   <!-- List of stations -->
   <div class="column">
     <article *ngIf="paginator.getTotalPages() === 0" class="message is-info">
