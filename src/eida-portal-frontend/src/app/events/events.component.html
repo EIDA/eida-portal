@@ -6,7 +6,7 @@
         <label class="label">Catalog</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Data source catalog">
           <div class="select">
             <select [(ngModel)]="eventsModel.selectedCatalog">
               <option *ngFor="let c of eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
@@ -21,7 +21,7 @@
         <label class="label">Minimum magnitude</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Minimum magnitude">
           <div class="control">
             <input [(ngModel)]="eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
           </div>
@@ -34,7 +34,7 @@
         <label class="label">Date from</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Starting date expressed according to ISO 8601 (YYYY-MM-DD)">
           <div class="control">
             <input [(ngModel)]="eventsModel.dateFrom" class="input" type="text" placeholder="1">
           </div>
@@ -47,7 +47,7 @@
         <label class="label">Date to</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Ending date expressed according to ISO 8601 (YYYY-MM-DD)">
           <div class="control">
             <input [(ngModel)]="eventsModel.dateTo" class="input" type="text" placeholder="1">
           </div>
@@ -60,7 +60,7 @@
         <label class="label">Depth from</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Minimal depth in meters">
           <div class="control">
             <input [(ngModel)]="eventsModel.depthFrom" class="input" type="text" placeholder="1">
           </div>
@@ -73,7 +73,7 @@
         <label class="label">Depth to</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="Maximal depth in meters">
           <div class="control">
             <input [(ngModel)]="eventsModel.depthTo" class="input" type="text" placeholder="1">
           </div>
@@ -86,7 +86,7 @@
         <label class="label">Coordinate (N)</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="North coordinate">
           <div class="control">
             <input [(ngModel)]="eventsModel.coordinateN" class="input" type="text" placeholder="1">
           </div>
@@ -99,7 +99,7 @@
         <label class="label">Coordinate (S)</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="South coordinate">
           <div class="control">
             <input [(ngModel)]="eventsModel.coordinateS" class="input" type="text" placeholder="1">
           </div>
@@ -112,7 +112,7 @@
         <label class="label">Coordinate (E)</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="East coordinate">
           <div class="control">
             <input [(ngModel)]="eventsModel.coordinateE" class="input" type="text" placeholder="1">
           </div>
@@ -125,7 +125,7 @@
         <label class="label">Coordinate (W)</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field" data-tippy-content="West coordinate">
           <div class="control">
             <input [(ngModel)]="eventsModel.coordinateW" class="input" type="text" placeholder="1">
           </div>
@@ -135,10 +135,10 @@
     <hr>
     <div class="columns">
       <div class="column is-half">
-        <span class="button is-danger is-fullwidth" (click)="reset();">Reset</span>
+        <span class="button is-danger is-fullwidth" (click)="reset();" data-tippy-content="Reset the form to its default values">Reset</span>
       </div>
       <div class="column is-half">
-        <span class="button is-success is-fullwidth" (click)="search();">Search</span>
+        <span class="button is-success is-fullwidth" (click)="search();" data-tippy-content="Search the catalog using provided criteria">Search</span>
       </div>
     </div>
 

@@ -3,6 +3,7 @@ import { ConsoleService } from '../console.service';
 
 declare var $: any;
 declare var Mousetrap: any;
+declare var tippy: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit {
     $(s).addClass('is-active');
   }
 
-  toggleVisibility(toggler, target) {
+  toggleVisibility(toggler, target, speed=250) {
     if ($(`#${toggler}`).hasClass('fa-toggle-on')) {
       $(`#${toggler}`).removeClass('fa-toggle-on').addClass('fa-toggle-off')
     } else {
@@ -66,6 +67,36 @@ export class DashboardComponent implements OnInit {
       // does not make it pop-up because the display property is set to 'none'.
       $(`#${target}`).find('canvas').css("display", "block");
     }
-    $(`#${target}`).toggle("fast");
+    $(`#${target}`).toggle(speed);
+  }
+
+  toggleTooltips(toggler) {
+    let elements = [];
+
+      $('[data-tippy-content]').each(function() {
+        if (!this._tippy) {
+          elements.push(this);
+        }
+      })
+
+      if (elements.length > 0) {
+        $(`#${toggler}`).removeClass('fa-toggle-off').addClass('fa-toggle-on')
+        // Create tooltips
+        for (let e of elements) {
+          tippy(e, {
+            arrow: true,
+            arrowType: 'round',
+            size: 'large',
+            duration: [250, 1000],
+            animation: 'perspective'
+          });
+        }
+      } else {
+        $(`#${toggler}`).removeClass('fa-toggle-on').addClass('fa-toggle-off')
+        // Destroy all tooltips
+        $('[data-tippy-content]').each(function() {
+          this._tippy.destroy();
+        })
+      }
   }
 }

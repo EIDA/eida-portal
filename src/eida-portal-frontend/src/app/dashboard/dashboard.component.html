@@ -64,13 +64,22 @@
           Map
         </span>
       </a>
+
+      <a class="navbar-item" (click)="toggleTooltips('tooltipsToggler');">
+        <span class="icon">
+          <i class="fas fa-toggle-off" id="tooltipsToggler"></i>
+        </span>
+        <span>
+          Tooltips
+        </span>
+      </a>
     </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <a class="bd-tw-button button">
+            <a class="bd-tw-button button" data-tippy-content="Authenticate using B2ACCESS service">
               <span class="icon"><i class="fas fa-lock-open"></i></span>
               <span>
                 Authenticate
@@ -100,7 +109,7 @@
 
       <div class="tabs is-boxed">
         <ul id="menuTabs">
-          <li class="is-active" id="eventsTab">
+          <li class="is-active" id="eventsTab" data-tippy-content="TooltipText">
             <label for="events">
               <a (click)="tabSelected('#eventsTab')">
                 <span class="icon"><i class="fas fa-map"></i></span>
@@ -108,7 +117,7 @@
               </a>
             </label>
           </li>
-          <li id="stationsTab">
+          <li id="stationsTab" data-tippy-content="TooltipText">
             <label for="stations">
               <a (click)="tabSelected('#stationsTab')">
                 <span class="icon"><i class="fas fa-globe-americas"></i></span>
@@ -116,7 +125,7 @@
               </a>
             </label>
           </li>
-          <li id="requestTab">
+          <li id="requestTab" data-tippy-content="TooltipText">
             <label for="request">
               <a (click)="tabSelected('#requestTab')">
                 <span class="icon"><i class="fas fa-download"></i></span>
@@ -124,7 +133,7 @@
               </a>
             </label>
           </li>
-          <li id="metricsTab">
+          <li id="metricsTab" data-tippy-content="TooltipText">
             <label for="metrics">
               <a (click)="tabSelected('#metricsTab')">
                 <span class="icon"><i class="fas fa-chart-bar"></i></span>
