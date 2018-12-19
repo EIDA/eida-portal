@@ -56,7 +56,7 @@
             </a>
           </div>
         </div> -->
-      <a class="navbar-item" (click)="toggleVisibility('mapToggler', 'mapContainer');">
+      <a class="navbar-item" (click)="uiService.toggleVisibility('mapToggler', 'mapContainer');">
         <span class="icon">
           <i class="fas fa-toggle-on" id="mapToggler"></i>
         </span>
@@ -65,7 +65,7 @@
         </span>
       </a>
 
-      <a class="navbar-item" (click)="toggleTooltips('tooltipsToggler');">
+      <a class="navbar-item" (click)="uiService.toggleTooltips('tooltipsToggler');">
         <span class="icon">
           <i class="fas fa-toggle-off" id="tooltipsToggler"></i>
         </span>
@@ -107,9 +107,9 @@
       <input type="radio" id="request" name="nav-tab">
       <input type="radio" id="metrics" name="nav-tab">
 
-      <div class="tabs is-boxed">
+      <div class="tabs is-boxed" data-tippy-content="TooltipText">
         <ul id="menuTabs">
-          <li class="is-active" id="eventsTab" data-tippy-content="TooltipText">
+          <li class="is-active" id="eventsTab">
             <label for="events">
               <a (click)="tabSelected('#eventsTab')">
                 <span class="icon"><i class="fas fa-map"></i></span>
@@ -117,7 +117,7 @@
               </a>
             </label>
           </li>
-          <li id="stationsTab" data-tippy-content="TooltipText">
+          <li id="stationsTab">
             <label for="stations">
               <a (click)="tabSelected('#stationsTab')">
                 <span class="icon"><i class="fas fa-globe-americas"></i></span>
@@ -125,7 +125,7 @@
               </a>
             </label>
           </li>
-          <li id="requestTab" data-tippy-content="TooltipText">
+          <li id="requestTab">
             <label for="request">
               <a (click)="tabSelected('#requestTab')">
                 <span class="icon"><i class="fas fa-download"></i></span>
@@ -133,7 +133,7 @@
               </a>
             </label>
           </li>
-          <li id="metricsTab" data-tippy-content="TooltipText">
+          <li id="metricsTab">
             <label for="metrics">
               <a (click)="tabSelected('#metricsTab')">
                 <span class="icon"><i class="fas fa-chart-bar"></i></span>
