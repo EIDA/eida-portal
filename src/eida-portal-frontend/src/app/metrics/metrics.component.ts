@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TextService } from '../text.service';
 
 @Component({
   selector: 'app-metrics',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MetricsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public textService: TextService) {}
 
   ngOnInit() {
   }

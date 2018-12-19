@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
-import { EventsModel } from '../models'
+import { EventsModel } from '../models';
+import { TextService } from '../text.service';
 
 @Component({
   selector: 'app-events',
@@ -9,7 +10,9 @@ import { EventsModel } from '../models'
 export class EventsComponent implements OnInit {
   @Input() eventsModel = new EventsModel();
 
-  constructor(public consoleService: ConsoleService) { }
+  constructor(
+    public consoleService: ConsoleService,
+    public textService: TextService) { }
 
   ngOnInit() {
     this.consoleService.add('Events initiated');

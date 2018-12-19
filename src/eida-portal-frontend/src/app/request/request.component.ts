@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
-import { RequestModel } from '../models'
+import { RequestModel } from '../models';
+import { TextService } from '../text.service';
 
 declare var $: any;
 @Component({
@@ -10,7 +11,9 @@ declare var $: any;
 export class RequestComponent implements OnInit {
   @Input() requestModel = new RequestModel();
 
-  constructor(public consoleService: ConsoleService) { }
+  constructor(
+    public consoleService: ConsoleService,
+    public textService: TextService) { }
 
   ngOnInit() {
     this.consoleService.add('Request initiated');

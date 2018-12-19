@@ -5,5 +5,5 @@
   </div>
 </div>
 <div style="margin-top: 5px">
-  <button class="button is-fullwidth" (click)="resetMapZoom()" data-tippy-content="Reset map zoom to its original value">Reset map zoom</button>
+  <button class="button is-fullwidth" (click)="resetMapZoom()" [attr.data-tippy-content]="textService.getText('map-tip-reset-zoom')">Reset map zoom</button>
 </div>

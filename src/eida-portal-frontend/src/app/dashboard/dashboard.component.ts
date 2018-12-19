@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { UiService } from '../ui.service';
+import { TextService } from '../text.service';
 
 declare var $: any;
 declare var Mousetrap: any;
@@ -13,8 +14,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public consoleService: ConsoleService,
-    public uiService: UiService
-  ) { }
+    public uiService: UiService,
+    public textService: TextService) { }
 
   ngOnInit() {
     this.consoleService.add('Dashboard initiated');

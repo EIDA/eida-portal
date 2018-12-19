@@ -2,7 +2,7 @@
   <div class="column is-5">
     <h1 class="title is-5 has-text-centered">Time window section</h1>
 
-    <div class="tabs is-toggle is-small is-fullwidth" data-tippy-content="TooltipText">
+    <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('request-tip-tabs-mode')">
       <ul id="modesTabs">
         <li id="absoluteModeTab" class="is-active" (click)="handleModeChange('absoluteModeTab', 'absoluteModeContent')"><a>Absolute
             mode</a></li>
@@ -16,8 +16,8 @@
           <label class="label">Start (minutes before)</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
-            <div class="select">
+          <div class="field">
+            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-start-type')">
               <select style="width:100%;">
                 <option selected>Origin time</option>
                 <option selected>P/Pdiff</option>
@@ -32,7 +32,7 @@
           <label class="label">-</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
+          <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-start-value')">
             <div class="control">
               <input class="input" type="text" placeholder="2">
             </div>
@@ -45,8 +45,8 @@
           <label class="label">End (minutes after)</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
-            <div class="select">
+          <div class="field">
+            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-end-type')">
               <select style="width:100%;">
                 <option selected>Origin time</option>
                 <option selected>P/Pdiff</option>
@@ -61,7 +61,7 @@
           <label class="label">+</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
+          <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-end-value')">
             <div class="control">
               <input class="input" type="text" placeholder="10">
             </div>
@@ -71,7 +71,7 @@
     </div>
 
     <div id="relativeModeContent" hidden>
-      <div class="field" data-tippy-content="TooltipText">
+      <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-from')">
         <label class="label">Datetime from</label>
         <div class="control">
           <input [(ngModel)]="requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
@@ -79,7 +79,7 @@
         <p class="help">Example: "2017-01-01T12:00:00"</p>
       </div>
 
-      <div class="field" data-tippy-content="TooltipText">
+      <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-to')">
         <label class="label">Datetime to</label>
         <div class="control">
           <input [(ngModel)]="requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
@@ -97,8 +97,8 @@
         <label class="label">FDSN request type</label>
       </div>
       <div class="field-body">
-        <div class="field" data-tippy-content="TooltipText">
-          <div class="select">
+        <div class="field">
+          <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-request-type')">
             <select [(ngModel)]="requestModel.selectedFdsnRequestType">
               <option *ngFor="let t of requestModel.fdsnRequestType" [ngValue]="t">{{t.name}}</option>
             </select>
@@ -111,13 +111,13 @@
 
     <div class="columns">
       <div class="column">
-        <span class="button is-warning is-fullwidth" (click)="review();" data-tippy-content="TooltipText">Review</span>
+        <span class="button is-warning is-fullwidth" (click)="review();" [attr.data-tippy-content]="textService.getText('request-tip-review')">Review</span>
       </div>
       <div class="column">
-        <span class="button is-success is-fullwidth" (click)="submit();" data-tippy-content="TooltipText">Download</span>
+        <span class="button is-success is-fullwidth" (click)="submit();" [attr.data-tippy-content]="textService.getText('request-tip-download')">Download</span>
       </div>
       <div class="column">
-        <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();" data-tippy-content="TooltipText">Cloud staging</span>
+        <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();" [attr.data-tippy-content]="textService.getText('request-tip-cloud-staging')">Cloud staging</span>
       </div>
     </div>
   </div>
@@ -138,13 +138,15 @@
       <button class="delete" aria-label="close" (click)="toggleModal();"></button>
     </header>
     <section class="modal-card-body">
+      <p>Select one of the nodes to stage data in the Cloud.</p>
+      <hr>
       <div class="field is-horizontal">
         <div class="field-label">
           <label class="label">Node</label>
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select">
+            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-node')">
               <select>
                 <option selected>Node 1</option>
                 <option selected>Node 2</option>
@@ -157,8 +159,8 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-info" data-tippy-content="TooltipText">Stage in cloud</button>
-      <button class="button" (click)="toggleModal();" data-tippy-content="TooltipText">Cancel</button>
+      <button class="button is-info" [attr.data-tippy-content]="textService.getText('request-tip-stage-in-cloud')">Stage in cloud</button>
+      <button class="button" (click)="toggleModal();" [attr.data-tippy-content]="textService.getText('request-tip-stage-cancel')">Cancel</button>
     </footer>
   </div>
 </div>

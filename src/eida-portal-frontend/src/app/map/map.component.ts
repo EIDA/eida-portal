@@ -6,6 +6,7 @@ import OSM from 'ol/source/OSM';
 import { MapService } from '../map.service';
 import { StationsService } from '../stations.service';
 import { ConsoleService } from '../console.service';
+import { TextService } from '../text.service';
 import { projection } from '@angular/core/src/render3/instructions';
 import { 
   StationsModel, FdsnNetwork, FdsnStationExt
@@ -35,7 +36,8 @@ export class MapComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private stationsService: StationsService,
-    public consoleService: ConsoleService) { }
+    public consoleService: ConsoleService,
+    public textService: TextService) { }
 
   ngOnInit() {
     this._map = new ol.Map({

@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="tabs is-toggle is-fullwidth" data-tippy-content="TooltipText">
+    <div class="tabs is-toggle is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-data-source')">
       <ul id="dataSourceTabs">
         <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent')"><a>Browse
             inventory</a></li>
@@ -17,7 +17,7 @@
           <label class="label">Year from</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
+          <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-from')">
             <div class="control">
               <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
             </div>
@@ -30,7 +30,7 @@
           <label class="label">Year to</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
+          <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-to')">
             <div class="control">
               <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
             </div>
@@ -75,8 +75,8 @@
           <label class="label">Network</label>
         </div>
         <div class="field-body">
-          <div class="field" data-tippy-content="TooltipText">
-            <div class="select">
+          <div class="field">
+            <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network')">
               <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
                 <option selected>All</option>
                 <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
@@ -90,7 +90,7 @@
       <hr>
 
       <h1 class="title is-5 has-text-centered">Stations</h1>
-      <div class="tabs is-toggle is-small is-fullwidth" data-tippy-content="TooltipText">
+      <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
         <ul id="stationsTabs">
           <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By
               code</a></li>
@@ -107,8 +107,8 @@
             <label class="label">Station</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
-              <div class="select">
+            <div class="field">
+              <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-station')">
                 <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
                   <option selected>All</option>
                   <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
@@ -125,7 +125,7 @@
             <label class="label">Coordinate (N)</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-n')">
               <div class="control">
                 <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
               </div>
@@ -138,7 +138,7 @@
             <label class="label">Coordinate (S)</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-s')">
               <div class="control">
                 <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
               </div>
@@ -152,7 +152,7 @@
             <label class="label">Coordinate (E)</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-e')">
               <div class="control">
                 <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
               </div>
@@ -165,7 +165,7 @@
             <label class="label">Coordinate (W)</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-w')">
               <div class="control">
                 <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
               </div>
@@ -180,7 +180,7 @@
             <label class="label">Distance from</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-from')">
               <div class="control">
                 <input class="input" type="text" placeholder="0">
               </div>
@@ -192,7 +192,7 @@
             <label class="label">Distance to</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-to')">
               <div class="control">
                 <input class="input" type="text" placeholder="180">
               </div>
@@ -204,7 +204,7 @@
             <label class="label">Azimuth from</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-from')">
               <div class="control">
                 <input class="input" type="text" placeholder="0">
               </div>
@@ -216,7 +216,7 @@
             <label class="label">Azimuth to</label>
           </div>
           <div class="field-body">
-            <div class="field" data-tippy-content="TooltipText">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-to')">
               <div class="control">
                 <input class="input" type="text" placeholder="360">
               </div>
@@ -229,7 +229,7 @@
 
       <h1 class="title is-5 has-text-centered">Streams</h1>
 
-      <div class="tabs is-toggle is-small is-fullwidth" data-tippy-content="TooltipText">
+      <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-streams')">
         <ul id="streamsTabs">
           <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By
               code</a></li>
@@ -239,7 +239,7 @@
       </div>
 
       <div id="streamsByCodeContent">
-        <div class="select is-multiple is-fullwidth" data-tippy-content="TooltipText">
+        <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-streams')">
           <select multiple>
             <option value="0">ABC</option>
             <option value="1">DEF</option>
@@ -256,14 +256,14 @@
       <hr>
       <div class="columns">
         <div class="column is-half">
-          <button class="button is-danger is-fullwidth" (click)="reset();" data-tippy-content="TooltipText">Reset</button>
+          <button class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('stations-tip-reset')">Reset</button>
         </div>
         <div class="column is-half">
-          <button class="button is-success is-fullwidth" (click)="add();" data-tippy-content="TooltipText">Add</button>
+          <button class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">Add</button>
         </div>
       </div>
       <div *ngIf="paginator.getTotalPages() > 0">
-        <button class="button is-warning is-fullwidth" (click)="removeAllStations();" data-tippy-content="TooltipText">Remove all stations ({{
+        <button class="button is-warning is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">Remove all stations ({{
           selectedStations.length }})</button>
       </div>
     </div>
@@ -282,7 +282,7 @@
       </ol>
     </div>
 
-      <div class="file has-name" data-tippy-content="TooltipText">
+      <div class="file has-name" [attr.data-tippy-content]="textService.getText('stations-tip-upload')">
         <label class="file-label">
           <input class="file-input" type="file" name="resume">
           <span class="file-cta">
@@ -301,7 +301,7 @@
 
       <hr>
 
-      <button style="width: 100%;" class="button is-success is-fullwidth" data-tippy-content="TooltipText">Send</button>
+      <button style="width: 100%;" class="button is-success is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-send')">Send</button>
     </div>
   </div>
 
@@ -335,11 +335,11 @@
               <p class="is-size-7">{{station.name}} ({{station.getCoordinates()}})</p>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'">
+              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('stations-tip-toggle-select')">
                 {{station.selected ? "Selected" : "Skipped"}}</button>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted">Remove</button>
+              <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted" [attr.data-tippy-content]="textService.getText('stations-tip-remove')">Remove</button>
             </td>
           </tr>
         </tbody>

@@ -7,6 +7,7 @@ import {
 import { StationsModel } from '../models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
+import { TextService } from '../text.service';
 import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
@@ -29,7 +30,8 @@ export class StationsComponent implements OnInit {
 
   constructor(
     public stationsService: StationsService,
-    public consoleService: ConsoleService) { }
+    public consoleService: ConsoleService,
+    public textService: TextService) { }
 
   ngOnInit() {
     this.stationsService.getNetworks().subscribe(
