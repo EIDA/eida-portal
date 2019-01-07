@@ -250,7 +250,18 @@
       </div>
 
       <div id="streamsBySamplingContent" hidden>
-        streamsBySamplingContent
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Sampling rate</label>
+          </div>
+          <div class="field-body">
+            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-sampling-rate')">
+              <div class="control">
+                <input class="input" type="text" placeholder="20">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <hr>

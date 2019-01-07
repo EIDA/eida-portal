@@ -211,6 +211,13 @@
     }
     ,
     {
+        "key": "stations-tip-sampling-rate",
+        "values": {
+            "en": "Sampling rate"
+        }
+    }
+    ,
+    {
         "key": "stations-tip-reset",
         "values": {
             "en": "Reset form to its default values"
