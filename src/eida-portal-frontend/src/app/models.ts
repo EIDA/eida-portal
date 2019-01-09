@@ -1,3 +1,5 @@
+import { Enums } from './modules/enums';
+
 export class StationsModel {
     yearFrom: string;
     yearTo: string;
@@ -7,6 +9,9 @@ export class StationsModel {
     coordinateW: number;
     selectedNetwork;
     selectedStation;
+    dataSource: Enums.StationDataSource;
+    stationSelectionMethod: Enums.StationSelectionMethod;
+    streamSelectionMethod: Enums.StationStreamSelectionMethod;
 
     constructor() {
         this.yearFrom = "1900";
@@ -17,6 +22,9 @@ export class StationsModel {
         this.coordinateW = -180.0;
         this.selectedNetwork = 'All';
         this.selectedStation = 'All';
+        this.dataSource = Enums.StationDataSource.Inventory;
+        this.stationSelectionMethod = Enums.StationSelectionMethod.Code;
+        this.streamSelectionMethod = Enums.StationStreamSelectionMethod.Code;
     }
 
     toString() {
@@ -67,6 +75,18 @@ export class EventsModel {
         depth: ${this.depthFrom} - ${this.depthTo},
         coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W`;
     }
+}
+
+export class FdsnEvent {
+    id: number;
+    time: string;
+    magnitude: number;
+    magnitudeType: string;
+    depth: number;
+    latitude: number;
+    longitude: number;
+    locationReference: string;
+    magnitudeReference: string;
 }
 
 export class MapModel {

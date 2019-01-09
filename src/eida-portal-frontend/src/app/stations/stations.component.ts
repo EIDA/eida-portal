@@ -11,6 +11,7 @@ import { TextService } from '../text.service';
 import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
+import { Enums } from '../modules/enums';
 
 declare var $: any;
 declare var Mousetrap: any;
@@ -114,6 +115,18 @@ export class StationsComponent implements OnInit {
     this.paginator.paginate(this.selectedStations);
     this.paginator.getPages();
     // $('#previousPageButton').attr('disabled', true);
+  }
+
+  stationDataSourceChanged(s: Enums.StationDataSource): void {
+    this.stationsModel.dataSource = s;
+  }
+
+  stationSelectionMethod(s: Enums.StationSelectionMethod): void {
+    this.stationsModel.stationSelectionMethod = s;
+  }
+
+  stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethod): void {
+    this.stationsModel.streamSelectionMethod = s;
   }
 
   handleGeneralInputTypeChange(btn: string, target: string): void {

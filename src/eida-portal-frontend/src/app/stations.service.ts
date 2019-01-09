@@ -4,6 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
 import { FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel } from './models';
 import { environment } from '../environments/environment';
+import { Enums } from './modules/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,42 @@ export class StationsService {
 
   // Add selected station(s) to map and notify subscribers
   addSelectedStation(s: StationsModel) {
+    if (s.dataSource === Enums.StationDataSource.Inventory) {
+      // Inventory based search
+
+      if (s.selectedNetwork === 'All') {
+        this._mapStations = this.allStations.filter(m => m.net);
+      } else {
+        this._mapStations = this.allStations.filter(
+          m => m.net === s.selectedNetwork.code
+        )
+      }
+
+      if (s.stationSelectionMethod === Enums.StationSelectionMethod.Code) {
+        if (s.selectedStation !== 'All') {
+          this._mapStations = this._mapStations.filter(
+            m => m.stat === s.selectedStation.stat
+          )
+        }
+      } else if (s.stationSelectionMethod === Enums.StationSelectionMethod.Region) {
+        this._mapStations = this._mapStations.filter(
+          m => m.lat >= s.coordinateS
+          && m.lat <= s.coordinateN
+          && m.lon >= s.coordinateW
+          && m.lon <= s.coordinateE
+        )
+      } else if (s.stationSelectionMethod === Enums.StationSelectionMethod.Events) {
+
+      }
+
+
+    } else if (s.dataSource === Enums.StationDataSource.File) {
+      // TODO: uploaded file containing station catalog
+    }
+
+    this.updateStations(this._mapStations);
+    return;
+
     if (s.selectedNetwork === 'All' && s.selectedStation === 'All') {
       this._mapStations = this.allStations.filter(m => m.net);
     } else if (s.selectedStation !== 'All'
@@ -82,7 +119,8 @@ export class StationsService {
         }
       }
     }
-    this.updateStations(this._mapStations);
+
+    
   }
 
   toggleStationSelection(s: FdsnStationExt) {

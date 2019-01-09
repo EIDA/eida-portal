@@ -2,9 +2,9 @@
   <div class="column is-5">
     <div class="tabs is-toggle is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-data-source')">
       <ul id="dataSourceTabs">
-        <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent')"><a>Browse
+        <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent'); stationDataSourceChanged(0);"><a>Browse
             inventory</a></li>
-        <li id="userSuppliedTab" (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent')"><a>User
+        <li id="userSuppliedTab" (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent'); stationDataSourceChanged(1);"><a>User
             supplied</a></li>
       </ul>
     </div>
@@ -92,11 +92,11 @@
       <h1 class="title is-5 has-text-centered">Stations</h1>
       <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
         <ul id="stationsTabs">
-          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent');"><a>By
+          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0);"><a>By
               code</a></li>
-          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent');"><a>By
+          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1);"><a>By
               region</a></li>
-          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent');"><a>By
+          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2);"><a>By
               events</a></li>
         </ul>
       </div>
@@ -231,9 +231,9 @@
 
       <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-streams')">
         <ul id="streamsTabs">
-          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent');"><a>By
+          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent'); stationStreamSelectionMethod(0);"><a>By
               code</a></li>
-          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent');"><a>By
+          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent'); stationStreamSelectionMethod(1);"><a>By
               sampling</a></li>
         </ul>
       </div>
