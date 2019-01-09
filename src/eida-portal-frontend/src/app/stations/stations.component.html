@@ -182,7 +182,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-from')">
               <div class="control">
-                <input class="input" type="text" placeholder="0">
+                <input [(ngModel)]="stationsModel.eventDistanceFrom" class="input" type="text" placeholder="0">
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-to')">
               <div class="control">
-                <input class="input" type="text" placeholder="180">
+                <input [(ngModel)]="stationsModel.eventDistanceTo" class="input" type="text" placeholder="180">
               </div>
             </div>
           </div>
@@ -206,7 +206,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-from')">
               <div class="control">
-                <input class="input" type="text" placeholder="0">
+                <input [(ngModel)]="stationsModel.eventAzimuthFrom" class="input" type="text" placeholder="0">
               </div>
             </div>
           </div>
@@ -218,7 +218,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-to')">
               <div class="control">
-                <input class="input" type="text" placeholder="360">
+                <input [(ngModel)]="stationsModel.eventAzimuthTo" class="input" type="text" placeholder="360">
               </div>
             </div>
           </div>
@@ -257,7 +257,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-sampling-rate')">
               <div class="control">
-                <input class="input" type="text" placeholder="20">
+                <input [(ngModel)]="stationsModel.targetSamplingRate" class="input" type="text" placeholder="20">
               </div>
             </div>
           </div>

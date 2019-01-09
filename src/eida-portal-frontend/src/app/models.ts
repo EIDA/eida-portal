@@ -12,6 +12,11 @@ export class StationsModel {
     dataSource: Enums.StationDataSource;
     stationSelectionMethod: Enums.StationSelectionMethod;
     streamSelectionMethod: Enums.StationStreamSelectionMethod;
+    eventDistanceFrom: number;
+    eventDistanceTo: number;
+    eventAzimuthFrom: number;
+    eventAzimuthTo: number;
+    targetSamplingRate: number;
 
     constructor() {
         this.yearFrom = "1900";
@@ -25,6 +30,11 @@ export class StationsModel {
         this.dataSource = Enums.StationDataSource.Inventory;
         this.stationSelectionMethod = Enums.StationSelectionMethod.Code;
         this.streamSelectionMethod = Enums.StationStreamSelectionMethod.Code;
+        this.eventDistanceFrom = 0.0;
+        this.eventDistanceTo = 180.0;
+        this.eventAzimuthFrom = 0.0;
+        this.eventAzimuthTo = 360.0;
+        this.targetSamplingRate = 20.0;
     }
 
     toString() {
