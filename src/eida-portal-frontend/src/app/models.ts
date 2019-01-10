@@ -180,3 +180,25 @@ export class FdsnStationExt extends FdsnStation {
         }
     }
 }
+
+export class MapDragBoxCoordinates {
+    coordN: number;
+    coordS: number;
+    coordE: number;
+    coordW: number;
+
+    constructor() {
+        this.coordN = 90.0;
+        this.coordS = -90.0;
+        this.coordE = 180.0;
+        this.coordW = -180.0;
+    }
+
+    getRounded(): MapDragBoxCoordinates {
+        this.coordN = Math.round(this.coordN * 100) / 100;
+        this.coordS = Math.round(this.coordS * 100) / 100;
+        this.coordE = Math.round(this.coordE * 100) / 100;
+        this.coordW = Math.round(this.coordW * 100) / 100;
+        return this;
+    }
+}

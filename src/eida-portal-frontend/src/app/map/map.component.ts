@@ -9,7 +9,7 @@ import { ConsoleService } from '../console.service';
 import { TextService } from '../text.service';
 import { projection } from '@angular/core/src/render3/instructions';
 import { 
-  StationsModel, FdsnNetwork, FdsnStationExt
+  StationsModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
  } from '../models';
 import { switchMap } from 'rxjs/operators';
 import { and } from '@angular/router/src/utils/collection';
@@ -34,8 +34,8 @@ export class MapComponent implements OnInit {
   stationsModel: StationsModel;
 
   constructor(
-    private mapService: MapService,
-    private stationsService: StationsService,
+    private _mapService: MapService,
+    private _stationsService: StationsService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
@@ -97,12 +97,41 @@ export class MapComponent implements OnInit {
     });
 
     // Subscribe to the service to get model changes from the stations component
-    this.stationsService.selectedStations.subscribe(
+    this._stationsService.selectedStations.subscribe(
       s => this.updateStationsMap(s)
     );
-    this.stationsService.focuedStation.subscribe(
+    this._stationsService.focuedStation.subscribe(
       s => this.focusStation(s)
     );
+
+    let draw = new ol.interaction.DragBox({
+        condition: ol.events.condition.shiftKeyOnly
+    });
+
+    this._map.addInteraction(draw);
+
+    draw.on('boxend', () => {
+      let c = draw.getGeometry().getCoordinates();
+      let e = draw.getGeometry().getExtent();
+      let coordNS = ol.proj.transform(
+        [c[0][1][1], c[0][2][1]], 'EPSG:3857', 'EPSG:4326'
+      );
+      let coordEW = ol.proj.transform(
+        [c[0][2][0], c[0][0][0]], 'EPSG:3857', 'EPSG:4326'
+      );
+
+      // Zoom to selected drag box
+      this._map.getView().fit(
+        e, { duration: 1000 }
+      );
+
+      // Send the coordinates to the map service so other components
+      // which subscribe to it can be notified
+      this._mapService.updateDragBoxCoordinatesByArray(
+        coordNS.concat(coordEW) 
+      );
+    });
+
     this.consoleService.add('Map initiated');
   }
 
@@ -151,6 +180,10 @@ export class MapComponent implements OnInit {
 
   removeStationMarkers(): void {
     this._vectorSource.clear();
+  }
+
+  updateDragBox(s: []): void {
+    this._mapService.updateDragBoxCoordinatesByArray(s);
   }
 
 }

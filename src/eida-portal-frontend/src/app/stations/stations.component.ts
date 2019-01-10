@@ -7,9 +7,11 @@ import {
 import { StationsModel } from '../models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
+import { MapService } from '../map.service';
 import { TextService } from '../text.service';
 import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
+import { MapDragBoxCoordinates } from '../models';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { Enums } from '../modules/enums';
 
@@ -30,6 +32,7 @@ export class StationsComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
   constructor(
+    private _mapService: MapService,
     public stationsService: StationsService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
@@ -52,6 +55,10 @@ export class StationsComponent implements OnInit {
 
     this.stationsService.selectedStations.subscribe(
       s => this.updateSelectedStationsTable(s)
+    );
+
+    this._mapService.dragBoxCoordinates.subscribe(
+      s => this.updateCoordinatesFromDragBox(s)
     );
 
     // Mousetrap keyboard shortcut bindings
@@ -127,6 +134,13 @@ export class StationsComponent implements OnInit {
 
   stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethod): void {
     this.stationsModel.streamSelectionMethod = s;
+  }
+
+  updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
+    this.stationsModel.coordinateN = mdbc.coordN;
+    this.stationsModel.coordinateS = mdbc.coordS;
+    this.stationsModel.coordinateE = mdbc.coordE;
+    this.stationsModel.coordinateW = mdbc.coordW;
   }
 
   handleGeneralInputTypeChange(btn: string, target: string): void {
