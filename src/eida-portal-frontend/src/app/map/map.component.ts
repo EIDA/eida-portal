@@ -113,12 +113,26 @@ export class MapComponent implements OnInit {
     draw.on('boxend', () => {
       let c = draw.getGeometry().getCoordinates();
       let e = draw.getGeometry().getExtent();
-      let coordNS = ol.proj.transform(
-        [c[0][1][1], c[0][2][1]], 'EPSG:3857', 'EPSG:4326'
-      );
-      let coordEW = ol.proj.transform(
-        [c[0][2][0], c[0][0][0]], 'EPSG:3857', 'EPSG:4326'
-      );
+
+      let coordinates = []
+      let longitudes = []
+      let latitudes = []
+
+      // Get the list of pairs with coordinates of the dragbox
+      for (let pair of c[0]) {
+        coordinates.push(ol.proj.transform(pair, 'EPSG:3857', 'EPSG:4326'));
+      }
+
+      // Spit the list into two separate lists - one containing
+      // longitudes and the other one latitudes
+      for (let c of coordinates) {
+        longitudes.push(c[0]);
+        latitudes.push(c[1]);
+      }
+
+      // From two created lists extract max and min values for S-N and E-W
+      let coordSN = [Math.max.apply(Math, latitudes), Math.min.apply(Math, latitudes)]
+      let coordEW = [Math.max.apply(Math, longitudes), Math.min.apply(Math, longitudes)]
 
       // Zoom to selected drag box
       this._map.getView().fit(
@@ -128,7 +142,7 @@ export class MapComponent implements OnInit {
       // Send the coordinates to the map service so other components
       // which subscribe to it can be notified
       this._mapService.updateDragBoxCoordinatesByArray(
-        coordNS.concat(coordEW) 
+        coordSN.concat(coordEW) 
       );
     });
 
