@@ -7,8 +7,16 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "Launch Chrome (MacOS + Chrome)",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/src/eida-portal-frontend/",
+            "sourceMaps": true
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "runtimeExecutable": "/opt/google/chrome/chrome",
-            "name": "Launch Chrome",
+            "name": "Launch Chrome (Linux + Chrome)",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/src/eida-portal-frontend/",
             "sourceMaps": true

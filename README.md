@@ -57,8 +57,11 @@ $ npm start
 
 1. Start Chrome on Linux with debugging port: `google-chrome-stable --remote-debugging-port=9222`
 1. Start the EIDA Portal frontend: `npm start`
-1. VS Code -> Debug -> Start Debugging
+1. VS Code -> Debug -> Start Debugging (make sure to select right profile)
 
+#### Mac + Chrome + VS Code ####
+1. Start the EIDA Portal frontend: `npm start`
+1. VS Code -> Debug -> Start Debugging (make sure to select right profile)
 
 ## Docker-compose ##
 ```
