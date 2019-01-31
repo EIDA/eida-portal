@@ -1,4 +1,9 @@
 export namespace Enums {
+    export enum EventsCatalog {
+        EMSC = 0,
+        IRIS = 1
+    }
+
     export enum StationDataSource {
         Inventory = 0,
         File = 1

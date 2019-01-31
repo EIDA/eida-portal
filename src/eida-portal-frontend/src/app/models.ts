@@ -59,12 +59,20 @@ export class EventsModel {
     coordinateS: number;
     coordinateE: number;
     coordinateW: number;
-    selectedCatalog;
+    selectedCatalog: Enums.EventsCatalog;
 
     constructor() {
         this.catalogs = [
-            {'id':0, 'name': "EIDA"},
-            {'id':1, 'name': "IRIS"}
+            {
+                'id':0,
+                'name': "EMSC",
+                'url': 'http://www.seismicportal.eu/fdsnws/event/1/query?'
+            },
+            {
+                'id':1,
+                'name': "IRIS",
+                'url': 'http://service.iris.edu/fdsnws/event/1/query?'
+            }
         ];
         this.minimumMagnitude = 0.0;
         this.dateFrom = "2017-01-01";
@@ -79,7 +87,7 @@ export class EventsModel {
     }
 
     toString() {
-        return `Catalog: ${this.selectedCatalog.name},
+        return `Catalog: ${this.selectedCatalog},
         minimum magnitude: ${this.minimumMagnitude},
         date: ${this.dateFrom} - ${this.dateTo},
         depth: ${this.depthFrom} - ${this.depthTo},
