@@ -59,6 +59,7 @@ export class EventsModel {
     coordinateS: number;
     coordinateE: number;
     coordinateW: number;
+    resultLimit: number;
     selectedCatalog: Enums.EventsCatalog;
 
     constructor() {
@@ -83,6 +84,7 @@ export class EventsModel {
         this.coordinateS = -90.0;
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
+        this.resultLimit = 100;
         this.selectedCatalog = this.catalogs[0];
     }
 

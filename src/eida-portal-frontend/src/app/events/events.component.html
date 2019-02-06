@@ -132,6 +132,19 @@
         </div>
       </div>
     </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">Result limit</label>
+      </div>
+      <div class="field-body">
+        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-result-limit')">
+          <div class="control">
+            <input [(ngModel)]="eventsModel.resultLimit" class="input" type="text" placeholder="1">
+          </div>
+        </div>
+      </div>
+    </div>
     <hr>
     <div class="columns">
       <div class="column is-half">

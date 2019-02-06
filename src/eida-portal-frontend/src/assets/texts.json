@@ -84,6 +84,12 @@
         }
     },
     {
+        "key": "events-tip-result-limit",
+        "values": {
+            "en": "Limit the number of the web service results.<br>Limiting number of results can help in case of <b style='color:gold'>Error 413: too many result</b>"
+        }
+    },
+    {
         "key": "events-tip-reset",
         "values": {
             "en": "Reset form to its default values"
