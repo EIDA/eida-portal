@@ -60,7 +60,7 @@ export class EventsModel {
     coordinateE: number;
     coordinateW: number;
     resultLimit: number;
-    selectedCatalog: Enums.EventsCatalog;
+    selectedCatalog;
 
     constructor() {
         this.catalogs = [
@@ -94,6 +94,15 @@ export class EventsModel {
         date: ${this.dateFrom} - ${this.dateTo},
         depth: ${this.depthFrom} - ${this.depthTo},
         coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W`;
+    }
+
+    // Get selected catalog URL
+    getSelCatUrl() {
+        for (var i = 0; i < Object.keys(this.catalogs).length; i++) {
+            if (this.catalogs[i].id === this.selectedCatalog.id) {
+                return this.catalogs[i].url;
+            }
+        }
     }
 }
 
@@ -150,6 +159,10 @@ export class FdsnNetwork {
         this.end = '';
         this.stations = [];
     }
+}
+
+export class FdsnEventResponse {
+
 }
 
 export class FdsnStation {

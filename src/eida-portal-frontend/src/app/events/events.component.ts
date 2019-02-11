@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { MapService } from '../map.service';
 import { EventsModel } from '../models';
+import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
 import { MapDragBoxCoordinates } from '../models';
 
@@ -11,9 +12,10 @@ import { MapDragBoxCoordinates } from '../models';
 })
 export class EventsComponent implements OnInit {
   @Input() eventsModel = new EventsModel();
-
+  
   constructor(
     private _mapService: MapService,
+    private _eventsService: EventsService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
@@ -25,7 +27,8 @@ export class EventsComponent implements OnInit {
   }
 
   search() {
-    this.consoleService.add('Events/search clicked >>> ' + this.eventsModel.toString());
+    let result = this._eventsService.getEvents(this.eventsModel);
+    console.log(result);
   }
 
   reset() {
