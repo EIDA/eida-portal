@@ -3,24 +3,37 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { EidaService } from './eida.service';
 import { EventsModel, FdsnEventResponse } from './models';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
-  public allEvents = new FdsnEventResponse();
+  public eventsResponse = new Subject<FdsnEventResponse>();
 
   constructor(
     private _eidaService: EidaService
   ) { }
 
-  getEvents(e: EventsModel): Observable<FdsnEventResponse> {
+  getEvents(e: EventsModel) {
     let url = this.buildEventsUrl(e);
-    return this._eidaService.http.get<FdsnEventResponse>(url)
+
+    // let headers: HttpHeaders = new HttpHeaders();
+    // headers = headers.append('Access-Control-Allow-Origin', '*');
+    // headers = headers.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    // headers = headers.append('Access-Control-Allow-Methods', 'GET');
+
+    // const httpOptions = {
+    //   headers: headers
+    // };
+
+    this._eidaService.http.get(url, {responseType: 'text'})
       .pipe(
         tap(_ => this._eidaService.log('fetched events data')),
         catchError(this._eidaService.handleError('getEvents', []))
+      ).subscribe(
+        r => this.eventsResponse.next(r)
       );
   }
 
@@ -32,10 +45,10 @@ export class EventsService {
     `&end=${e.dateTo}` +
     `&mindepth=${e.depthFrom}` +
     `&maxdepth=${e.depthTo}` +
-    `&minlat=${e.coordinateW}` +
-    `&maxlat=${e.coordinateE}` +
-    `&minlon=${e.coordinateS}` +
-    `&maxlon=${e.coordinateN}` +
+    `&minlat=${e.coordinateS}` +
+    `&maxlat=${e.coordinateN}` +
+    `&minlon=${e.coordinateW}` +
+    `&maxlon=${e.coordinateE}` +
     `&limit=${e.resultLimit}`;
   }
 }

@@ -5,6 +5,7 @@ import { EventsModel } from '../models';
 import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
 import { MapDragBoxCoordinates } from '../models';
+import { FdsnEventResponse } from '../models';
 
 @Component({
   selector: 'app-events',
@@ -12,6 +13,7 @@ import { MapDragBoxCoordinates } from '../models';
 })
 export class EventsComponent implements OnInit {
   @Input() eventsModel = new EventsModel();
+  public fdsnResponse;
   
   constructor(
     private _mapService: MapService,
@@ -23,12 +25,16 @@ export class EventsComponent implements OnInit {
     this._mapService.dragBoxCoordinates.subscribe(
       s => this.updateCoordinatesFromDragBox(s)
     );
+
     this.consoleService.add('Events initiated');
+
+    this._eventsService.eventsResponse.subscribe(
+      n => console.log(n)
+    );
   }
 
   search() {
-    let result = this._eventsService.getEvents(this.eventsModel);
-    console.log(result);
+    this._eventsService.getEvents(this.eventsModel);
   }
 
   reset() {

@@ -100,25 +100,24 @@ export class StationsService {
     }
 
     this.updateStations(this._mapStations);
-    return;
 
-    if (s.selectedNetwork === 'All' && s.selectedStation === 'All') {
-      this._mapStations = this.allStations.filter(m => m.net);
-    } else if (s.selectedStation !== 'All'
-      && this._mapStations.find(
-        m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
-      return;
-    } else if (s.selectedStation !== 'All'
-      && !this._mapStations.find(
-        m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
-      this._mapStations.push(s.selectedStation);
-    } else {
-      for (let st of this.allStations.filter(m => m.net === s.selectedNetwork.code)) {
-        if (!this._mapStations.find(x => x.net === st.net && x.stat === st.stat)) {
-          this._mapStations.push(st);
-        }
-      }
-    }
+    // if (s.selectedNetwork === 'All' && s.selectedStation === 'All') {
+    //   this._mapStations = this.allStations.filter(m => m.net);
+    // } else if (s.selectedStation !== 'All'
+    //   && this._mapStations.find(
+    //     m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
+    //   return;
+    // } else if (s.selectedStation !== 'All'
+    //   && !this._mapStations.find(
+    //     m => m.net === s.selectedStation.net && m.stat === s.selectedStation.stat)) {
+    //   this._mapStations.push(s.selectedStation);
+    // } else {
+    //   for (let st of this.allStations.filter(m => m.net === s.selectedNetwork.code)) {
+    //     if (!this._mapStations.find(x => x.net === st.net && x.stat === st.stat)) {
+    //       this._mapStations.push(st);
+    //     }
+    //   }
+    // }
 
     
   }
