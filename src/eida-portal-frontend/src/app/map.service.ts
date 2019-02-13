@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EidaService } from './eida.service';
 import { Subject ,  Observable, of } from 'rxjs';
-import { MapDragBoxCoordinates } from './models';
+import { MapDragBoxCoordinates } from './modules/models';
 
 @Injectable({
   providedIn: 'root'

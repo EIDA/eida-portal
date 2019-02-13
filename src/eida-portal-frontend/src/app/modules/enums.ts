@@ -1,3 +1,4 @@
+// Created manually
 export namespace Enums {
     export enum EventsCatalog {
         EMSC = 0,

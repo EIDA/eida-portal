@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { EidaService } from './eida.service';
-import { EventsModel, FdsnEventResponse } from './models';
+import { EventsModel } from './modules/models';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
-  public eventsResponse = new Subject<FdsnEventResponse>();
+  public eventsResponse = new Subject<Object>()
 
   constructor(
     private _eidaService: EidaService

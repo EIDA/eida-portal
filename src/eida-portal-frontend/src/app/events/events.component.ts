@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { MapService } from '../map.service';
-import { EventsModel } from '../models';
+import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
+import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
-import { MapDragBoxCoordinates } from '../models';
-import { FdsnEventResponse } from '../models';
+import { Parser } from 'xml2js';
+import { SerializationHelper } from '../helpers/serialization.helper';
 
 @Component({
   selector: 'app-events',
@@ -29,7 +30,7 @@ export class EventsComponent implements OnInit {
     this.consoleService.add('Events initiated');
 
     this._eventsService.eventsResponse.subscribe(
-      n => console.log(n)
+      n => this.eventsXmlToJson(n)
     );
   }
 
@@ -40,6 +41,17 @@ export class EventsComponent implements OnInit {
   reset() {
     this.eventsModel = new EventsModel();
     this.consoleService.add('Events/reset clicked');
+  }
+
+  eventsXmlToJson(resp) {
+    let p = new Parser();
+    p.parseString(resp, function(err, result) {
+      if (err) {throw err;}
+      let r1 = JSON.parse(JSON.stringify(result));
+      console.log(r1);
+      let r2 = SerializationHelper.eventsJsonToObjGraph(r1);
+      console.log(r2);
+    });
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {

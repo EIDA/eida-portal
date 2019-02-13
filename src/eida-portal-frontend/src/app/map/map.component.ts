@@ -10,7 +10,7 @@ import { TextService } from '../text.service';
 import { projection } from '@angular/core/src/render3/instructions';
 import { 
   StationsModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
- } from '../models';
+ } from '../modules/models';
 import { switchMap } from 'rxjs/operators';
 import { and } from '@angular/router/src/utils/collection';
 

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Subject ,  Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
-import { FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel } from './models';
+import { 
+  FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel
+} from './modules/models';
 import { environment } from '../environments/environment';
 import { Enums } from './modules/enums';
 

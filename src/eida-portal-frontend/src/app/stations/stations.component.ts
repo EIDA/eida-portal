@@ -4,14 +4,14 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { StationsModel } from '../models';
+import {
+  StationsModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
+} from '../modules/models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
 import { MapService } from '../map.service';
 import { TextService } from '../text.service';
-import { FdsnNetwork, FdsnStationExt } from '../models';
 import { PaginatorService } from '../paginator.service';
-import { MapDragBoxCoordinates } from '../models';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { Enums } from '../modules/enums';
 

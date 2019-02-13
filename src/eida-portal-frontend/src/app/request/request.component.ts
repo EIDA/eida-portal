@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
-import { RequestModel } from '../models';
+import { RequestModel } from '../modules/models';
 import { TextService } from '../text.service';
 
 declare var $: any;

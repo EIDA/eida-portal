@@ -1,4 +1,6 @@
-import { Enums } from './modules/enums';
+// Created manually
+
+import { Enums } from './enums';
 
 export class StationsModel {
     yearFrom: string;
@@ -85,7 +87,7 @@ export class EventsModel {
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
         this.resultLimit = 100;
-        this.selectedCatalog = this.catalogs[0];
+        this.selectedCatalog = this.catalogs[1];
     }
 
     toString() {
@@ -104,18 +106,6 @@ export class EventsModel {
             }
         }
     }
-}
-
-export class FdsnEvent {
-    id: number;
-    time: string;
-    magnitude: number;
-    magnitudeType: string;
-    depth: number;
-    latitude: number;
-    longitude: number;
-    locationReference: string;
-    magnitudeReference: string;
 }
 
 export class MapModel {
@@ -159,10 +149,6 @@ export class FdsnNetwork {
         this.end = '';
         this.stations = [];
     }
-}
-
-export class FdsnEventResponse {
-
 }
 
 export class FdsnStation {
