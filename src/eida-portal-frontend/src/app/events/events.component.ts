@@ -47,10 +47,9 @@ export class EventsComponent implements OnInit {
     let p = new Parser();
     p.parseString(resp, function(err, result) {
       if (err) {throw err;}
-      let r1 = JSON.parse(JSON.stringify(result));
-      console.log(r1);
-      let r2 = SerializationHelper.eventsJsonToObjGraph(r1);
-      console.log(r2);
+      let json = JSON.parse(JSON.stringify(result));
+      let objGraph = SerializationHelper.eventsJsonToObjGraph(json);
+      // TODO: 
     });
   }
 
