@@ -6,11 +6,13 @@ import OSM from 'ol/source/OSM';
 import { MapService } from '../map.service';
 import { StationsService } from '../stations.service';
 import { ConsoleService } from '../console.service';
+import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
 import { projection } from '@angular/core/src/render3/instructions';
 import { 
   StationsModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
  } from '../modules/models';
+ import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 import { switchMap } from 'rxjs/operators';
 import { and } from '@angular/router/src/utils/collection';
 
@@ -36,6 +38,7 @@ export class MapComponent implements OnInit {
   constructor(
     private _mapService: MapService,
     private _stationsService: StationsService,
+    private _eventsService: EventsService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
@@ -100,8 +103,13 @@ export class MapComponent implements OnInit {
     this._stationsService.selectedStations.subscribe(
       s => this.updateStationsMap(s)
     );
+
     this._stationsService.focuedStation.subscribe(
       s => this.focusStation(s)
+    );
+
+    this._eventsService.eventsObjGraph.subscribe(
+      s => this.updateEventsMap(s)
     );
 
     let draw = new ol.interaction.DragBox({
@@ -174,6 +182,10 @@ export class MapComponent implements OnInit {
       duration: 1000,
       zoom: 13
     })
+  }
+
+  updateEventsMap(events: FdsnEventsResponseModels.FdsnEventsRoot) {
+    console.log(events);
   }
 
   resetMapZoom() {

@@ -6,16 +6,34 @@ import { EventsModel } from './modules/models';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
+import { Parser } from 'xml2js';
+import { SerializationHelper } from './helpers/serialization.helper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
-  public eventsResponse = new Subject<Object>()
+  public eventsResponse = new Subject<Object>();
+  public eventsObjGraph = new Subject<FdsnEventsResponseModels.FdsnEventsRoot>();
 
   constructor(
     private _eidaService: EidaService
-  ) { }
+  ) {
+    this.eventsResponse.subscribe(
+      resp => this.eventsXmlToObjGraph(resp, this.eventsObjGraph)
+    );
+  }
+
+  // Extract json data to object graph for easier operation (map rendering etc)
+  eventsXmlToObjGraph(resp, eog) {
+    let p = new Parser();
+    p.parseString(resp, function(err, result) {
+      if (err) {throw err;}
+      let json = JSON.parse(JSON.stringify(result));
+      let objGraph = SerializationHelper.eventsJsonToObjGraph(json);
+      eog.next(objGraph);
+    });
+  }
 
   getEvents(e: EventsModel) {
     let url = this.buildEventsUrl(e);
