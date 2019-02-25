@@ -154,13 +154,50 @@
         <span class="button is-success is-fullwidth" (click)="search();" [attr.data-tippy-content]="textService.getText('events-tip-search')">Search</span>
       </div>
     </div>
+    <div *ngIf="paginator.getTotalPages() > 0">
+      <button class="button is-warning is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">Remove all events ({{
+        selectedEvents.length }})</button>
+    </div>
 
   </div>
   <div class="column">
-    <article class="message is-info">
+    <article *ngIf="paginator.getTotalPages() === 0" class="message is-info">
       <div class="message-body">
         Selected events will appear here.
       </div>
     </article>
+    <div *ngIf="paginator.getTotalPages() > 0">
+      <nav class="pagination is-right" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
+        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+        <ul class="pagination-list">
+          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1" (click)="paginator.getFirstPage()">1</a></li>
+          <li><span *ngIf="paginator.previousPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <!-- <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 45">45</a></li> -->
+          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <!-- <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 47">47</a></li> -->
+          <li><span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86" (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
+        </ul>
+      </nav>
+      <hr>
+      <table class="table is-fullwidth" id="eventsTable">
+        <tbody>
+          <tr *ngFor="let event of paginator.getCurrentPage()">
+            <td>
+              <a (click)="focusOnEvent(station)">{{event.description.text}}</a>
+              <p class="is-size-7">Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
+            </td>
+            <td>
+              <button style="width: 100%;" (click)="eventsService.toggleEventSelection(event)" [ngClass]="event.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('events-tip-toggle-select')">
+                {{event.selected ? "Selected" : "Skipped"}}</button>
+            </td>
+            <td>
+              <button style="width: 100%;" (click)="eventsService.removeEventSelection(event)" class="button is-small is-danger is-inverted" [attr.data-tippy-content]="textService.getText('events-tip-remove')">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { MapService } from '../map.service';
 import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
-import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
+import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
+import { PaginatorService } from '../paginator.service';
 
 @Component({
   selector: 'app-events',
@@ -12,11 +13,12 @@ import { TextService } from '../text.service';
 })
 export class EventsComponent implements OnInit {
   @Input() eventsModel = new EventsModel();
-  public fdsnResponse;
+  paginator = new PaginatorService();
+  selectedEvents = new Array<FdsnEventsResponseModels.Event>();
   
   constructor(
     private _mapService: MapService,
-    private _eventsService: EventsService,
+    public eventsService: EventsService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
@@ -26,10 +28,14 @@ export class EventsComponent implements OnInit {
     );
 
     this.consoleService.add('Events initiated');
+
+    this.eventsService.selectedEvents.subscribe(
+      n => this.updateSelectedEventsTable(n)
+    );
   }
 
   search() {
-    this._eventsService.getEvents(this.eventsModel);
+    this.eventsService.getEvents(this.eventsModel);
   }
 
   reset() {
@@ -42,6 +48,24 @@ export class EventsComponent implements OnInit {
     this.eventsModel.coordinateS = mdbc.coordS;
     this.eventsModel.coordinateE = mdbc.coordE;
     this.eventsModel.coordinateW = mdbc.coordW;
+  }
+
+  updateSelectedEventsTable(e: FdsnEventsResponseModels.EventExt[]) {
+    this.selectedEvents = e;
+    this.refreshPaginator();
+  }
+
+  refreshPaginator(): void {
+    this.paginator.paginate(this.selectedEvents);
+    this.paginator.getPages();
+  }
+
+  focusOnEvent(e) {
+
+  }
+
+  removeAllEvents(): void {
+    this.eventsService.removeAllEvents();
   }
 
 }

@@ -21,7 +21,7 @@ export class SerializationHelper {
         let result = new FdsnEventsResponseModels.FdsnEventsRoot();
         
         for (let e of json['q:quakeml'].eventParameters[0].event) {
-          let event = new FdsnEventsResponseModels.Event();
+          let event = new FdsnEventsResponseModels.EventExt();
           
           // Not provided by EMSC
           event.type = (
@@ -30,6 +30,7 @@ export class SerializationHelper {
 
           event.preferredMagnitudeID = e.preferredMagnitudeID[0];
           event.preferredOriginID = e.preferredOriginID[0];
+          event._publicID = e.$.publicID;
           event.description.type = e.description[0].type[0] ;
           event.description.text = e.description[0].text[0];
 

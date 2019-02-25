@@ -83,12 +83,32 @@ export namespace FdsnEventsResponseModels {
         }
     }
 
+    export class EventExt extends Event {
+        selected: boolean;
+    
+        constructor() {
+            super();
+            this.selected = true;
+        }
+    
+        getCoordinates() : string {
+            try {
+                return `Lat: ` + 
+                `${Number(this.origin.latitude.value).toFixed(2)}, ` +
+                `Lon: ${Number(this.origin.longitude.value).toFixed(2)}`;   
+            } catch {
+                return `Lat: ${this.origin.latitude.value}, ` +
+                `Lon: ${this.origin.longitude.value}`;
+            }
+        }
+    }
+
     export class EventParameters {
-        event: Event[];
+        event: EventExt[];
         _publicID: string;
 
         constructor() {
-            this.event = new Array<Event>();
+            this.event = new Array<EventExt>();
         }
     }
 

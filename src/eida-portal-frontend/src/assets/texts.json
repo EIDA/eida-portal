@@ -101,6 +101,24 @@
             "en": "Search for events using provided criteria"
         }
     },
+    {
+        "key": "events-tip-remove-all-events",
+        "values": {
+            "en": "Remove all events from the working set"
+        }
+    },
+    {
+        "key": "events-tip-toggle-select",
+        "values": {
+            "en": "Toggle event selection (skipped events are still in working set, but will not be included in final data package)"
+        }
+    },
+    {
+        "key": "events-tip-remove",
+        "values": {
+            "en": "Remove event from working set"
+        }
+    },
 
 
 
