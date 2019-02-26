@@ -179,7 +179,11 @@ export class MapComponent implements OnInit {
 
       point.setStyle(new ol.style.Style({
         image: new ol.style.Icon({
-          src: (s.selected ? 'assets/img/markers/triangle-green.png' : 'assets/img/markers/triangle-grey.png')
+          src: (
+            s.selected
+            ? 'assets/img/markers/triangle-green.png'
+            : 'assets/img/markers/triangle-grey.png'
+          )
         })
       })), this._stationsSrc.addFeature(point);
     }
@@ -209,12 +213,16 @@ export class MapComponent implements OnInit {
         geometry: new ol.geom.Point(
           ol.proj.fromLonLat([+e.origin.longitude, +e.origin.latitude])
         ),
-        name: `${e.description.text}`
+        name: `${e.getMapPopupText()}`
       });
   
       point.setStyle(new ol.style.Style({
         image: new ol.style.Icon({
-          src: (e.selected ? 'assets/img/markers/icon_earthquake_tektonisch.png': 'assets/img/markers/icon_earthquake_tektonisch_deselected.png')
+          src: (
+            e.selected
+            ? 'assets/img/markers/icon_earthquake_tektonisch.png'
+            : 'assets/img/markers/icon_earthquake_tektonisch_deselected.png'
+          )
         })
       })), this._eventsSrc.addFeature(point);
     }

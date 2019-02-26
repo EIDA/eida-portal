@@ -101,6 +101,17 @@ export namespace FdsnEventsResponseModels {
                 `Lon: ${this.origin.longitude}`;
             }
         }
+
+        getMapPopupText(): string {
+            return `
+            <b>Time:</b> ${this.origin.time}<br>
+            <b>Region:</b> ${this.description.text}<br>
+            <b>Magnitude:</b> ${this.magnitude.mag.value}<br>
+            <b>Depth:</b> ${this.origin.depth}<br>
+            <b>Latitude:</b> ${this.origin.latitude}<br>
+            <b>Longitude:</b> ${this.origin.longitude}
+            `;
+        }
     }
 
     export class EventParameters {
