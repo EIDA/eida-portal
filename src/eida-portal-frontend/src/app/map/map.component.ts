@@ -202,7 +202,7 @@ export class MapComponent implements OnInit {
   
       point.setStyle(new ol.style.Style({
         image: new ol.style.Icon({
-          src: ('assets/img/markers/icon_earthquake_tektonisch.png')
+          src: (e.selected ? 'assets/img/markers/icon_earthquake_tektonisch.png': 'assets/img/markers/icon_earthquake_tektonisch_deselected.png')
         })
       })), this._eventsSrc.addFeature(point);
     }

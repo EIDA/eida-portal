@@ -87,7 +87,7 @@ export class EventsModel {
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
         this.resultLimit = 100;
-        this.selectedCatalog = this.catalogs[1];
+        this.selectedCatalog = this.catalogs[0];
     }
 
     toString() {
