@@ -1,6 +1,7 @@
 // Created manually
 
 import { Enums } from './enums';
+import { environment } from '../../environments/environment';
 
 export class StationsModel {
     yearFrom: string;
@@ -69,12 +70,12 @@ export class EventsModel {
             {
                 'id':0,
                 'name': "EMSC",
-                'url': 'http://www.seismicportal.eu/fdsnws/event/1/query?'
+                'url': environment.fdsnEventEmsc
             },
             {
                 'id':1,
                 'name': "IRIS",
-                'url': 'http://service.iris.edu/fdsnws/event/1/query?'
+                'url': environment.fdsnEventIris
             }
         ];
         this.minimumMagnitude = 0.0;

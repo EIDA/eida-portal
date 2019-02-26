@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   networksUrl:  'https://www.orfeus-eu.org/epb/n',
   stationsUrl: 'https://www.orfeus-eu.org/epb/s',
-  networksStationsUrl: 'https://www.orfeus-eu.org/epb/ns'
+  networksStationsUrl: 'https://www.orfeus-eu.org/epb/ns',
+  fdsnEventEmsc: 'http://seismicportal.eu/fdsnws/event/1/query?',
+  fdsnEventIris: 'http://service.iris.edu/fdsnws/event/1/query?'
 };
 
 /*
