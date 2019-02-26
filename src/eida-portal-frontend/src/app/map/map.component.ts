@@ -113,6 +113,10 @@ export class MapComponent implements OnInit {
       s => this.focusStation(s)
     );
 
+    this._eventsService.focusedEvent.subscribe(
+      e => this.focusEvent(e)
+    )
+
     this._eventsService.selectedEvents.subscribe(
       s => this.updateEventsMap(s)
     );
@@ -184,6 +188,14 @@ export class MapComponent implements OnInit {
   focusStation(s: FdsnStationExt) {
     this._map.getView().animate({
       center: ol.proj.fromLonLat([+s.lon, +s.lat]),
+      duration: 1000,
+      zoom: 13
+    })
+  }
+
+  focusEvent(e: FdsnEventsResponseModels.EventExt) {
+    this._map.getView().animate({
+      center: ol.proj.fromLonLat([+e.origin.longitude, +e.origin.latitude]),
       duration: 1000,
       zoom: 13
     })

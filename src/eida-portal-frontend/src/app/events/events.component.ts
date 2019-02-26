@@ -60,8 +60,8 @@ export class EventsComponent implements OnInit {
     this.paginator.getPages();
   }
 
-  focusOnEvent(e) {
-
+  focusOnEvent(e: FdsnEventsResponseModels.EventExt) {
+    this.eventsService.updateFocusedEvent(e);
   }
 
   removeAllEvents(): void {

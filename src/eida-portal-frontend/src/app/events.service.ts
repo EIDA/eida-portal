@@ -29,6 +29,7 @@ export class EventsService {
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
   public selectedEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
   public eventsResponse = new Subject<Object>();
+  public focusedEvent = new Subject<FdsnEventsResponseModels.EventExt>();
   // public eventsObjGraph = new Subject<FdsnEventsResponseModels.FdsnEventsRoot>();
 
   constructor(
@@ -119,5 +120,9 @@ export class EventsService {
 
   updateEvents(s: FdsnEventsResponseModels.EventExt[]) {
     this.selectedEvents.next(s);
+  }
+
+  updateFocusedEvent(e: FdsnEventsResponseModels.EventExt) {
+    this.focusedEvent.next(e);
   }
 }

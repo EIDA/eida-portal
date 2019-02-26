@@ -94,11 +94,11 @@ export namespace FdsnEventsResponseModels {
         getCoordinates() : string {
             try {
                 return `Lat: ` + 
-                `${Number(this.origin.latitude.value).toFixed(2)}, ` +
-                `Lon: ${Number(this.origin.longitude.value).toFixed(2)}`;   
+                `${Number(this.origin.latitude).toFixed(2)}, ` +
+                `Lon: ${Number(this.origin.longitude).toFixed(2)}`;   
             } catch {
-                return `Lat: ${this.origin.latitude.value}, ` +
-                `Lon: ${this.origin.longitude.value}`;
+                return `Lat: ${this.origin.latitude}, ` +
+                `Lon: ${this.origin.longitude}`;
             }
         }
     }

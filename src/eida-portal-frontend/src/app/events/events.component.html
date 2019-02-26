@@ -185,7 +185,7 @@
         <tbody>
           <tr *ngFor="let event of paginator.getCurrentPage()">
             <td>
-              <a (click)="focusOnEvent(station)">{{event.description.text}}</a>
+              <a (click)="focusOnEvent(event)">{{event.description.text | titlecase}}</a>
               <p class="is-size-7">Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
             </td>
             <td>
