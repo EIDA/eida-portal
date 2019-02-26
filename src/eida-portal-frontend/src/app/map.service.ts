@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EidaService } from './eida.service';
-import { Subject ,  Observable, of } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MapDragBoxCoordinates } from './modules/models';
 
 @Injectable({
@@ -8,6 +7,7 @@ import { MapDragBoxCoordinates } from './modules/models';
 })
 export class MapService {
   public dragBoxCoordinates = new Subject<MapDragBoxCoordinates>();
+  public mapResizeTrigger = new Subject<boolean>();
 
   constructor() { }
 
@@ -22,5 +22,9 @@ export class MapService {
     dbc.coordE = a[2];
     dbc.coordW = a[3];
     this.dragBoxCoordinates.next(dbc.getRounded());
+  }
+
+  triggerMapResize(value: boolean): void {
+    this.mapResizeTrigger.next(value);
   }
 }

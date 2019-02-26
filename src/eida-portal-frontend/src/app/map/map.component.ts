@@ -1,16 +1,12 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map.service';
 import { StationsService } from '../stations.service';
 import { ConsoleService } from '../console.service';
 import { EventsService } from '../events.service';
 import { TextService } from '../text.service';
-import { 
-  StationsModel, FdsnStationExt, MapDragBoxCoordinates
- } from '../modules/models';
- import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
+import { StationsModel, FdsnStationExt } from '../modules/models';
+import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 
-declare var jquery: any;
-declare var $: any;
 declare var ol: any;
 
 @Component({
@@ -163,6 +159,10 @@ export class MapComponent implements OnInit {
       );
     });
 
+    this._mapService.mapResizeTrigger.subscribe(
+      e => this.updateMapSize(e)
+    );
+
     this.consoleService.add('Map initiated');
   }
 
@@ -234,6 +234,10 @@ export class MapComponent implements OnInit {
       duration: 1000,
       zoom: 2
     })
+  }
+
+  updateMapSize(value: boolean): void {
+    this._map.updateSize();
   }
 
   removeStation(s: FdsnStationExt): void {

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { MapService } from '../app/map.service';
+import { map } from 'rxjs/operators';
 
 declare var $: any;
 declare var tippy: any;
@@ -8,7 +10,9 @@ declare var tippy: any;
 })
 export class UiService {
 
-  constructor() { }
+  constructor(
+    private _mapService: MapService
+  ) { }
 
   toggleVisibility(toggler, target, speed=250) {
     if ($(`#${toggler}`).hasClass('fa-toggle-on')) {
@@ -20,7 +24,9 @@ export class UiService {
       // does not make it pop-up because the display property is set to 'none'.
       $(`#${target}`).find('canvas').css("display", "block");
     }
-    $(`#${target}`).toggle(speed);
+    $(`#${target}`).toggle(speed, function() {
+      this.triggerMapResize(true);
+    }.bind(this._mapService));
   }
 
   toggleTooltips(toggler) {

@@ -19,7 +19,7 @@ export class StationsService {
   private _mapStations = new Array<FdsnStationExt>();
 
   constructor(
-    private eidaService: EidaService
+    private _eidaService: EidaService
   ) { }
 
   private networksUrl = environment.networksUrl;
@@ -51,18 +51,18 @@ export class StationsService {
   }
 
   getNetworks(): Observable<FdsnNetwork[]> {
-    return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
+    return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
       .pipe(
-        tap(_ => this.eidaService.log('fetched networks data')),
-        catchError(this.eidaService.handleError('getNetworks', []))
+        tap(_ => this._eidaService.log('fetched networks data')),
+        catchError(this._eidaService.handleError('getNetworks', []))
       );
   }
 
   getStations(): Observable<FdsnStation[]> {
-    return this.eidaService.http.get<FdsnStation[]>(this.stationsUrl)
+    return this._eidaService.http.get<FdsnStation[]>(this.stationsUrl)
       .pipe(
-        tap(_ => this.eidaService.log('fetched stations data')),
-        catchError(this.eidaService.handleError('getStations', []))
+        tap(_ => this._eidaService.log('fetched stations data')),
+        catchError(this._eidaService.handleError('getStations', []))
       );
   }
 
@@ -148,18 +148,18 @@ export class StationsService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
+    return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
       .pipe(
-        tap(_ => this.eidaService.log(`found heroes matching "${term}"`)),
-        catchError(this.eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
+        tap(_ => this._eidaService.log(`found heroes matching "${term}"`)),
+        catchError(this._eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
       );
   }
 
   getNetworksStations(): Observable<FdsnNetwork[]> {
-    return this.eidaService.http.get<FdsnNetwork[]>(this.networksStationsUrl)
+    return this._eidaService.http.get<FdsnNetwork[]>(this.networksStationsUrl)
       .pipe(
-        tap(_ => this.eidaService.log('fetched networks and stations data')),
-        catchError(this.eidaService.handleError('getNetworksStations', []))
+        tap(_ => this._eidaService.log('fetched networks and stations data')),
+        catchError(this._eidaService.handleError('getNetworksStations', []))
       );
   }
 
