@@ -117,11 +117,20 @@ export class MapComponent implements OnInit {
       s => this.updateEventsMap(s)
     );
 
+    // Add dragbox draw interaction to the map
     let draw = new ol.interaction.DragBox({
         condition: ol.events.condition.shiftKeyOnly
     });
 
     this._map.addInteraction(draw);
+
+    // Add shift + scrool zoom to the map
+    var mouseWheelInt = new ol.interaction.MouseWheelZoom();
+    this._map.addInteraction(mouseWheelInt);
+
+    this._map.on('wheel', function(evt) {
+      mouseWheelInt.setActive(ol.events.condition.shiftKeyOnly(evt));
+   });
 
     draw.on('boxend', () => {
       let c = draw.getGeometry().getCoordinates();
