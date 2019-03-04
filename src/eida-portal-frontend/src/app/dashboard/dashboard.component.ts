@@ -54,6 +54,21 @@ export class DashboardComponent implements OnInit {
       $('#metricsTab').addClass('is-active');
       $('#metrics').prop('checked', true);
     });
+
+    Mousetrap.bind('5', function(e) {
+      $('#menuTabs').find('li').removeClass('is-active');
+      $('tab-pane').prop('checked', false);
+      $('#helpTab').addClass('is-active');
+      $('#help').prop('checked', true);
+    });
+
+    Mousetrap.bind('m m', function() {
+      this.toggleVisibility('mapToggler', 'mapContainer')
+    }.bind(this.uiService));
+
+    Mousetrap.bind('t t', function() {
+      this.toggleTooltips('tooltipsToggler')
+    }.bind(this.uiService));
   }
 
   tabSelected(s) {

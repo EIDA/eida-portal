@@ -7,7 +7,8 @@
   #events:checked~.tab-content>.content-events,
   #stations:checked~.tab-content>.content-stations,
   #request:checked~.tab-content>.content-request,
-  #metrics:checked~.tab-content>.content-metrics {
+  #metrics:checked~.tab-content>.content-metrics,
+  #help:checked~.tab-content>.content-help {
     display: block;
   }
 </style>
@@ -110,6 +111,7 @@
       <input type="radio" id="stations" name="nav-tab">
       <input type="radio" id="request" name="nav-tab">
       <input type="radio" id="metrics" name="nav-tab">
+      <input type="radio" id="help" name="nav-tab">
 
       <div class="tabs is-boxed" [attr.data-tippy-content]="textService.getText('dash-tip-tabs')">
         <ul id="menuTabs">
@@ -145,6 +147,14 @@
               </a>
             </label>
           </li>
+          <li id="helpTab">
+            <label for="help">
+              <a (click)="tabSelected('#helpTab')">
+                <span class="icon"><i class="fas fa-question"></i></span>
+                <span>Help</span>
+              </a>
+            </label>
+          </li>
         </ul>
       </div>
 
@@ -165,6 +175,9 @@
         </div>
         <div class="tab-pane content-metrics">
           <app-metrics></app-metrics>
+        </div>
+        <div class="tab-pane content-help">
+          <app-help></app-help>
         </div>
       </div>
     </div>

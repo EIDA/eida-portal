@@ -12,6 +12,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestComponent } from './request/request.component';
 import { MetricsComponent } from './metrics/metrics.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MetricsComponent } from './metrics/metrics.component';
     MapComponent,
     DashboardComponent,
     RequestComponent,
-    MetricsComponent
+    MetricsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
