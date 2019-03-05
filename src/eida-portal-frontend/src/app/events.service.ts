@@ -49,10 +49,16 @@ export class EventsService {
     let p = new Parser();
     p.parseString(resp, function(err, result) {
       if (err) {throw err;}
-      let json = JSON.parse(JSON.stringify(result));
-      let objGraph = SerializationHelper.eventsJsonToObjGraph(json);
-      allEvents.next(objGraph.quakeml.eventParameters.event);
-    });
+
+      try {
+        let json = JSON.parse(JSON.stringify(result));
+        let objGraph = SerializationHelper.eventsJsonToObjGraph(json);
+        allEvents.next(objGraph.quakeml.eventParameters.event);
+      } catch (ex) {
+        this.log(ex);
+        allEvents.next(new FdsnEventsResponseModels.FdsnEventsRoot());
+      }
+    }.bind(this._eidaService));
   }
 
   addReceivedEvents(events: FdsnEventsResponseModels.EventExt[]) {
