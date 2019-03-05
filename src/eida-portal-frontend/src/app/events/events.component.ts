@@ -7,6 +7,8 @@ import { TextService } from '../text.service';
 import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 import { PaginatorService } from '../paginator.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -35,6 +37,7 @@ export class EventsComponent implements OnInit {
   }
 
   search() {
+    $('#searchButton').addClass('is-loading');
     this.eventsService.getEvents(this.eventsModel);
   }
 
@@ -53,6 +56,7 @@ export class EventsComponent implements OnInit {
   updateSelectedEventsTable(e: FdsnEventsResponseModels.EventExt[]) {
     this.selectedEvents = e;
     this.refreshPaginator();
+    $('#searchButton').removeClass('is-loading');
   }
 
   refreshPaginator(): void {

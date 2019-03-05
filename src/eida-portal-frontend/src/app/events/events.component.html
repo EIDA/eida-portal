@@ -151,7 +151,7 @@
         <span class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('events-tip-reset')">Reset</span>
       </div>
       <div class="column is-half">
-        <span class="button is-success is-fullwidth" (click)="search();" [attr.data-tippy-content]="textService.getText('events-tip-search')">Search</span>
+        <span id="searchButton" class="button is-success is-fullwidth" (click)="search();" [attr.data-tippy-content]="textService.getText('events-tip-search')">Search</span>
       </div>
     </div>
     <div *ngIf="paginator.getTotalPages() > 0">
