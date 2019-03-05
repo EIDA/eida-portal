@@ -96,6 +96,7 @@ export class StationsComponent implements OnInit {
   updateSelectedStationsTable(s: FdsnStationExt[]) {
     this.selectedStations = s;
     this.refreshPaginator();
+    $('#addButton').removeClass('is-loading');
   }
 
   focusOnStation(s: FdsnStationExt) {
@@ -107,6 +108,7 @@ export class StationsComponent implements OnInit {
   }
 
   add() {
+    $('#addButton').addClass('is-loading');
     this.stationsService.addSelectedStation(this.stationsModel);
   }
 

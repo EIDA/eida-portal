@@ -270,7 +270,7 @@
           <button class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('stations-tip-reset')">Reset</button>
         </div>
         <div class="column is-half">
-          <button class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">Add</button>
+          <button id="addButton" class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">Add</button>
         </div>
       </div>
       <div *ngIf="paginator.getTotalPages() > 0">
