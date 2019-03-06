@@ -3,7 +3,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { EidaService } from './eida.service';
 import { EventsModel } from './modules/models';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
 import { Parser } from 'xml2js';
@@ -27,7 +27,7 @@ export class EventsService {
   */
   private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
-  public selectedEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
+  public selectedEvents = new BehaviorSubject(new Array<FdsnEventsResponseModels.EventExt>());
   public eventsResponse = new Subject<Object>();
   public focusedEvent = new Subject<FdsnEventsResponseModels.EventExt>();
   // public eventsObjGraph = new Subject<FdsnEventsResponseModels.FdsnEventsRoot>();

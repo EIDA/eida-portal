@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Subject ,  Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
+import { EventsService } from './events.service';
 import { 
   FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel
 } from './modules/models';
 import { environment } from '../environments/environment';
 import { Enums } from './modules/enums';
+import { GisHelper } from './helpers/gis.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class StationsService {
   private _mapStations = new Array<FdsnStationExt>();
 
   constructor(
-    private _eidaService: EidaService
+    private _eidaService: EidaService,
+    private _eventsService: EventsService
   ) { }
 
   private networksUrl = environment.networksUrl;
@@ -93,7 +96,10 @@ export class StationsService {
           && m.lon <= s.coordinateE
         )
       } else if (s.stationSelectionMethod === Enums.StationSelectionMethod.Events) {
-
+        for (let e of this._eventsService.selectedEvents.getValue()) {
+          console.log(GisHelper.coordinatesToDistance(e.origin, this._mapStations[0]))
+          console.log(GisHelper.coordinatesToBearing(e.origin, this._mapStations[0]))
+        }
       }
 
 

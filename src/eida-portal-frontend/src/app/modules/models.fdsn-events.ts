@@ -22,11 +22,11 @@ export namespace FdsnEventsResponseModels {
     }
 
     export class Coordinate {
-        value: string;
+        value: number;
     }
 
     export class Depth {
-        value: string;
+        value: number;
     }
 
     export class Origin {
