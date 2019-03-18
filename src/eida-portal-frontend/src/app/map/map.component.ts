@@ -172,6 +172,10 @@ export class MapComponent implements OnInit {
       e => this.updateMapSize(e)
     );
 
+    this._mapService.mapZoomResetTrigger.subscribe(
+      e => this.resetMapZoom()
+    );
+
     this.consoleService.add('Map initiated');
   }
 

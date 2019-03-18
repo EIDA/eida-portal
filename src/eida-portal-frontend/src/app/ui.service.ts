@@ -29,6 +29,10 @@ export class UiService {
     }.bind(this._mapService));
   }
 
+  resetMapZoom(value: boolean): void {
+    this._mapService.triggerZoomReset(value);
+  }
+
   toggleTooltips(toggler) {
     let elements = [];
 

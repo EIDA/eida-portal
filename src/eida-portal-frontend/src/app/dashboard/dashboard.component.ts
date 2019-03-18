@@ -66,6 +66,10 @@ export class DashboardComponent implements OnInit {
       this.toggleVisibility('mapToggler', 'mapContainer')
     }.bind(this.uiService));
 
+    Mousetrap.bind('r r', function() {
+      this.resetMapZoom(true)
+    }.bind(this.uiService));
+
     Mousetrap.bind('t t', function() {
       this.toggleTooltips('tooltipsToggler')
     }.bind(this.uiService));

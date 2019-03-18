@@ -8,6 +8,7 @@ import { MapDragBoxCoordinates } from './modules/models';
 export class MapService {
   public dragBoxCoordinates = new Subject<MapDragBoxCoordinates>();
   public mapResizeTrigger = new Subject<boolean>();
+  public mapZoomResetTrigger = new Subject<boolean>();
 
   constructor() { }
 
@@ -26,5 +27,9 @@ export class MapService {
 
   triggerMapResize(value: boolean): void {
     this.mapResizeTrigger.next(value);
+  }
+
+  triggerZoomReset(value: boolean): void {
+    this.mapZoomResetTrigger.next(value);
   }
 }
