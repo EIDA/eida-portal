@@ -124,6 +124,14 @@ export class EventsService {
     this.updateEvents(this._mapEvents);
   }
 
+  invertEventsSelection() {
+    for (let e of this._mapEvents) {
+      e.selected = !e.selected;
+    }
+
+    this.updateEvents(this._mapEvents);
+  }
+
   updateEvents(s: FdsnEventsResponseModels.EventExt[]) {
     this.selectedEvents.next(s);
   }

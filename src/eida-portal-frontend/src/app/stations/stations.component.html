@@ -273,9 +273,14 @@
           <button id="addButton" class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">Add</button>
         </div>
       </div>
-      <div *ngIf="paginator.getTotalPages() > 0">
-        <button class="button is-warning is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">Remove all stations ({{
-          selectedStations.length }})</button>
+      <div class="columns" *ngIf="paginator.getTotalPages() > 0">
+        <div class="column is-half">
+            <span class="button is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">Remove all stations ({{
+                selectedStations.length }})</span>
+        </div>
+        <div class="column is-half">
+            <span class="button is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">Invert selection</span>
+        </div>
       </div>
     </div>
 

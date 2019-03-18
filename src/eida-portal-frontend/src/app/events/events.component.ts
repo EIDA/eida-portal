@@ -72,4 +72,8 @@ export class EventsComponent implements OnInit {
     this.eventsService.removeAllEvents();
   }
 
+  invertEventsSelection(): void {
+    this.eventsService.invertEventsSelection();
+  }
+
 }

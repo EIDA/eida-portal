@@ -154,9 +154,14 @@
         <span id="searchButton" class="button is-success is-fullwidth" (click)="search();" [attr.data-tippy-content]="textService.getText('events-tip-search')">Search</span>
       </div>
     </div>
-    <div *ngIf="paginator.getTotalPages() > 0">
-      <button class="button is-warning is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">Remove all events ({{
-        selectedEvents.length }})</button>
+    <div class="columns" *ngIf="paginator.getTotalPages() > 0">
+      <div class="column is-half">
+          <span class="button is-danger is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">Remove all events ({{
+              selectedEvents.length }})</span>
+      </div>
+      <div class="column is-half">
+        <span class="button is-link is-fullwidth" (click)="invertEventsSelection();" [attr.data-tippy-content]="textService.getText('events-tip-invert-selection')">Invert selection</span>
+      </div>
     </div>
 
   </div>

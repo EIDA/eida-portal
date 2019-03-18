@@ -150,6 +150,14 @@ export class StationsService {
     this.updateStations(this._mapStations);
   }
 
+  invertStationsSelection() {
+    for (let s of this._mapStations) {
+      s.selected = !s.selected;
+    }
+
+    this.updateStations(this._mapStations);
+  }
+
   searchNetwork(term: string): Observable<FdsnNetwork[]> {
     if (!term.trim()) {
       return of([]);

@@ -120,6 +120,10 @@ export class StationsComponent implements OnInit {
     this.stationsService.removeAllStations();
   }
 
+  invertStationsSelection(): void {
+    this.stationsService.invertStationsSelection();
+  }
+
   refreshPaginator(): void {
     this.paginator.paginate(this.selectedStations);
     this.paginator.getPages();
