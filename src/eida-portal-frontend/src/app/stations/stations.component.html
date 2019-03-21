@@ -279,17 +279,17 @@
       </div>
       <div class="columns" *ngIf="paginator.getTotalPages() > 0">
         <div class="column is-third">
-            <span class="button is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
+            <span class="button is-small is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
               Remove all ({{selectedStations.length }})
             </span>
         </div>
         <div class="column is-third">
-            <span class="button is-danger is-fullwidth" (click)="removeSelectedStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
+            <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
               Remove selected ({{countSelectedStations() }})
             </span>
         </div>
         <div class="column is-third">
-            <span class="button is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
+            <span class="button is-small is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
               Invert selection
             </span>
         </div>

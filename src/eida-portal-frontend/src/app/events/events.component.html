@@ -160,17 +160,17 @@
     </div>
     <div class="columns" *ngIf="paginator.getTotalPages() > 0">
       <div class="column is-third">
-          <span class="button is-danger is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">
+          <span class="button is-small is-danger is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">
             Remove all ({{ selectedEvents.length }})
           </span>
       </div>
       <div class="column is-third">
-        <span class="button is-danger is-fullwidth" (click)="removeSelectedEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-selected-events')">
+        <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-selected-events')">
           Remove selected ({{ countSelectedEvents() }})
         </span>
     </div>
       <div class="column is-third">
-        <span class="button is-link is-fullwidth" (click)="invertEventsSelection();" [attr.data-tippy-content]="textService.getText('events-tip-invert-selection')">
+        <span class="button is-small is-link is-fullwidth" (click)="invertEventsSelection();" [attr.data-tippy-content]="textService.getText('events-tip-invert-selection')">
           Invert selection
         </span>
       </div>
@@ -203,7 +203,7 @@
           <tr *ngFor="let event of paginator.getCurrentPage()">
             <td>
               <a (click)="focusOnEvent(event)">{{event.description.text | titlecase}}</a>
-              <p class="is-size-7">Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
+              <p class="is-size-7">{{event.origin.time | date:'medium'}}<br>Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
             </td>
             <td>
               <button style="width: 100%;" (click)="eventsService.toggleEventSelection(event)" [ngClass]="event.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('events-tip-toggle-select')">
