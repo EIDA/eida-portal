@@ -150,6 +150,11 @@ export class StationsService {
     this.updateStations(this._mapStations);
   }
 
+  removeSelectedStations() {
+    this._mapStations = this._mapStations.filter(e => e.selected !== true);
+    this.updateStations(this._mapStations);
+  }
+
   invertStationsSelection() {
     for (let s of this._mapStations) {
       s.selected = !s.selected;

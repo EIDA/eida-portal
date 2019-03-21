@@ -16,7 +16,7 @@ declare var $: any;
 export class EventsComponent implements OnInit {
   @Input() eventsModel = new EventsModel();
   paginator = new PaginatorService();
-  selectedEvents = new Array<FdsnEventsResponseModels.Event>();
+  selectedEvents = new Array<FdsnEventsResponseModels.EventExt>();
   
   constructor(
     private _mapService: MapService,
@@ -70,6 +70,14 @@ export class EventsComponent implements OnInit {
 
   removeAllEvents(): void {
     this.eventsService.removeAllEvents();
+  }
+
+  removeSelectedEvents(): void {
+    this.eventsService.removeSelectedEvents();
+  }
+
+  countSelectedEvents(): number {
+    return this.selectedEvents.filter(e => e.selected === true).length;
   }
 
   invertEventsSelection(): void {

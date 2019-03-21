@@ -102,6 +102,12 @@
         }
     },
     {
+        "key": "events-tip-remove-selected-events",
+        "values": {
+            "en": "Remove selected events from the working set"
+        }
+    },
+    {
         "key": "events-tip-invert-selection",
         "values": {
             "en": "Invert selection of events in the working set<br>Selected events -> Deselected events<br>Deselected events -> Selected events"
@@ -237,6 +243,12 @@
         "key": "stations-tip-remove-all-stations",
         "values": {
             "en": "Remove all stations from the working set"
+        }
+    },
+    {
+        "key": "stations-tip-remove-selected-stations",
+        "values": {
+            "en": "Remove selected stations from the working set"
         }
     },
     {

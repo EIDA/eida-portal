@@ -267,19 +267,31 @@
       <hr>
       <div class="columns">
         <div class="column is-half">
-          <button class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('stations-tip-reset')">Reset</button>
+          <span class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('stations-tip-reset')">
+            Reset form
+          </span>
         </div>
         <div class="column is-half">
-          <button id="addButton" class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">Add</button>
+          <span id="addButton" class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">
+            Add
+          </span>
         </div>
       </div>
       <div class="columns" *ngIf="paginator.getTotalPages() > 0">
-        <div class="column is-half">
-            <span class="button is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">Remove all stations ({{
-                selectedStations.length }})</span>
+        <div class="column is-third">
+            <span class="button is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
+              Remove all ({{selectedStations.length }})
+            </span>
         </div>
-        <div class="column is-half">
-            <span class="button is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">Invert selection</span>
+        <div class="column is-third">
+            <span class="button is-danger is-fullwidth" (click)="removeSelectedStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
+              Remove selected ({{countSelectedStations() }})
+            </span>
+        </div>
+        <div class="column is-third">
+            <span class="button is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
+              Invert selection
+            </span>
         </div>
       </div>
     </div>

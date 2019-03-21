@@ -120,6 +120,14 @@ export class StationsComponent implements OnInit {
     this.stationsService.removeAllStations();
   }
 
+  removeSelectedStations(): void {
+    this.stationsService.removeSelectedStations();
+  }
+
+  countSelectedStations(): number {
+    return this.selectedStations.filter(e => e.selected === true).length;
+  }
+
   invertStationsSelection(): void {
     this.stationsService.invertStationsSelection();
   }

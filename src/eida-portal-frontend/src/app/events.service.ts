@@ -124,6 +124,12 @@ export class EventsService {
     this.updateEvents(this._mapEvents);
   }
 
+  removeSelectedEvents() {
+    this._mapEvents = this._mapEvents.filter(e => e.selected !== true);
+    this.updateEvents(this._mapEvents);
+
+  }
+
   invertEventsSelection() {
     for (let e of this._mapEvents) {
       e.selected = !e.selected;
