@@ -34,7 +34,7 @@ export class StationsModel {
         this.stationSelectionMethod = Enums.StationSelectionMethod.Code;
         this.streamSelectionMethod = Enums.StationStreamSelectionMethod.Code;
         this.eventDistanceFrom = 0.0;
-        this.eventDistanceTo = 180.0;
+        this.eventDistanceTo = 100.0;
         this.eventAzimuthFrom = 0.0;
         this.eventAzimuthTo = 360.0;
         this.targetSamplingRate = 20.0;

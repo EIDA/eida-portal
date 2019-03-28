@@ -188,13 +188,13 @@
     {
         "key": "stations-tip-distance-from",
         "values": {
-            "en": "Station minimal event distance"
+            "en": "Station minimal event distance (kilometers)"
         }
     },
     {
         "key": "stations-tip-distance-to",
         "values": {
-            "en": "Station maximal event distance"
+            "en": "Station maximal event distance (kilometers)"
         }
     },
     {
