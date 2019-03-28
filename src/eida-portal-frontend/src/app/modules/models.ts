@@ -79,8 +79,8 @@ export class EventsModel {
             }
         ];
         this.minimumMagnitude = 0.0;
-        this.dateFrom = "2017-01-01";
-        this.dateTo = "2018-01-01";
+        this.dateFrom = "2018-01-01";
+        this.dateTo = "2019-01-01";
         this.depthFrom = 0;
         this.depthTo = 999;
         this.coordinateN = 90.0;

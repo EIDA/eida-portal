@@ -82,45 +82,69 @@ export class StationsService {
   }
 
   // Add selected station(s) to map and notify subscribers
-  addSelectedStation(s: StationsModel) {
-    if (s.dataSource === Enums.StationDataSource.Inventory) {
+  addSelectedStation(sm: StationsModel) {
+    if (sm.dataSource === Enums.StationDataSource.Inventory) {
       // Inventory based search
 
       // All all networks or selected network based on the combo selection
-      if (s.selectedNetwork === 'All') {
+      if (sm.selectedNetwork === 'All') {
         this._filteredStations = this.allStations.filter(m => m.net);
       } else {
         this._filteredStations = this._mapStations.concat(this.allStations.filter(
-          m => m.net === s.selectedNetwork.code
+          m => m.net === sm.selectedNetwork.code
         ))
       }
 
-      if (s.stationSelectionMethod === Enums.StationSelectionMethod.Code) {
-        if (s.selectedStation !== 'All') {
+      // Station selection method-dependent
+      if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Code) {
+        if (sm.selectedStation !== 'All') {
           this._filteredStations = this._filteredStations.filter(
-            m => m.stat === s.selectedStation.stat
+            m => m.stat === sm.selectedStation.stat
           )
         }
-      } else if (s.stationSelectionMethod === Enums.StationSelectionMethod.Region) {
+      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Region) {
         this._filteredStations = this._filteredStations.filter(
-          m => m.lat >= s.coordinateS
-          && m.lat <= s.coordinateN
-          && m.lon >= s.coordinateW
-          && m.lon <= s.coordinateE
+          m => m.lat >= sm.coordinateS
+          && m.lat <= sm.coordinateN
+          && m.lon >= sm.coordinateW
+          && m.lon <= sm.coordinateE
         )
-      } else if (s.stationSelectionMethod === Enums.StationSelectionMethod.Events) {
-        for (let e of this._eventsService.selectedEvents.getValue()) {
-          console.log(GisHelper.coordinatesToDistance(e.origin, this._mapStations[0]))
-          console.log(GisHelper.coordinatesToBearing(e.origin, this._mapStations[0]))
+      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Events) {
+        for (let i = this._filteredStations.length - 1; i >= 0; i--) {
+          if (!this._stationHasEvent(this._filteredStations[i], sm)) {
+            this._filteredStations.splice(i, 1);
+          }
         }
       }
 
 
-    } else if (s.dataSource === Enums.StationDataSource.File) {
+    } else if (sm.dataSource === Enums.StationDataSource.File) {
       // TODO: uploaded file containing station catalog
     }
 
     this.updateStations(this._filteredStations);    
+  }
+
+  _stationHasEvent(s: FdsnStationExt, sm: StationsModel): boolean {
+    var event = null;
+    for (let e of this._eventsService.selectedEvents.getValue()) {
+      let distance = GisHelper.coordinatesToDistance(e.origin, s)
+      let bearing = GisHelper.coordinatesToAzimuth(e.origin, s)
+
+      if (!(distance < sm.eventDistanceFrom
+        || distance > sm.eventDistanceTo
+        || bearing < sm.eventAzimuthFrom
+        || bearing > sm.eventAzimuthTo)) {
+        event = e;
+        break;
+      }
+    }
+
+    if (event) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toggleStationSelection(s: FdsnStationExt) {
