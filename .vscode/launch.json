@@ -7,16 +7,23 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome (MacOS + Chrome)",
+            "name": "EPF Launch Chrome (MacOS + Chrome)",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/src/eida-portal-frontend/",
             "sourceMaps": true
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "EPB Launch Chrome (MacOS + Chrome)",
+            "url": "http://localhost:3000",
+            "program": "${workspaceFolder}/src/eida-portal-backend/server.js"
+        },
+        {
             "type": "chrome",
             "request": "launch",
             "runtimeExecutable": "/opt/google/chrome/chrome",
-            "name": "Launch Chrome (Linux + Chrome)",
+            "name": "EPF Launch Chrome (Linux + Chrome)",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/src/eida-portal-frontend/",
             "sourceMaps": true
