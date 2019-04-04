@@ -2,3 +2,4 @@ node_modules/
 npm-debug.log
 stations.json
 networks.json
+epb-db.json
