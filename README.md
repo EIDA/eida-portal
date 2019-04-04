@@ -8,8 +8,8 @@ n/a
 ### To build the eida-portal-backend docker image ###
 ```
 $ cd src/eida-portal-backend/
-$ docker build -t eida/backend .
-$ docker run -p 49160:3000 -d eida/backend
+$ docker build -t eida/backend:latest .
+$ docker run -p 49160:3000 -d eida/backend:latest
 ```
 
 ### Start local dev server for eida-portal-backend ###
@@ -40,8 +40,8 @@ Please refer to https://angular.io/guide/deployment
 ### To build the eida-portal-frontend docker image ###
 ```
 $ cd src/eida-portal-frontend/
-$ docker build -t eida/frontend .
-$ docker run -p 49161:4200 -d eida/frontend
+$ docker build -t eida/frontend:latest .
+$ docker run -p 49161:4200 -d eida/frontend:latest
 ```
 
 ### Start local dev server for eida-portal-frontend ###
