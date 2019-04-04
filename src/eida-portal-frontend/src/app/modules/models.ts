@@ -141,23 +141,24 @@ export class FdsnNetwork {
     desc: string;
     start: string;
     end: string;
-    stations: FdsnStation[];
 
     constructor() {
         this.code = 'ALL';
         this.desc = 'ALL';
         this.start = '';
         this.end = '';
-        this.stations = [];
     }
 }
 
 export class FdsnStation {
     net: string;
     stat: string;
+    loc: string;
+    cha: string;
     lat: number;
     lon: number;
     elev: number;
+    dep: string;
     name: string;
     start: string;
     end: string;
@@ -165,12 +166,15 @@ export class FdsnStation {
     constructor() {
         this.net = 'ALL';
         this.stat = 'ALL';
+        this.loc = 'ALL';
+        this.cha = 'ALL';
         this.lat = 0.0;
         this.lon = 0.0;
         this.elev = 0.0;
-        this.name = 'All stations';
-        this.start = '';
-        this.end = '';
+        this.dep = 'ALL';
+        this.name = 'ALL';
+        this.start = 'ALL';
+        this.end = 'ALL';
     }
 }
 
