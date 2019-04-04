@@ -25,10 +25,10 @@ var srv = app.listen(port, function() {
 });
 
 // fdsn_worker.sync_networks(request);
-// fdsn_worker.sync_stations(async, request, fs);
+// fdsn_worker.sync_stations(request);
 
-// Harvest the FDSN data every 10 minutes
-new CronJob('* * * * *', function () {
+// Harvest the FDSN data every hour
+new CronJob('* */1 * * *', function () {
     fdsn_worker.sync_networks(request);
-    // fdsn_worker.sync_stations(async, request, fs);
+    fdsn_worker.sync_stations(request);
 }, null, true);

@@ -1,51 +1,48 @@
 var loki = require('lokijs');
 
 module.exports = class DbMan {
-
-    constructor() { }
+    constructor() {
+        this.db = new loki('epb-db.json');
+    }
 
     initDb() {
-        var db = new loki('epb-db.json', {
-            autoload: true,
-            autosave: true,
-            autoloadCallback: dbInit,
-        });
-        
-        function dbInit() {
-            // Init networks collection
-            initCol([
-                'networks',
-            ])
-    
-            // Save the DB
-            db.saveDatabase();
-        }
-    
-        function initCol(array) {
-            for (let a of array) {
-                var col = db.getCollection(a);
-                if (!col) {
-                    col = db.addCollection(a);
-                }
+        // Init networks collection
+        this._initCol([
+            'networks',
+            'stations',
+            'netstat'
+        ])
+
+        // Save the DB
+        this.db.saveDatabase();
+    }
+
+    _initCol(array) {
+        for (let a of array) {
+            var col = this.db.getCollection(a);
+            if (!col) {
+                col = this.db.addCollection(a);
             }
         }
     }
 
-    getDbCtx() {
-        var ctx = new loki('epb-db.json', {
-            autoload: true,
-            autosave: true,
-            autosaveInterval: 1000
-        });
+    loadCollection(colName, callback) {
+        this.db.loadDatabase({}, function () {
+            var _collection = this.getCollection(colName);
     
-        return ctx;
+            if (!_collection) {
+                console.log("Collection %s does not exit. Creating ...", colName);
+                _collection = this.addCollection(colName);
+            }
+    
+            callback(_collection, this);
+        }.bind(this.db));
     }
 
     clrCollection(name) {
-        let ctx = this.getDbCtx();
-        ctx.loadDatabase({}, function() {
-            let r = ctx.getCollection(name);
-            r.clear();
-        })
+        this.loadCollection(name, function(name, ctx){
+            name.clear();
+            ctx.saveDatabase();
+        });
     }
 }

@@ -1,4 +1,8 @@
+const DbMan = require('../db/dbMan');
+
 exports.list_all_stations = function (req, res) {
-    const data = require('../stations.json');
-    res.json(data);
+    var dbMan = new DbMan();
+    dbMan.loadCollection('stations', function(stations) {
+        res.json(stations.data);
+    });
 };
