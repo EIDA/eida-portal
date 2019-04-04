@@ -1,5 +1,6 @@
 node_modules/
 npm-debug.log
-stations.json
-networks.json
+
+# Ignore the DB file
+db/epb-db.json
 epb-db.json
