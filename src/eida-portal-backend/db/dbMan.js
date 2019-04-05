@@ -6,15 +6,17 @@ module.exports = class DbMan {
     }
 
     initDb() {
-        // Init networks collection
-        this._initCol([
-            'networks',
-            'stations',
-            'netstat'
-        ])
+        this.db.loadDatabase({}, function () {
+            // Init networks collection
+            this._initCol([
+                'networks',
+                'stations',
+                'netstat'
+            ])
 
-        // Save the DB
-        this.db.saveDatabase();
+            // Save the DB
+            this.db.saveDatabase();
+        }.bind(this));
     }
 
     _initCol(array) {

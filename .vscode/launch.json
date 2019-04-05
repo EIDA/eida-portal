@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "EPB Launch (Chrome)",
+            "name": "EPB Launch",
             "url": "http://localhost:3000",
             "program": "${workspaceFolder}/src/eida-portal-backend/server.js"
         },
