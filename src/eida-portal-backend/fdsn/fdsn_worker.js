@@ -6,7 +6,7 @@ var parseString = require('xml2js').parseString;
 /**
  * Sync basic networks information.
  */
-exports.sync_networks = function (callback) {
+exports.sync_networks = function (err, callback) {
     var db = new DbMan();
     db.clrCollection('networks');
 
@@ -51,7 +51,7 @@ exports.sync_networks = function (callback) {
 /**
  * Sync basic station information.
  */
-exports.sync_stations = function (callback) {
+exports.sync_stations = function (err, callback) {
     var db = new DbMan();
     db.clrCollection('stations');
 
@@ -105,7 +105,7 @@ exports.sync_stations = function (callback) {
 /**
  * Sync station channels using FDSN routing service.
 */
-exports.sync_stations_channels = function () {
+exports.sync_stations_channels = function (err) {
     var db = new DbMan();
     db.loadCollection('stations', function(stations) {
         for (let e of stations.data) {
@@ -126,7 +126,7 @@ exports.sync_stations_channels = function () {
     });
 }
 
-function syncStationChannels(station, stationUrl) {
+function syncStationChannels(err, station, stationUrl) {
     let url = `${stationUrl}network=${station.net}&station=${station.stat}&level=channel`;
 
     request(url, function(err, resp) {
@@ -168,7 +168,7 @@ function syncStationChannels(station, stationUrl) {
 
 }
 
-function dataselectToStationUrl(dataselectUrl) {
+function dataselectToStationUrl(err, dataselectUrl) {
     let baseUrl = dataselectUrl.split('/')[2];
 
     for (let e of eida) {

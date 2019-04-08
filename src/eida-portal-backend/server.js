@@ -24,17 +24,16 @@ var srv = app.listen(port, function() {
 });
 
 
-fdsn_worker.sync_networks(function() {
-    fdsn_worker.sync_stations(function() {
-        fdsn_worker.sync_stations_channels();
+// fdsn_worker.sync_networks(function() {
+//     fdsn_worker.sync_stations(function() {
+//         fdsn_worker.sync_stations_channels();
+//     });
+// });
+
+new CronJob('0 */6 * * *', function () {
+    fdsn_worker.sync_networks(function(err) {
+        fdsn_worker.sync_stations(function(err) {
+            fdsn_worker.sync_stations_channels();
+        });
     });
-});
-
-new CronJob('* * * * *', function () {
-    // fdsn_worker.sync_networks();
-    // fdsn_worker.sync_stations();
 }, null, true);
-
-// new CronJob('*/2 * * * *', function () {
-//     fdsn_worker.sync_stations_channels();
-// }, null, true);
