@@ -1,31 +1,38 @@
 var loki = require('lokijs');
+var idbAdapter = new loki.LokiFsAdapter('loki');
 
 module.exports = class DbMan {
     constructor() {
-        this.db = new loki('epb-db.json');
-    }
+        this.db = new loki(
+            'epb-db.json',
+            {
+                autoload: true,
+                autoloadCallback: function() {
+                    let cols = [
+                        'networks',
+                        'stations',
+                        'netstat'
+                    ]
 
-    initDb() {
-        this.db.loadDatabase({}, function () {
-            // Init networks collection
-            this._initCol([
-                'networks',
-                'stations',
-                'netstat'
-            ])
-
-            // Save the DB
-            this.db.saveDatabase();
-        }.bind(this));
-    }
-
-    _initCol(array) {
-        for (let a of array) {
-            var col = this.db.getCollection(a);
-            if (!col) {
-                col = this.db.addCollection(a);
+                    for (let a of cols) {
+                        var c = this.db.getCollection(a);
+                        if (!c) {
+                            c = this.db.addCollection(a);
+                        }
+                    }
+                    this.db.saveDatabase();
+                }.bind(this),
+                autosave: true,
+                autosaveInterval: 10000,
+                adapter: idbAdapter
             }
-        }
+        );
+    }
+
+    loadDb(callback) {
+        this.db.loadDatabase({}, function() {
+            callback(this);
+        }.bind(this.db));
     }
 
     loadCollection(colName, callback) {
@@ -35,6 +42,7 @@ module.exports = class DbMan {
             if (!_collection) {
                 console.log("Collection %s does not exit. Creating ...", colName);
                 _collection = this.addCollection(colName);
+                this.saveDatabase();
             }
     
             callback(_collection, this);

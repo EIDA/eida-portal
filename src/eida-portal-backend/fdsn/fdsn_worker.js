@@ -6,7 +6,7 @@ var parseString = require('xml2js').parseString;
 /**
  * Sync basic networks information.
  */
-exports.sync_networks = function () {
+exports.sync_networks = function (callback) {
     var db = new DbMan();
     db.clrCollection('networks');
 
@@ -44,12 +44,14 @@ exports.sync_networks = function () {
             }.bind(resp));
         });
     }
+
+    if (callback) callback();
 };
 
 /**
  * Sync basic station information.
  */
-exports.sync_stations = function () {
+exports.sync_stations = function (callback) {
     var db = new DbMan();
     db.clrCollection('stations');
 
@@ -96,6 +98,8 @@ exports.sync_stations = function () {
             }.bind(resp));
         });
     }
+    
+    if (callback) callback();
 }
 
 /**
@@ -119,7 +123,7 @@ exports.sync_stations_channels = function () {
                 });
             }.bind(e));
         }
-    })
+    });
 }
 
 function syncStationChannels(station, stationUrl) {

@@ -15,23 +15,26 @@ app.use(function (req, res) {
     });
 });
 
-var dbMan = new DbMan();
-dbMan.initDb();
+// var dbMan = new DbMan();
+// dbMan.initDb();
 
 var srv = app.listen(port, function() {
     var port = srv.address().port;
     console.log('EIDA Backend listening at http://127.0.0.1:%s', port);
 });
 
-// fdsn_worker.sync_networks();
-// fdsn_worker.sync_stations();
-// fdsn_worker.sync_stations_channels();
 
-new CronJob('0 */2 * * *', function () {
-    fdsn_worker.sync_networks();
-    fdsn_worker.sync_stations();
+fdsn_worker.sync_networks(function() {
+    fdsn_worker.sync_stations(function() {
+        fdsn_worker.sync_stations_channels();
+    });
+});
+
+new CronJob('* * * * *', function () {
+    // fdsn_worker.sync_networks();
+    // fdsn_worker.sync_stations();
 }, null, true);
 
-new CronJob('30 */2 * * *', function () {
-    fdsn_worker.sync_stations_channels();
-}, null, true);
+// new CronJob('*/2 * * * *', function () {
+//     fdsn_worker.sync_stations_channels();
+// }, null, true);
