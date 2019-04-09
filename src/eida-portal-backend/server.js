@@ -7,33 +7,23 @@ var fdsn_worker = require('./fdsn/fdsn_worker')
 var routes = require('./routes/networksRoutes');
 const DbMan = require('./db/dbMan');
 
+this.dbMan = new DbMan();
+// this.dbMan.initDb();
+
 app.use(cors());
-routes(app);
+routes(app, this.dbMan);
 app.use(function (req, res) {
     res.status(404).send({
         url: req.originalUrl + ' not found'
     });
 });
 
-// var dbMan = new DbMan();
-// dbMan.initDb();
-
 var srv = app.listen(port, function() {
     var port = srv.address().port;
     console.log('EIDA Backend listening at http://127.0.0.1:%s', port);
 });
 
-
-// fdsn_worker.sync_networks(function() {
-//     fdsn_worker.sync_stations(function() {
-//         fdsn_worker.sync_stations_channels();
-//     });
-// });
-
-new CronJob('0 */6 * * *', function () {
-    fdsn_worker.sync_networks(function(err) {
-        fdsn_worker.sync_stations(function(err) {
-            fdsn_worker.sync_stations_channels();
-        });
-    });
-}, null, true);
+new CronJob('0 */12 * * *', function () {
+    fdsn_worker.sync_networks(null, this.dbMan);
+    fdsn_worker.sync_stations(null, this.dbMan);
+}.bind(this), null, true);
