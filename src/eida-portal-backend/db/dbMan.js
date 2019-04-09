@@ -29,7 +29,6 @@ module.exports = class DbMan {
                 c = this.db.addCollection(a);
             }
         }
-        // this.db.saveDatabase();
     }
 
     loadDb(callback) {
@@ -45,7 +44,6 @@ module.exports = class DbMan {
             if (!_collection) {
                 console.log("Collection %s does not exit. Creating ...", colName);
                 _collection = this.addCollection(colName);
-                // this.saveDatabase();
             }
     
             callback(_collection);
@@ -55,7 +53,6 @@ module.exports = class DbMan {
     clrCollection(name) {
         this.loadCollection(name, function(name, ctx){
             name.clear();
-            // ctx.saveDatabase();
         });
     }
 }

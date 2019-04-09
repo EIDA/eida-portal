@@ -47,8 +47,6 @@ function processNetResp(networks, body) {
             }
             
     }
-
-    // ctx.db.saveDatabase();
 }
 
 /**
@@ -66,13 +64,13 @@ exports.sync_stations = function (err, ctx) {
             }
 
             ctx.loadCollection('stations', function(stations) {
-                processStatResp(stations, ctx, resp.body)
+                processStatResp(stations, resp.body)
             });
         });
     }
 }
 
-function processStatResp(stations, ctx, body) {
+function processStatResp(stations, body) {
     var lines = body.split('\n');
 
     if (lines.length < 10) return;
