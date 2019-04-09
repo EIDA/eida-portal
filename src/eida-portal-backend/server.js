@@ -23,6 +23,12 @@ var srv = app.listen(port, function() {
     console.log('EIDA Backend listening at http://127.0.0.1:%s', port);
 });
 
+
+// Sync on startup...
+fdsn_worker.sync_networks(null, this.dbMan);
+fdsn_worker.sync_stations(null, this.dbMan);
+
+// ...and every now and then
 new CronJob('0 */12 * * *', function () {
     fdsn_worker.sync_networks(null, this.dbMan);
     fdsn_worker.sync_stations(null, this.dbMan);
