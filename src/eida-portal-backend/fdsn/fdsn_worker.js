@@ -1,7 +1,6 @@
 var request = require('request');
 var eida = require('../eida.json');
 const DbMan = require('../db/dbMan');
-var parseString = require('xml2js').parseString;
 
 /**
  * Sync basic networks information.
@@ -113,81 +112,4 @@ function processStatResp(stations, body) {
                 // sync_station_channels(stations, _station);
             }
     }
-}
-
-/**
- * Sync station channels using FDSN routing service.
-*/
-function sync_station_channels(stations, station) {
-    request(
-        eida[0].url_routing + `network=${station.net}&station=${station.stat}`,
-        function(err, resp) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-
-            processRouteResp(stations, station, resp);
-        }
-    );
-}
-
-function processRouteResp(stations, station, resp) {
-    parseString(resp.body, function(err, result) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        if (!result) {
-            return;
-        }
-
-        let stationUrl = dataselectToStationUrl(
-            result.service.datacenter[0].url[0]
-        )
-        syncStationChannels(stations, station, stationUrl);
-    });
-}
-
-function syncStationChannels(stations, station, stationUrl) {
-    let url = `${stationUrl}network=${station.net}&station=${station.stat}&level=channel`;
-
-    request(url, function(err, resp) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        parseString(resp.body, function(err, result) {
-            // Nullcheck the parse result and make sure it has a FDSNStationXML
-            if (!result || !result.FDSNStationXML) return;
-
-            for (let ch of result.FDSNStationXML.Network[0].Station[0].Channel) {
-                station.cha.push({
-                    'code': ch['$'].code,
-                    'location': ch['$'].locationCode,
-                    'sample_rate': ch.SampleRate[0]
-                })
-            }
-
-            stations.insert(station);
-        });
-    });
-}
-
-function dataselectToStationUrl(dataselectUrl) {
-    let baseUrl = dataselectUrl.split('/')[2];
-
-    for (let e of eida) {
-        if (e.url_base === baseUrl) {
-            return e.url_station
-        }
-    }
-
-    // If baseUrl cannot be found...
-    // TODO: think how to handle this exception in a more suitable way
-    console.log(
-        `FDSN Station URL not found in EIDA definition file for: ${dataselectUrl}`
-    )
 }
