@@ -33,8 +33,8 @@ module.exports = class DbMan {
 
     loadDb(callback) {
         this.db.loadDatabase({}, function() {
-            callback(this);
-        }.bind(this.db));
+            callback(this.db);
+        }.bind(this));
     }
 
     loadCollection(colName, callback) {

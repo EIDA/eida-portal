@@ -18,5 +18,5 @@ module.exports = function (app, ctx) {
     .get(statsController.list_all_stations.bind(ctx));
 
   app.route('/ns')
-    .get(netsStatsController.list_all_networks_stations);
+    .get(netsStatsController.list_all_networks_stations.bind(ctx));
 };

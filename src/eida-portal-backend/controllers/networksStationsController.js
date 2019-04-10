@@ -1,10 +1,7 @@
-const DbMan = require('../db/dbMan');
-
 exports.list_all_networks_stations = function (req, res) {
-    var dbMan = new DbMan();
     var result = [];
 
-    dbMan.loadDb(function(ctx) {
+    this.loadDb(function(ctx) {
         nets = ctx.getCollection('networks');
         stats = ctx.getCollection('stations');
         
@@ -22,5 +19,5 @@ exports.list_all_networks_stations = function (req, res) {
             }
             res.json(result);
         }
-    }.bind(dbMan))
+    });
 };
