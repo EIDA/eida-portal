@@ -27,9 +27,11 @@ var srv = app.listen(port, function() {
 // Sync on startup...
 fdsn_worker.sync_networks(null, this.dbMan);
 fdsn_worker.sync_stations(null, this.dbMan);
+fdsn_worker.sync_stations_channels(null, this.dbMan);
 
 // ...and every now and then
 new CronJob('0 */12 * * *', function () {
     fdsn_worker.sync_networks(null, this.dbMan);
     fdsn_worker.sync_stations(null, this.dbMan);
+    fdsn_worker.sync_stations_channels(null, this.dbMan);
 }.bind(this), null, true);

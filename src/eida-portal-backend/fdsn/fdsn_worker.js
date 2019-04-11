@@ -108,8 +108,58 @@ function processStatResp(stations, body) {
                 }
 
                 stations.insert(_station);
+            }
+    }
+}
 
-                // sync_station_channels(stations, _station);
+/**
+ * Sync complete station channel level info.
+ * Make bulk requests and store channel level responses from all EIDA nodes for later use.
+ * This is to prevent making additional requests when channel info is needed.
+ */
+exports.sync_stations_channels = function(err, ctx) {
+    ctx.clrCollection('channels');
+
+    for (let e of eida) {
+        let url = e.url_station + 'format=text&level=channel';
+        request(url, function (err, resp) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            ctx.loadCollection('channels', function(stations) {
+                process_channel_resp(e.code, stations, resp.body)
+            });
+        }); 
+    }
+}
+
+function process_channel_resp(nodeCode, channels, body) {
+    var lines = body.split('\n');
+
+    if (lines.length < 10) return;
+
+    for (var i = 1; i < lines.length; i++) {
+        var values = lines[i].split('|');
+        if (values[0] &&
+            values[1] &&
+            values[2] &&
+            values[3] &&
+            values[4] &&
+            values[5] &&
+            values[6]) {
+                let _channel = {
+                    'node': nodeCode.toUpperCase(),
+                    'net': values[0],
+                    'stat': values[1],
+                    'start': values[15].substr(0, 4),
+                    'loc': values[2],
+                    'cha': values[3],
+                    'sampling': values[14]
+                }
+
+                channels.insert(_channel);
             }
     }
 }

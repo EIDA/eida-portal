@@ -4,10 +4,15 @@ var eida = require('../eida.json');
 
 exports.list_all_stations = function (req, res) {
     // In case the request contains query parameters, we can assume
-    // the response station channel info is expected in the result
+    // the response station channel info is expected in the result.
+    // The idea is pretty simple:
+    // 1. Channel info is requested
+    // 2. Query the routing service to get the right node
+    // 3. Use the local cache (db.channels) to get channels info
     if (req.query.net && req.query.stat) {
-        this.loadCollection('stations', function(stations) {
-            let s = stations.find({
+        this.loadDb(function(ctx) {
+            let sCol = ctx.getCollection('stations');
+            let s = sCol.find({
                 'net': req.query.net.toUpperCase(),
                 'stat': req.query.stat.toUpperCase()
             });
@@ -18,7 +23,7 @@ exports.list_all_stations = function (req, res) {
                 return;
             }
 
-            get_station_channel_info(res, s[0]);
+            get_station_channel_info(ctx, res, s[0]);
         });
     } else if (req.query.net) {
         this.loadCollection('stations', function(stations) {
@@ -37,7 +42,7 @@ exports.list_all_stations = function (req, res) {
 /**
  * Sync station channels using FDSN routing service.
 */
-function get_station_channel_info(res, station) {
+function get_station_channel_info(ctx, res, station) {
     request(
         eida[0].url_routing + `network=${station.net}&station=${station.stat}`,
         function(err, resp) {
@@ -46,12 +51,12 @@ function get_station_channel_info(res, station) {
                 return;
             }
 
-            process_route_resp(res, station, resp);
+            process_route_resp(ctx, res, station, resp);
         }
     );
 }
 
-function process_route_resp(res, station, resp) {
+function process_route_resp(ctx, res, station, resp) {
     parseString(resp.body, function(err, result) {
         if (err) {
             console.log(err);
@@ -62,47 +67,45 @@ function process_route_resp(res, station, resp) {
             return;
         }
 
-        let stationUrl = dataselect_to_station_url(
+        let nodeCode = dataselect_url_to_node_code(
             result.service.datacenter[0].url[0]
         )
-        sync_station_channels(res, station, stationUrl);
+        add_station_channels(ctx, res, station, nodeCode);
     });
 }
 
-function sync_station_channels(res, station, stationUrl) {
-    let url = `${stationUrl}network=${station.net}&station=${station.stat}&level=channel`;
-
-    request(url, function(err, resp) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        parseString(resp.body, function(err, result) {
-            // Nullcheck the parse result and make sure it has a FDSNStationXML
-            if (!result || !result.FDSNStationXML) return;
-
-            station.cha = [];
-
-            for (let ch of result.FDSNStationXML.Network[0].Station[0].Channel) {
-                station.cha.push({
-                    'code': ch['$'].code,
-                    'location': ch['$'].locationCode,
-                    'sample_rate': ch.SampleRate[0]
-                })
-            }
-
-            res.json(station);
-        });
+function add_station_channels(ctx, res, station, nodeCode) {
+    let chCol = ctx.getCollection('channels');
+    let ch = chCol.find({
+        'node': nodeCode,
+        'net': station.net,
+        'stat': station.stat
     });
+
+    station.cha = [];
+
+    if (!ch || ch.length <= 0) {
+        res.json(station);
+        return;
+    }
+
+    for (let c of ch) {
+        station.cha.push({
+            'code': c.cha,
+            'location': c.loc,
+            'sample_rate': c.sampling
+        })
+    }
+
+    res.json(station);
 }
 
-function dataselect_to_station_url(dataselectUrl) {
+function dataselect_url_to_node_code(dataselectUrl) {
     let baseUrl = dataselectUrl.split('/')[2];
 
     for (let e of eida) {
         if (e.url_base === baseUrl) {
-            return e.url_station
+            return e.code
         }
     }
 
