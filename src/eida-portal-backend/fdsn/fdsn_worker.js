@@ -144,16 +144,12 @@ function process_channel_resp(nodeCode, channels, body) {
         var values = lines[i].split('|');
         if (values[0] &&
             values[1] &&
-            values[2] &&
             values[3] &&
-            values[4] &&
-            values[5] &&
-            values[6]) {
+            values[14]) {
                 let _channel = {
                     'node': nodeCode.toUpperCase(),
                     'net': values[0],
                     'stat': values[1],
-                    'start': values[15].substr(0, 4),
                     'loc': values[2],
                     'cha': values[3],
                     'sampling': values[14]

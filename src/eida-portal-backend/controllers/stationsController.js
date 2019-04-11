@@ -1,6 +1,7 @@
 var request = require('request');
 var parseString = require('xml2js').parseString;
 var eida = require('../eida.json');
+var helpers = require('../helpers/helpers');
 
 exports.list_all_stations = function (req, res) {
     // In case the request contains query parameters, we can assume
@@ -67,7 +68,7 @@ function process_route_resp(ctx, res, station, resp) {
             return;
         }
 
-        let nodeCode = dataselect_url_to_node_code(
+        let nodeCode = helpers.dataselect_url_to_node_code(
             result.service.datacenter[0].url[0]
         )
         add_station_channels(ctx, res, station, nodeCode);
@@ -98,20 +99,4 @@ function add_station_channels(ctx, res, station, nodeCode) {
     }
 
     res.json(station);
-}
-
-function dataselect_url_to_node_code(dataselectUrl) {
-    let baseUrl = dataselectUrl.split('/')[2];
-
-    for (let e of eida) {
-        if (e.url_base === baseUrl) {
-            return e.code
-        }
-    }
-
-    // If baseUrl cannot be found...
-    // TODO: think how to handle this exception in a more suitable way
-    console.log(
-        `FDSN Station URL not found in EIDA definition file for: ${dataselectUrl}`
-    )
 }
