@@ -86,7 +86,8 @@ function add_station_channels(ctx, res, station, nodeCode) {
     station.cha = [];
 
     if (!ch || ch.length <= 0) {
-        res.json(station);
+        // Return an array to keep things consistent
+        res.json([station]);
         return;
     }
 
@@ -98,5 +99,7 @@ function add_station_channels(ctx, res, station, nodeCode) {
         })
     }
 
-    res.json(station);
+    // Return an array to keep things consistent
+    res.json([station]);
+    return;
 }
