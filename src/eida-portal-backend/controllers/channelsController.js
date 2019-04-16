@@ -4,7 +4,48 @@ var eida = require('../eida.json');
 var helpers = require('../helpers/helpers');
 
 exports.list_all_channels = function (req, res) {
-    if (req.query.net && req.query.stat) {
+    if (req.query.net && req.query.stat && req.query.level) {
+        this.loadCollection('channels', function(channels) {
+            let temp = [];
+            for (let c of channels.find({
+                'net': req.query.net.toUpperCase(),
+                'stat': req.query.stat.toUpperCase()
+            })) {
+                let cha = c.cha.substring(0, 2);
+                temp.push(cha);
+            }
+
+            let result = createChannelArray(temp);
+            res.json(result);
+            return;
+        });
+    } else if (req.query.net && req.query.level) {
+        this.loadCollection('channels', function(channels) {
+            let temp = [];
+            for (let c of channels.find({
+                'net': req.query.net.toUpperCase()
+            })) {
+                let cha = c.cha.substring(0, 2);
+                temp.push(cha);
+            }
+
+            let result = createChannelArray(temp);
+            res.json(result);
+            return;
+        });
+    } else if (req.query.level) {
+        this.loadCollection('channels', function(channels) {
+            let temp = [];
+            for (let c of channels.data) {
+                let cha = c.cha.substring(0, 2);
+                temp.push(cha);
+            }
+
+            let result = createChannelArray(temp);
+            res.json(result);
+            return;
+        });
+    } else if (req.query.net && req.query.stat) {
         let ctx = this;
         request(
             eida[0].url_routing 
@@ -111,4 +152,12 @@ function process_route_resp(ctx, resp, res) {
             return;
         });
     });
+}
+
+function createChannelArray(array) {
+    var result = {};
+    array.map(function (a) {
+        if (a in result) result[a] ++; else result[a] = 1;
+    })
+    return result;
 }
