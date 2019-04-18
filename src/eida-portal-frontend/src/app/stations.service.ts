@@ -28,6 +28,7 @@ export class StationsService {
 
   private networksUrl = environment.networksUrl;
   private stationsUrl = environment.stationsUrl;
+  private channelsUrl = environment.channelsUrl;
   private networksStationsUrl = environment.networksStationsUrl;
 
   addAllStations(fs: FdsnStation[]) {
@@ -66,19 +67,34 @@ export class StationsService {
   }
 
   getNetworks(): Observable<FdsnNetwork[]> {
-    return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
-      .pipe(
+    return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl).pipe(
         tap(_ => this._eidaService.log('fetched networks data')),
         catchError(this._eidaService.handleError('getNetworks', []))
       );
   }
 
   getStations(): Observable<FdsnStation[]> {
-    return this._eidaService.http.get<FdsnStation[]>(this.stationsUrl)
-      .pipe(
+    return this._eidaService.http.get<FdsnStation[]>(this.stationsUrl).pipe(
         tap(_ => this._eidaService.log('fetched stations data')),
         catchError(this._eidaService.handleError('getStations', []))
       );
+  }
+
+  getChannels(net: string, stat: string): Observable<Object> {
+    let url = `${this.channelsUrl}?level=0&`;
+
+    if (net) {
+      url += `net=${net}&`;
+    }
+
+    if (stat) {
+      url += `stat=${stat}`;
+    }
+
+    return this._eidaService.http.get<Object>(url).pipe(
+      tap(_ => this._eidaService.log(`fetched channels data: ${net}/${stat}`)),
+      catchError(this._eidaService.handleError('getChannels', []))
+    );
   }
 
   // Add selected station(s) to map and notify subscribers
@@ -180,16 +196,16 @@ export class StationsService {
     this.refreshStations(this._mapStations);
   }
 
-  searchNetwork(term: string): Observable<FdsnNetwork[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
-      .pipe(
-        tap(_ => this._eidaService.log(`found heroes matching "${term}"`)),
-        catchError(this._eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
-      );
-  }
+  // searchNetwork(term: string): Observable<FdsnNetwork[]> {
+  //   if (!term.trim()) {
+  //     return of([]);
+  //   }
+  //   return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
+  //     .pipe(
+  //       tap(_ => this._eidaService.log(`found heroes matching "${term}"`)),
+  //       catchError(this._eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
+  //     );
+  // }
 
   getNetworksStations(): Observable<FdsnNetwork[]> {
     return this._eidaService.http.get<FdsnNetwork[]>(this.networksStationsUrl)

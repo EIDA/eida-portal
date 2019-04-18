@@ -239,14 +239,32 @@
       </div>
 
       <div id="streamsByCodeContent">
-        <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-streams')">
+        <!-- <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-streams')">
           <select multiple>
-            <option value="0">ABC</option>
-            <option value="1">DEF</option>
-            <option value="2">GHI</option>
-            <option value="3">JKL</option>
+            <option *ngFor="let s of stationsModel.streams" [ngValue]="s" (click)="handleStreamSelection(s);">
+              {{ s.channelCode }} ({{ s.appearances }})</option>
           </select>
+        </div> -->
+
+      <h1 class="title is-6 has-text-centered">Included streams</h1>
+      <div class="field is-grouped is-grouped-multiline">
+        <div *ngFor="let s of getStreams(true);" class="control">
+          <div class="tags has-addons">
+            <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+            <a class="tag is-warning" (click)="handleStreamSelection(s);">-</a>
+          </div>
         </div>
+      </div>
+
+      <h1 class="title is-6 has-text-centered">Excluded streams</h1>
+      <div class="field is-grouped is-grouped-multiline">
+        <div *ngFor="let s of getStreams(false);" class="control">
+          <div class="tags has-addons">
+            <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+            <a class="tag is-success" (click)="handleStreamSelection(s);">+</a>
+          </div>
+        </div>
+      </div>
       </div>
 
       <div id="streamsBySamplingContent" hidden>

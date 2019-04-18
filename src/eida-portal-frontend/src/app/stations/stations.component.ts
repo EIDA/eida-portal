@@ -5,7 +5,7 @@ import {
 } from 'rxjs/operators';
 
 import {
-  StationsModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
+  StationsModel, StationStreamModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
 } from '../modules/models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
@@ -27,7 +27,7 @@ export class StationsComponent implements OnInit {
   
   filteredStations: FdsnStationExt[];
   selectedStations = new Array<FdsnStationExt>();
-  networks_search$: Observable<FdsnNetwork[]>;
+  // networks_search$: Observable<FdsnNetwork[]>;
   paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
@@ -47,11 +47,11 @@ export class StationsComponent implements OnInit {
 
     this.consoleService.add('Stations initiated');
 
-    this.networks_search$ = this.searchTerms.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.stationsService.searchNetwork(term)),
-    );
+    // this.networks_search$ = this.searchTerms.pipe(
+    //   debounceTime(300),
+    //   distinctUntilChanged(),
+    //   switchMap((term: string) => this.stationsService.searchNetwork(term)),
+    // );
 
     this.stationsService.selectedStations.subscribe(
       s => this.updateSelectedStationsTable(s)
@@ -60,11 +60,6 @@ export class StationsComponent implements OnInit {
     this._mapService.dragBoxCoordinates.subscribe(
       s => this.updateCoordinatesFromDragBox(s)
     );
-
-    // Mousetrap keyboard shortcut bindings
-    Mousetrap.bind('a d d', function(e) {
-      console.log('Adding stations to map');
-    });
   }
 
   search_network(term: string): void {
@@ -89,8 +84,10 @@ export class StationsComponent implements OnInit {
       this.filteredStations = this.stationsService.allStations.filter(
         s => s.net === n.code
       );
-      this.stationsModel.clearStationSelection();
     }
+
+    this.stationsModel.clearStationSelection();
+    this.refreshChannels();
   }
 
   updateSelectedStationsTable(s: FdsnStationExt[]) {
@@ -105,6 +102,35 @@ export class StationsComponent implements OnInit {
 
   stationChanged(s) {
     this.stationsModel.selectedStation = s;
+    this.refreshChannels();    
+  }
+
+  refreshChannels() {
+    this.stationsService.getChannels(
+      this.stationsModel.selectedNetwork.code,
+      this.stationsModel.selectedStation.stat).subscribe(
+        val => this.importStationChannels(val)
+    );
+  }
+
+  importStationChannels(array) : void {
+    this.stationsModel.clearChannels();
+
+    for (let a in array) {
+      let s = new StationStreamModel();
+      s.channelCode = a;
+      s.appearances = array[a];
+      this.stationsModel.streams.push(s);
+    }
+  }
+
+  getStreams(selected: boolean) {
+    return this.stationsModel.streams.filter(x => x.selected === selected);
+  }
+
+  handleStreamSelection(s) : void {
+    this.stationsModel.streams.find(
+      e => e.channelCode === s.channelCode).selected = !s.selected;
   }
 
   add() {
