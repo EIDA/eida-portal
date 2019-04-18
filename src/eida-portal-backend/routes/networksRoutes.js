@@ -26,5 +26,9 @@ module.exports = function (app, ctx) {
 
   app.route('/cha').get(
     channelsController.list_all_channels.bind(ctx)
-  )
+  );
+
+  app.route('/cha').post(function(req, res) {
+    channelsController.get_channels_for_stations(req, res, ctx);
+  });
 };

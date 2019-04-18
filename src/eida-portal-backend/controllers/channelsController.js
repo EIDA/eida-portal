@@ -3,6 +3,13 @@ var parseString = require('xml2js').parseString;
 var eida = require('../eida.json');
 var helpers = require('../helpers/helpers');
 
+exports.get_channels_for_stations = function(req, res, ctx) {
+    ctx.loadCollection('channels', function(channels) {
+        res.send(req.body);
+        return;
+    });
+}
+
 exports.list_all_channels = function (req, res) {
     if (req.query.net && req.query.stat && req.query.level) {
         this.loadCollection('channels', function(channels) {

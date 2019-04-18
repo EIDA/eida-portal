@@ -1,16 +1,18 @@
-var express = require('express'),
+const express = require('express'),
     app = express(),
     port = process.env.PORT || 3000;
-var cors = require('cors')
-var CronJob = require('cron').CronJob;
-var fdsn_worker = require('./fdsn/fdsn_worker')
-var routes = require('./routes/networksRoutes');
+const cors = require('cors')
+const CronJob = require('cron').CronJob;
+const fdsn_worker = require('./fdsn/fdsn_worker')
+const routes = require('./routes/networksRoutes');
+const bodyParser = require('body-parser');
 const DbMan = require('./db/dbMan');
 
 this.dbMan = new DbMan();
 // this.dbMan.initDb();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 routes(app, this.dbMan);
 app.use(function (req, res) {
     res.status(404).send({
