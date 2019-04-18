@@ -12,7 +12,8 @@ this.dbMan = new DbMan();
 // this.dbMan.initDb();
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 routes(app, this.dbMan);
 app.use(function (req, res) {
     res.status(404).send({
