@@ -100,16 +100,23 @@ export class StationsComponent implements OnInit {
     this.stationsService.updateFocusedStation(s);
   }
 
-  stationChanged(s) {
+  stationChanged(s): void {
     this.stationsModel.selectedStation = s;
     this.refreshChannels();    
   }
 
-  refreshChannels() {
+  refreshChannels(): void {
     this.stationsService.getChannels(
       this.stationsModel.selectedNetwork.code,
       this.stationsModel.selectedStation.stat).subscribe(
         val => this.importStationChannels(val)
+    );
+  }
+
+  // When stations in the rowking set change, refresh the station channels list
+  refreshStationChannels(st: FdsnStationExt[]): void {
+    this.stationsService.getChannelsForWorkingSet(st).subscribe(
+      result => console.log(result)
     );
   }
 
@@ -161,6 +168,7 @@ export class StationsComponent implements OnInit {
   refreshPaginator(): void {
     this.paginator.paginate(this.selectedStations);
     this.paginator.getPages();
+    this.refreshStationChannels(this.selectedStations);
     // $('#previousPageButton').attr('disabled', true);
   }
 

@@ -9,6 +9,7 @@ import {
 import { environment } from '../environments/environment';
 import { Enums } from './modules/enums';
 import { GisHelper } from './helpers/gis.helper';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,20 @@ export class StationsService {
     return this._eidaService.http.get<Object>(url).pipe(
       tap(_ => this._eidaService.log(`fetched channels data: ${net}/${stat}`)),
       catchError(this._eidaService.handleError('getChannels', []))
+    );
+  }
+
+  getChannelsForWorkingSet(st: FdsnStationExt[]) {
+    let url = `${this.channelsUrl}?level=0&`;
+    return this._eidaService.http.post(
+      url,
+      JSON.stringify(st),
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      }
+    ).pipe(
+      tap(_ => this._eidaService.log('fetched channels data')),
+      catchError(this._eidaService.handleError('getChannelsForWorkingSet', []))
     );
   }
 

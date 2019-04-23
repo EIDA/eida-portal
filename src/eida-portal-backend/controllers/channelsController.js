@@ -5,7 +5,20 @@ var helpers = require('../helpers/helpers');
 
 exports.get_channels_for_stations = function(req, res, ctx) {
     ctx.loadCollection('channels', function(channels) {
-        res.send(req.body);
+        let data = req.body;
+        let temp = [];
+
+        for (let d of data) {
+            array.push(
+                channels.find({
+                    'net': d.net,
+                    'stat': d.stat
+                })
+            )
+        }
+
+        let result = createChannelArray(temp);
+        res.json(result);
         return;
     });
 }

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  networksUrl:  'http://127.0.0.1:49160/n',
-  stationsUrl: 'http://127.0.0.1:49160/s',
-  channelsUrl: 'http://127.0.0.1:49160/cha',
+  networksUrl:  'http://127.0.0.1:3000/n',
+  stationsUrl: 'http://127.0.0.1:3000/s',
+  channelsUrl: 'http://127.0.0.1:3000/cha',
   networksStationsUrl: 'https://www.orfeus-eu.org/epb/ns',
   fdsnEventEmsc: 'http://seismicportal.eu/fdsnws/event/1/query?',
   fdsnEventIris: 'http://service.iris.edu/fdsnws/event/1/query?'
