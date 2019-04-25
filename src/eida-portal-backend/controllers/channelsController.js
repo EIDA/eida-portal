@@ -9,17 +9,29 @@ exports.get_channels_for_stations = function(req, res, ctx) {
         let temp = [];
 
         for (let d of data) {
-            array.push(
-                channels.find({
-                    'net': d.net,
-                    'stat': d.stat
-                })
-            )
+            // For each station - get the array of its channels
+            let chaArr = channels.find({
+                'net': d.net,
+                'stat': d.stat
+            });
+
+            // Add each channel to the channels array
+            if (chaArr.length > 0) {
+                for (c of chaArr) {
+                    temp.push(c.cha.substring(0, 2));
+                }
+            }
         }
 
-        let result = createChannelArray(temp);
-        res.json(result);
-        return;
+        // Create response object from the channels array
+        if (temp.length > 0) {
+            let result = createChannelArray(temp);
+            res.json(result);
+            return;
+        } else {
+            res.json('nodata');
+            return;
+        }
     });
 }
 
@@ -174,6 +186,10 @@ function process_route_resp(ctx, resp, res) {
     });
 }
 
+/**
+ * Get the array of channel codes and, group them by name and add count
+ * @param {string[]} array - Array of channel codes.
+ */
 function createChannelArray(array) {
     var result = {};
     array.map(function (a) {
