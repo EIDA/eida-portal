@@ -15,9 +15,7 @@ export class RequestComponent implements OnInit {
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
-  ngOnInit() {
-    this.consoleService.add('Request initiated');
-  }
+  ngOnInit() { }
 
   review() {
     this.consoleService.add('Request/review clicked');

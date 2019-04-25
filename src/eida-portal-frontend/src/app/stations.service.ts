@@ -81,7 +81,7 @@ export class StationsService {
       );
   }
 
-  getChannels(net: string, stat: string): Observable<Object> {
+  getAvailableStreams(net: string, stat: string): Observable<Object> {
     let url = `${this.channelsUrl}?level=0&`;
 
     if (net) {
@@ -93,12 +93,12 @@ export class StationsService {
     }
 
     return this._eidaService.http.get<Object>(url).pipe(
-      tap(_ => this._eidaService.log(`fetched channels data: ${net}/${stat}`)),
-      catchError(this._eidaService.handleError('getChannels', []))
+      tap(_ => this._eidaService.log(`fetched streams data: ${net}/${stat}`)),
+      catchError(this._eidaService.handleError('getAvailableStreams', []))
     );
   }
 
-  getChannelsForWorkingSet(st: FdsnStationExt[]) {
+  getStreamsForWorkingSet(st: FdsnStationExt[]) {
     let url = `${this.channelsUrl}?level=0&`;
     return this._eidaService.http.post(
       url,
@@ -107,8 +107,8 @@ export class StationsService {
         headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
     ).pipe(
-      tap(_ => this._eidaService.log('fetched channels data')),
-      catchError(this._eidaService.handleError('getChannelsForWorkingSet', []))
+      tap(_ => this._eidaService.log('fetched workset streams data')),
+      catchError(this._eidaService.handleError('getStreamsForWorkingSet', []))
     );
   }
 

@@ -18,8 +18,6 @@ export class DashboardComponent implements OnInit {
     public textService: TextService) { }
 
   ngOnInit() {
-    this.consoleService.add('Dashboard initiated');
-
     Mousetrap.bind('1', function(e) {
       $('#menuTabs').find('li').removeClass('is-active');
       $('tab-pane').prop('checked', false);

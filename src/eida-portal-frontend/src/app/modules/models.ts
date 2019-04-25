@@ -20,7 +20,8 @@ export class StationsModel {
     eventAzimuthFrom: number;
     eventAzimuthTo: number;
     targetSamplingRate: number;
-    streams: Array<StationStreamModel>;
+    availableStreams: Array<StationStreamModel>;
+    worksetStreams: Array<StationStreamModel>;
 
     constructor() {
         this.yearFrom = "1900";
@@ -39,7 +40,8 @@ export class StationsModel {
         this.eventAzimuthFrom = 0.0;
         this.eventAzimuthTo = 360.0;
         this.targetSamplingRate = 20.0;
-        this.streams = new Array<StationStreamModel>();
+        this.availableStreams = new Array<StationStreamModel>();
+        this.worksetStreams = new Array<StationStreamModel>();
     }
 
     toString() {
@@ -52,18 +54,22 @@ export class StationsModel {
         this.selectedStation = 'All';
     }
 
-    clearChannels() {
-        this.streams = new Array<StationStreamModel>();
+    clearAvailableStreams() {
+        this.availableStreams = new Array<StationStreamModel>();
+    }
+
+    clearWorksetStreams() {
+        this.worksetStreams = new Array<StationStreamModel>();
     }
 }
 
 export class StationStreamModel {
-    channelCode: string;
+    streamCode: string;
     appearances: number;
     selected: boolean;
 
     constructor() {
-        this.channelCode = '';
+        this.streamCode = '';
         this.appearances = 0;
         this.selected = true;
     }

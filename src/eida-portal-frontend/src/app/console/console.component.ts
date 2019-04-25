@@ -9,8 +9,6 @@ export class ConsoleComponent implements OnInit {
 
   constructor(public consoleService: ConsoleService) { }
 
-  ngOnInit() {
-    this.consoleService.add('Console initiated');
-  }
+  ngOnInit() { }
 
 }

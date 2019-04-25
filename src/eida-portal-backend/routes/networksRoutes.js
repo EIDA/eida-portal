@@ -3,7 +3,7 @@ module.exports = function (app, ctx) {
   var netsController = require('../controllers/networksController');
   var statsController = require('../controllers/stationsController');
   var netsStatsController = require('../controllers/networksStationsController');
-  var channelsController = require('../controllers/channelsController');
+  var streamsController = require('../controllers/streamsController');
 
   app.all(function (req, res, next) {
     // Enable CORS headers and proceed to the next middleware
@@ -24,11 +24,11 @@ module.exports = function (app, ctx) {
     netsStatsController.list_all_networks_stations.bind(ctx)
   );
 
-  app.route('/cha').get(
-    channelsController.list_all_channels.bind(ctx)
+  app.route('/streams').get(
+    streamsController.list_all_streams.bind(ctx)
   );
 
-  app.route('/cha').post(function(req, res) {
-    channelsController.get_channels_for_stations(req, res, ctx);
+  app.route('/streams').post(function(req, res) {
+    streamsController.get_streams_for_stations(req, res, ctx);
   });
 };

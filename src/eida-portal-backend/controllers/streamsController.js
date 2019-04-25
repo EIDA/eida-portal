@@ -3,7 +3,7 @@ var parseString = require('xml2js').parseString;
 var eida = require('../eida.json');
 var helpers = require('../helpers/helpers');
 
-exports.get_channels_for_stations = function(req, res, ctx) {
+exports.get_streams_for_stations = function(req, res, ctx) {
     ctx.loadCollection('channels', function(channels) {
         let data = req.body;
         let temp = [];
@@ -25,17 +25,16 @@ exports.get_channels_for_stations = function(req, res, ctx) {
 
         // Create response object from the channels array
         if (temp.length > 0) {
-            let result = createChannelArray(temp);
+            let result = createStreamArray(temp);
             res.json(result);
             return;
         } else {
-            res.json('nodata');
             return;
         }
     });
 }
 
-exports.list_all_channels = function (req, res) {
+exports.list_all_streams = function (req, res) {
     if (req.query.net && req.query.stat && req.query.level) {
         this.loadCollection('channels', function(channels) {
             let temp = [];
@@ -47,7 +46,7 @@ exports.list_all_channels = function (req, res) {
                 temp.push(cha);
             }
 
-            let result = createChannelArray(temp);
+            let result = createStreamArray(temp);
             res.json(result);
             return;
         });
@@ -61,7 +60,7 @@ exports.list_all_channels = function (req, res) {
                 temp.push(cha);
             }
 
-            let result = createChannelArray(temp);
+            let result = createStreamArray(temp);
             res.json(result);
             return;
         });
@@ -73,7 +72,7 @@ exports.list_all_channels = function (req, res) {
                 temp.push(cha);
             }
 
-            let result = createChannelArray(temp);
+            let result = createStreamArray(temp);
             res.json(result);
             return;
         });
@@ -190,7 +189,7 @@ function process_route_resp(ctx, resp, res) {
  * Get the array of channel codes and, group them by name and add count
  * @param {string[]} array - Array of channel codes.
  */
-function createChannelArray(array) {
+function createStreamArray(array) {
     var result = {};
     array.map(function (a) {
         if (a in result) result[a] ++; else result[a] = 1;

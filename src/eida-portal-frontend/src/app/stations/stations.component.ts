@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
@@ -31,6 +31,8 @@ export class StationsComponent implements OnInit {
   paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
+  private _streamSubscription: Subscription;
+
   constructor(
     private _mapService: MapService,
     public stationsService: StationsService,
@@ -44,8 +46,6 @@ export class StationsComponent implements OnInit {
     this.stationsService.getStations().subscribe(
       s => this.stationsService.addAllStations(s)
     );
-
-    this.consoleService.add('Stations initiated');
 
     // this.networks_search$ = this.searchTerms.pipe(
     //   debounceTime(300),
@@ -87,12 +87,17 @@ export class StationsComponent implements OnInit {
     }
 
     this.stationsModel.clearStationSelection();
-    this.refreshChannels();
+    this.refreshAvailableStreams();
   }
 
+  /**
+   * Triggered from stations service when workset changes
+   * @param s - Array of FdsnStationExt objects
+   */
   updateSelectedStationsTable(s: FdsnStationExt[]) {
     this.selectedStations = s;
     this.refreshPaginator();
+    this.refreshAvailableStreams();
     $('#addButton').removeClass('is-loading');
   }
 
@@ -102,42 +107,20 @@ export class StationsComponent implements OnInit {
 
   stationChanged(s): void {
     this.stationsModel.selectedStation = s;
-    this.refreshChannels();    
+    this.refreshAvailableStreams();    
   }
 
-  refreshChannels(): void {
-    this.stationsService.getChannels(
-      this.stationsModel.selectedNetwork.code,
-      this.stationsModel.selectedStation.stat).subscribe(
-        val => this.importStationChannels(val)
-    );
+  getAvailableStreams() {
+    return this.stationsModel.availableStreams;
   }
 
-  // When stations in the rowking set change, refresh the station channels list
-  refreshStationChannels(st: FdsnStationExt[]): void {
-    this.stationsService.getChannelsForWorkingSet(st).subscribe(
-      result => console.log(result)
-    );
-  }
-
-  importStationChannels(array) : void {
-    this.stationsModel.clearChannels();
-
-    for (let a in array) {
-      let s = new StationStreamModel();
-      s.channelCode = a;
-      s.appearances = array[a];
-      this.stationsModel.streams.push(s);
-    }
-  }
-
-  getStreams(selected: boolean) {
-    return this.stationsModel.streams.filter(x => x.selected === selected);
+  getWorksetStreams(selected: boolean) {
+    return this.stationsModel.worksetStreams.filter(x => x.selected === selected);
   }
 
   handleStreamSelection(s) : void {
-    this.stationsModel.streams.find(
-      e => e.channelCode === s.channelCode).selected = !s.selected;
+    this.stationsModel.worksetStreams.find(
+      e => e.streamCode === s.streamCode).selected = !s.selected;
   }
 
   add() {
@@ -151,10 +134,12 @@ export class StationsComponent implements OnInit {
 
   removeAllStations(): void {
     this.stationsService.removeAllStations();
+    this.refreshWorksetStationChannels();
   }
 
   removeSelectedStations(): void {
     this.stationsService.removeSelectedStations();
+    this.refreshWorksetStationChannels();
   }
 
   countSelectedStations(): number {
@@ -168,8 +153,56 @@ export class StationsComponent implements OnInit {
   refreshPaginator(): void {
     this.paginator.paginate(this.selectedStations);
     this.paginator.getPages();
-    this.refreshStationChannels(this.selectedStations);
+    this.refreshWorksetStationChannels();
     // $('#previousPageButton').attr('disabled', true);
+  }
+
+  /**
+   * Refresh availalbe streams for selected network / station
+   */
+  refreshAvailableStreams(): void {
+    this.stationsService.getAvailableStreams(
+      this.stationsModel.selectedNetwork.code,
+      this.stationsModel.selectedStation.stat).subscribe(
+        val => this.importStationStreams(val)
+    );
+  }
+
+  importStationStreams(array) : void {
+    this.stationsModel.clearAvailableStreams();
+
+    for (let a in array) {
+      let s = new StationStreamModel();
+      s.streamCode = a;
+      s.appearances = array[a];
+      this.stationsModel.availableStreams.push(s);
+    }
+  }
+
+  /**
+   * When stations in the rowking set change, refresh the station channels list
+   */
+  refreshWorksetStationChannels(): void {
+    if (this._streamSubscription) {
+      this._streamSubscription.unsubscribe();
+    }
+    
+    this._streamSubscription = this.stationsService.getStreamsForWorkingSet(
+      this.selectedStations.filter(n => n.selected === true)
+    ).subscribe(
+      result => this.importWorksetStationChannels(result)
+    );
+  }
+
+  importWorksetStationChannels(array): void {
+    this.stationsModel.clearWorksetStreams();
+
+    for (let a in array) {
+      let s = new StationStreamModel();
+      s.streamCode = a;
+      s.appearances = array[a];
+      this.stationsModel.worksetStreams.push(s);
+    }
   }
 
   stationDataSourceChanged(s: Enums.StationDataSource): void {

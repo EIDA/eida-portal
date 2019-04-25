@@ -29,8 +29,6 @@ export class EventsComponent implements OnInit {
       s => this.updateCoordinatesFromDragBox(s)
     );
 
-    this.consoleService.add('Events initiated');
-
     this.eventsService.selectedEvents.subscribe(
       n => this.updateSelectedEventsTable(n)
     );

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   networksUrl:  'http://127.0.0.1:3000/n',
   stationsUrl: 'http://127.0.0.1:3000/s',
-  channelsUrl: 'http://127.0.0.1:3000/cha',
+  channelsUrl: 'http://127.0.0.1:3000/streams',
   networksStationsUrl: 'https://www.orfeus-eu.org/epb/ns',
   fdsnEventEmsc: 'http://seismicportal.eu/fdsnws/event/1/query?',
   fdsnEventIris: 'http://service.iris.edu/fdsnws/event/1/query?'

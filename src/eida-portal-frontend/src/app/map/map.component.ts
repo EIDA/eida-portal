@@ -175,8 +175,6 @@ export class MapComponent implements OnInit {
     this._mapService.mapZoomResetTrigger.subscribe(
       e => this.resetMapZoom()
     );
-
-    this.consoleService.add('Map initiated');
   }
 
   updateStationsMap(stations: FdsnStationExt[]) {

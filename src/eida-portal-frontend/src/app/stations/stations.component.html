@@ -1,10 +1,15 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-data-source')">
+    <div class="tabs is-toggle is-small is-fullwidth"
+      [attr.data-tippy-content]="textService.getText('stations-tip-tabs-data-source')">
       <ul id="dataSourceTabs">
-        <li id="browseInventoryTab" class="is-active" (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent'); stationDataSourceChanged(0);"><a>Browse
+        <li id="browseInventoryTab" class="is-active"
+          (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent'); stationDataSourceChanged(0);">
+          <a>Browse
             inventory</a></li>
-        <li id="userSuppliedTab" (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent'); stationDataSourceChanged(1);"><a>User
+        <li id="userSuppliedTab"
+          (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent'); stationDataSourceChanged(1);">
+          <a>User
             supplied</a></li>
       </ul>
     </div>
@@ -77,7 +82,8 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network')">
-              <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)" style="width:100%;">
+              <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
+                style="width:100%;">
                 <option selected>All</option>
                 <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
                   {{n.desc}}</option>
@@ -90,13 +96,20 @@
       <hr>
 
       <h1 class="title is-5 has-text-centered">Stations</h1>
-      <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
+      <div class="tabs is-toggle is-small is-fullwidth"
+        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
         <ul id="stationsTabs">
-          <li id="stationsByCodeTab" class="is-active" (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0);"><a>By
+          <li id="stationsByCodeTab" class="is-active"
+            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0);">
+            <a>By
               code</a></li>
-          <li id="stationsByRegionTab" (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1);"><a>By
+          <li id="stationsByRegionTab"
+            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1);">
+            <a>By
               region</a></li>
-          <li id="stationsByEventsTab" (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2);"><a>By
+          <li id="stationsByEventsTab"
+            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2);">
+            <a>By
               events</a></li>
         </ul>
       </div>
@@ -109,9 +122,11 @@
           <div class="field-body">
             <div class="field">
               <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-station')">
-                <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)" style="width:100%;">
+                <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
+                  style="width:100%;">
                   <option selected>All</option>
-                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})</option>
+                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})
+                  </option>
                 </select>
               </div>
             </div>
@@ -229,11 +244,16 @@
 
       <h1 class="title is-5 has-text-centered">Streams</h1>
 
-      <div class="tabs is-toggle is-small is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-tabs-streams')">
+      <div class="tabs is-toggle is-small is-fullwidth"
+        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-streams')">
         <ul id="streamsTabs">
-          <li id="streamsByCodeTab" class="is-active" (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent'); stationStreamSelectionMethod(0);"><a>By
+          <li id="streamsByCodeTab" class="is-active"
+            (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent'); stationStreamSelectionMethod(0);">
+            <a>By
               code</a></li>
-          <li id="streamsBySamplingTab" (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent'); stationStreamSelectionMethod(1);"><a>By
+          <li id="streamsBySamplingTab"
+            (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent'); stationStreamSelectionMethod(1);">
+            <a>By
               sampling</a></li>
         </ul>
       </div>
@@ -246,25 +266,38 @@
           </select>
         </div> -->
 
-      <h1 class="title is-6 has-text-centered">Included streams</h1>
-      <div class="field is-grouped is-grouped-multiline">
-        <div *ngFor="let s of getStreams(true);" class="control">
-          <div class="tags has-addons">
-            <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
-            <a class="tag is-warning" (click)="handleStreamSelection(s);">-</a>
+        <h1 class="title is-6 has-text-centered">Streams available in selection</h1>
+        <div class="field is-grouped is-grouped-multiline">
+          <div *ngFor="let s of getAvailableStreams();" class="control">
+            <div class="tags">
+              <span class="tag is-small">{{ s.streamCode }} ({{ s.appearances }})</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <h1 class="title is-6 has-text-centered">Excluded streams</h1>
-      <div class="field is-grouped is-grouped-multiline">
-        <div *ngFor="let s of getStreams(false);" class="control">
-          <div class="tags has-addons">
-            <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
-            <a class="tag is-success" (click)="handleStreamSelection(s);">+</a>
+        <hr>
+
+        <h1 class="title is-6 has-text-centered">Streams <b>included</b> in the working set</h1>
+        <div class="field is-grouped is-grouped-multiline">
+          <div *ngFor="let s of getWorksetStreams(true);" class="control">
+            <div class="tags has-addons">
+              <span class="tag is-dark">{{ s.streamCode }} ({{ s.appearances }})</span>
+              <a class="tag is-warning" (click)="handleStreamSelection(s);">-</a>
+            </div>
           </div>
         </div>
-      </div>
+
+        <hr>
+
+        <h1 class="title is-6 has-text-centered">Streams <b>excluded</b> from the working set</h1>
+        <div class="field is-grouped is-grouped-multiline">
+          <div *ngFor="let s of getWorksetStreams(false);" class="control">
+            <div class="tags has-addons">
+              <span class="tag is-dark">{{ s.streamCode }} ({{ s.appearances }})</span>
+              <a class="tag is-success" (click)="handleStreamSelection(s);">+</a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="streamsBySamplingContent" hidden>
@@ -285,31 +318,36 @@
       <hr>
       <div class="columns">
         <div class="column is-half">
-          <span class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('stations-tip-reset')">
+          <span class="button is-danger is-fullwidth" (click)="reset();"
+            [attr.data-tippy-content]="textService.getText('stations-tip-reset')">
             Reset form
           </span>
         </div>
         <div class="column is-half">
-          <span id="addButton" class="button is-success is-fullwidth" (click)="add();" [attr.data-tippy-content]="textService.getText('stations-tip-add')">
+          <span id="addButton" class="button is-success is-fullwidth" (click)="add();"
+            [attr.data-tippy-content]="textService.getText('stations-tip-add')">
             Add
           </span>
         </div>
       </div>
       <div class="columns" *ngIf="paginator.getTotalPages() > 0">
         <div class="column is-third">
-            <span class="button is-small is-danger is-fullwidth" (click)="removeAllStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
-              Remove all ({{selectedStations.length }})
-            </span>
+          <span class="button is-small is-danger is-fullwidth" (click)="removeAllStations();"
+            [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
+            Remove all ({{selectedStations.length }})
+          </span>
         </div>
         <div class="column is-third">
-            <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedStations();" [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
-              Remove selected ({{countSelectedStations() }})
-            </span>
+          <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedStations();"
+            [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
+            Remove selected ({{countSelectedStations() }})
+          </span>
         </div>
         <div class="column is-third">
-            <span class="button is-small is-link is-fullwidth" (click)="invertStationsSelection();" [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
-              Invert selection
-            </span>
+          <span class="button is-small is-link is-fullwidth" (click)="invertStationsSelection();"
+            [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
+            Invert selection
+          </span>
         </div>
       </div>
     </div>
@@ -318,15 +356,15 @@
       <h1 class="title is-5 has-text-centered">File upload</h1>
       <p>You can upload text files in one of the following two formats:</p>
       <div class="content">
-      <ol type="1">
-        <li>
-          A list of stations previously saved here. (Use the "Save Stations" button in the "Event and Station List").
-        </li>
-        <li>
+        <ol type="1">
+          <li>
+            A list of stations previously saved here. (Use the "Save Stations" button in the "Event and Station List").
+          </li>
+          <li>
             A file retrieved from any FDSN compliant fdsnws-station Web Service in text format.
-        </li>
-      </ol>
-    </div>
+          </li>
+        </ol>
+      </div>
 
       <div class="file has-name">
         <label class="file-label" [attr.data-tippy-content]="textService.getText('stations-tip-upload')">
@@ -347,7 +385,8 @@
 
       <hr>
 
-      <button style="width: 100%;" class="button is-success is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-send')">Send</button>
+      <button style="width: 100%;" class="button is-success is-fullwidth"
+        [attr.data-tippy-content]="textService.getText('stations-tip-send')">Send</button>
     </div>
   </div>
 
@@ -360,16 +399,21 @@
     </article>
     <div *ngIf="paginator.getTotalPages() > 0">
       <nav class="pagination is-right" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
-        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()"
+          [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
+        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()"
+          [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
         <ul class="pagination-list">
-          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1" (click)="paginator.getFirstPage()">1</a></li>
+          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1"
+              (click)="paginator.getFirstPage()">1</a></li>
           <li><span *ngIf="paginator.previousPageExists()" class="pagination-ellipsis">&hellip;</span></li>
           <!-- <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 45">45</a></li> -->
-          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <li><a class="pagination-link is-current" aria-label="Page 46"
+              aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
           <!-- <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 47">47</a></li> -->
           <li><span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis">&hellip;</span></li>
-          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86" (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
+          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86"
+              (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
         </ul>
       </nav>
       <hr>
@@ -381,11 +425,15 @@
               <p class="is-size-7">{{station.name}} ({{station.getCoordinates()}})</p>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)" [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('stations-tip-toggle-select')">
+              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)"
+                [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'"
+                [attr.data-tippy-content]="textService.getText('stations-tip-toggle-select')">
                 {{station.selected ? "Selected" : "Skipped"}}</button>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)" class="button is-small is-danger is-inverted" [attr.data-tippy-content]="textService.getText('stations-tip-remove')">Remove</button>
+              <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)"
+                class="button is-small is-danger is-inverted"
+                [attr.data-tippy-content]="textService.getText('stations-tip-remove')">Remove</button>
             </td>
           </tr>
         </tbody>
