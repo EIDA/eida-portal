@@ -29,6 +29,7 @@ exports.get_streams_for_stations = function(req, res, ctx) {
             res.json(result);
             return;
         } else {
+            res.json(null);
             return;
         }
     });
