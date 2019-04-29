@@ -118,7 +118,7 @@ function processStatResp(stations, body) {
  * This is to prevent making additional requests when channel info is needed.
  */
 exports.sync_stations_channels = function(err, ctx) {
-    ctx.clrCollection('channels');
+    ctx.recreateCollection('channels');
 
     for (let e of eida) {
         let url = e.url_station + 'format=text&level=channel';
@@ -155,7 +155,16 @@ function process_channel_resp(nodeCode, channels, body) {
                     'sampling': values[14]
                 }
 
-                channels.insert(_channel);
+                // If channel does not already exist in the list, add it.
+                if (channels.find({
+                    'node': _channel.node,
+                    'net': _channel.net,
+                    'stat': _channel.stat,
+                    'cha': _channel.cha,
+                    'sampling': _channel.sampling
+                }).length <= 0) {
+                    channels.insert(_channel);
+                }
             }
     }
 }

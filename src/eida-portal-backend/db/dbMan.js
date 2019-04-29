@@ -10,7 +10,7 @@ module.exports = class DbMan {
             {
                 autoload: true,
                 autosave: true,
-                autosaveInterval: 10000,
+                autosaveInterval: 60000,
                 adapter: adapter
             }
         );
@@ -51,8 +51,18 @@ module.exports = class DbMan {
     }
 
     clrCollection(name) {
-        this.loadCollection(name, function(name, ctx){
-            name.clear();
+        this.loadCollection(
+            name,
+            function(name){
+                name.clear();
+            }
+        );
+    }
+
+    recreateCollection(name) {
+        this.loadDb(function(ctx) {
+            ctx.removeCollection(name);
+            ctx.addCollection(name);
         });
     }
 }
