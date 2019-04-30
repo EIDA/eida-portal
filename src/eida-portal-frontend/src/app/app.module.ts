@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestComponent } from './request/request.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { HelpComponent } from './help/help.component';
+import { KeysPipe } from './pipes/keys-pipe.pipe';
+import { EnumKeyValueListPipe } from './pipes/enum-key-value.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HelpComponent } from './help/help.component';
     DashboardComponent,
     RequestComponent,
     MetricsComponent,
-    HelpComponent
+    HelpComponent,
+    KeysPipe,
+    EnumKeyValueListPipe
   ],
   imports: [
     BrowserModule,

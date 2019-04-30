@@ -138,25 +138,37 @@ export class MapModel {
 }
 
 export class RequestModel {
+    fdsnRequestTypes: {};
+    absoluteModeTimeMethods: {};
     datetimeFrom: string;
     datetimeTo: string;
-    fdsnRequestType: {};
+    timeWindowSelectionMode: Enums.RequestTimeWindowSelectionMode;
     selectedFdsnRequestType;
+    selectedAbsoluteModeStartTimeMethod;
+    selectedAbsoluteModeEndTimeMethod;
 
     constructor() {
+        this.fdsnRequestTypes = [
+            { 'id': 0, 'name': 'Waveform (Mini-SEED)' },
+            { 'id': 1, 'name': 'Metadata (StationXML)' },
+            { 'id': 2, 'name': 'Metadata (Text)' }
+        ];
+        this.absoluteModeTimeMethods = [
+            { 'id': 0, 'name': 'Origin Time'},
+            { 'id': 1, 'name': 'P/Pdiff'},
+            { 'id': 2, 'name': 'S/Sdiff'}
+        ]
         this.datetimeFrom = "2017-01-01T12:00:00";
         this.datetimeTo = "2018-01-01T12:00:00";
-        this.fdsnRequestType = [
-            {'id': 0, 'name': 'Waveform (Mini-SEED)'},
-            {'id': 1, 'name': 'Metadata (StationXML)'},
-            {'id': 2, 'name': 'Metadata (Text)'}
-        ];
-        this.selectedFdsnRequestType = this.fdsnRequestType[0];
+        this.timeWindowSelectionMode = Enums.RequestTimeWindowSelectionMode.Absolute;
+        this.selectedFdsnRequestType = this.fdsnRequestTypes[0];
+        this.selectedAbsoluteModeStartTimeMethod = this.absoluteModeTimeMethods[0];
+        this.selectedAbsoluteModeEndTimeMethod = this.absoluteModeTimeMethods[0];
     }
 
     toString() {
         return `Datetime: ${this.datetimeFrom} - ${this.datetimeTo},
-        request type: ${this.selectedFdsnRequestType.name}`;
+        request type: ${this.selectedFdsnRequestType}`;
     }
 }
 

@@ -20,4 +20,9 @@ export namespace Enums {
         Code = 0,
         Sampling = 1
     }
+
+    export enum RequestTimeWindowSelectionMode {
+        Absolute = 0,
+        Relative = 1
+    }
 }

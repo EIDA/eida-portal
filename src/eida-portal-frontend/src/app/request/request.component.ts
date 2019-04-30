@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { RequestModel } from '../modules/models';
 import { TextService } from '../text.service';
+import { Enums } from '../modules/enums';
 
 declare var $: any;
 @Component({
@@ -17,11 +18,15 @@ export class RequestComponent implements OnInit {
 
   ngOnInit() { }
 
+  timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionMode) {
+    this.requestModel.timeWindowSelectionMode = t;
+  }
+
   review() {
     this.consoleService.add('Request/review clicked');
   }
 
-  submit() {
+  download() {
     this.consoleService.add('Request/submit clicked >>> ' + this.requestModel.toString());
   }
 
