@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
+import { RequestService } from '../request.service';
 import { RequestModel } from '../modules/models';
 import { TextService } from '../text.service';
 import { Enums } from '../modules/enums';
@@ -13,6 +14,7 @@ export class RequestComponent implements OnInit {
   @Input() requestModel = new RequestModel();
 
   constructor(
+    private _requestService: RequestService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 

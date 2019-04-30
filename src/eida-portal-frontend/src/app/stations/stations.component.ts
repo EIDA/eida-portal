@@ -9,6 +9,7 @@ import {
 } from '../modules/models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
+import { RequestService } from '../request.service';
 import { MapService } from '../map.service';
 import { TextService } from '../text.service';
 import { PaginatorService } from '../paginator.service';
@@ -34,9 +35,10 @@ export class StationsComponent implements OnInit {
   private _streamSubscription: Subscription;
 
   constructor(
+    private _consoleService: ConsoleService,
     private _mapService: MapService,
+    private _requestService: RequestService,
     public stationsService: StationsService,
-    public consoleService: ConsoleService,
     public textService: TextService) { }
 
   ngOnInit() {

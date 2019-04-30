@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { MapService } from '../map.service';
-import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
 import { EventsService } from '../events.service';
+import { RequestService } from '../request.service';
+import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
 import { TextService } from '../text.service';
 import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
 import { PaginatorService } from '../paginator.service';
@@ -20,8 +21,9 @@ export class EventsComponent implements OnInit {
   
   constructor(
     private _mapService: MapService,
+    private _requestService: RequestService,
+    private _consoleService: ConsoleService,
     public eventsService: EventsService,
-    public consoleService: ConsoleService,
     public textService: TextService) { }
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class EventsComponent implements OnInit {
 
   reset() {
     this.eventsModel = new EventsModel();
-    this.consoleService.add('Events/reset clicked');
+    this._consoleService.add('Events/reset clicked');
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
