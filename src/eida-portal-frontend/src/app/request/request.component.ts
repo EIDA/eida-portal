@@ -12,14 +12,14 @@ declare var $: any;
 export class RequestComponent implements OnInit {
 
   constructor(
-    private _requestService: RequestService,
+    public requestService: RequestService,
     public consoleService: ConsoleService,
     public textService: TextService) { }
 
   ngOnInit() { }
 
   timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionModes) {
-    this._requestService.requestModel.timeWindowSelectionMode = t;
+    this.requestService.requestModel.timeWindowSelectionMode = t;
   }
 
   review() {
@@ -27,7 +27,7 @@ export class RequestComponent implements OnInit {
   }
 
   download() {
-    this.consoleService.add('Request/submit clicked >>> ' + this._requestService.requestModel.toString());
+    this.consoleService.add('Request/submit clicked >>> ' + this.requestService.requestModel.toString());
   }
 
   toggleModal() {
