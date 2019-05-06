@@ -18,8 +18,8 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-start-type')">
-              <select [(ngModel)]="requestModel.selectedAbsoluteModeStartTimeMethod">
-                <option *ngFor="let tm of requestModel.absoluteModeTimeMethods" [ngValue]="tm">{{tm.name}}</option>
+              <select [(ngModel)]="requestService.requestModel.selectedAbsoluteModeStartTimeMethod">
+                <option *ngFor="let tm of requestService.requestModel.absoluteModeTimeMethods" [ngValue]="tm">{{tm.name}}</option>
               </select>
             </div>
           </div>
@@ -45,8 +45,8 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-end-type')">
-              <select [(ngModel)]="requestModel.selectedAbsoluteModeEndTimeMethod">
-                <option *ngFor="let tm of requestModel.absoluteModeTimeMethods" [ngValue]="tm">{{tm.name}}</option>
+              <select [(ngModel)]="requestService.requestModel.selectedAbsoluteModeEndTimeMethod">
+                <option *ngFor="let tm of requestService.requestModel.absoluteModeTimeMethods" [ngValue]="tm">{{tm.name}}</option>
               </select>
             </div>
           </div>
@@ -70,7 +70,7 @@
       <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-from')">
         <label class="label">Datetime from</label>
         <div class="control">
-          <input [(ngModel)]="requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+          <input [(ngModel)]="requestService.requestModel.datetimeFrom" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
         </div>
         <p class="help">Example: "2017-01-01T12:00:00"</p>
       </div>
@@ -78,7 +78,7 @@
       <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-to')">
         <label class="label">Datetime to</label>
         <div class="control">
-          <input [(ngModel)]="requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
+          <input [(ngModel)]="requestService.requestModel.datetimeTo" class="input" type="text" placeholder="YYYY-MM-DDTHH:MM:SS">
         </div>
         <p class="help">Example: "2018-01-01T12:00:00"</p>
       </div>
@@ -95,8 +95,8 @@
       <div class="field-body">
         <div class="field">
           <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-request-type')">
-            <select [(ngModel)]="requestModel.selectedFdsnRequestType">
-              <option *ngFor="let rt of requestModel.fdsnRequestTypes" [ngValue]="rt">{{rt.name}}</option>
+            <select [(ngModel)]="requestService.requestModel.selectedFdsnRequestType">
+              <option *ngFor="let rt of requestService.requestModel.fdsnRequestTypes" [ngValue]="rt">{{rt.name}}</option>
             </select>
           </div>
         </div>
