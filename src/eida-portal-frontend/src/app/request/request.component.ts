@@ -20,7 +20,7 @@ export class RequestComponent implements OnInit {
 
   ngOnInit() { }
 
-  timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionMode) {
+  timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionModes) {
     this.requestModel.timeWindowSelectionMode = t;
   }
 

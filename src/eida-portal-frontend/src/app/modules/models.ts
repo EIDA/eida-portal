@@ -13,8 +13,8 @@ export class StationsModel {
     selectedNetwork;
     selectedStation;
     dataSource: Enums.StationDataSource;
-    stationSelectionMethod: Enums.StationSelectionMethod;
-    streamSelectionMethod: Enums.StationStreamSelectionMethod;
+    stationSelectionMethod: Enums.StationSelectionMethods;
+    streamSelectionMethod: Enums.StationStreamSelectionMethods;
     eventDistanceFrom: number;
     eventDistanceTo: number;
     eventAzimuthFrom: number;
@@ -33,8 +33,8 @@ export class StationsModel {
         this.selectedNetwork = 'All';
         this.selectedStation = 'All';
         this.dataSource = Enums.StationDataSource.Inventory;
-        this.stationSelectionMethod = Enums.StationSelectionMethod.Code;
-        this.streamSelectionMethod = Enums.StationStreamSelectionMethod.Code;
+        this.stationSelectionMethod = Enums.StationSelectionMethods.Code;
+        this.streamSelectionMethod = Enums.StationStreamSelectionMethods.Code;
         this.eventDistanceFrom = 0.0;
         this.eventDistanceTo = 100.0;
         this.eventAzimuthFrom = 0.0;
@@ -142,7 +142,7 @@ export class RequestModel {
     absoluteModeTimeMethods: {};
     datetimeFrom: string;
     datetimeTo: string;
-    timeWindowSelectionMode: Enums.RequestTimeWindowSelectionMode;
+    timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
     selectedFdsnRequestType;
     selectedAbsoluteModeStartTimeMethod;
     selectedAbsoluteModeEndTimeMethod;
@@ -160,7 +160,7 @@ export class RequestModel {
         ]
         this.datetimeFrom = "2017-01-01T12:00:00";
         this.datetimeTo = "2018-01-01T12:00:00";
-        this.timeWindowSelectionMode = Enums.RequestTimeWindowSelectionMode.Absolute;
+        this.timeWindowSelectionMode = Enums.RequestTimeWindowSelectionModes.Absolute;
         this.selectedFdsnRequestType = this.fdsnRequestTypes[0];
         this.selectedAbsoluteModeStartTimeMethod = this.absoluteModeTimeMethods[0];
         this.selectedAbsoluteModeEndTimeMethod = this.absoluteModeTimeMethods[0];

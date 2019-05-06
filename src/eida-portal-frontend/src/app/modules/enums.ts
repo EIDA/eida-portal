@@ -1,6 +1,6 @@
 // Created manually
 export namespace Enums {
-    export enum EventsCatalog {
+    export enum EventsCatalogs {
         EMSC = 0,
         IRIS = 1
     }
@@ -10,18 +10,18 @@ export namespace Enums {
         File = 1
     }
     
-    export enum StationSelectionMethod {
+    export enum StationSelectionMethods {
         Code = 0,
         Region = 1,
         Events = 2
     }
 
-    export enum StationStreamSelectionMethod {
+    export enum StationStreamSelectionMethods {
         Code = 0,
         Sampling = 1
     }
 
-    export enum RequestTimeWindowSelectionMode {
+    export enum RequestTimeWindowSelectionModes {
         Absolute = 0,
         Relative = 1
     }

@@ -163,6 +163,10 @@ export class StationsComponent implements OnInit {
    * Refresh availalbe streams for selected network / station
    */
   refreshAvailableStreams(): void {
+    if ((this.stationsModel.stationSelectionMethod !== Enums.StationSelectionMethods.Code)) {
+      return;
+    }
+
     this.stationsService.getAvailableStreams(
       this.stationsModel.selectedNetwork.code,
       this.stationsModel.selectedStation.stat).subscribe(
@@ -211,11 +215,11 @@ export class StationsComponent implements OnInit {
     this.stationsModel.dataSource = s;
   }
 
-  stationSelectionMethod(s: Enums.StationSelectionMethod): void {
+  stationSelectionMethod(s: Enums.StationSelectionMethods): void {
     this.stationsModel.stationSelectionMethod = s;
   }
 
-  stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethod): void {
+  stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethods): void {
     this.stationsModel.streamSelectionMethod = s;
   }
 

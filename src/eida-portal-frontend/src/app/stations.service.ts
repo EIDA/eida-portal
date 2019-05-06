@@ -127,20 +127,20 @@ export class StationsService {
       }
 
       // Station selection method-dependent
-      if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Code) {
+      if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Code) {
         if (sm.selectedStation !== 'All') {
           this._filteredStations = this._filteredStations.filter(
             m => m.stat === sm.selectedStation.stat
           )
         }
-      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Region) {
+      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Region) {
         this._filteredStations = this._filteredStations.filter(
           m => m.lat >= sm.coordinateS
           && m.lat <= sm.coordinateN
           && m.lon >= sm.coordinateW
           && m.lon <= sm.coordinateE
         )
-      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethod.Events) {
+      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Events) {
         for (let i = this._filteredStations.length - 1; i >= 0; i--) {
           if (!this._stationHasEvent(this._filteredStations[i], sm)) {
             this._filteredStations.splice(i, 1);
