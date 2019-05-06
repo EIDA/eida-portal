@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
+// import {
+//   debounceTime, distinctUntilChanged, switchMap
+// } from 'rxjs/operators';
 
 import {
-  StationsModel, StationStreamModel, FdsnNetwork, FdsnStationExt, MapDragBoxCoordinates
+  StationsModel, StationStreamModel, FdsnNetwork, FdsnStationExt,
+  MapDragBoxCoordinates
 } from '../modules/models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
@@ -13,11 +14,11 @@ import { RequestService } from '../request.service';
 import { MapService } from '../map.service';
 import { TextService } from '../text.service';
 import { PaginatorService } from '../paginator.service';
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
+// import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { Enums } from '../modules/enums';
 
 declare var $: any;
-declare var Mousetrap: any;
+// declare var Mousetrap: any;
 
 @Component({
   selector: 'app-stations',
