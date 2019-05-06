@@ -24,7 +24,7 @@
         <div class="field-body">
           <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-from')">
             <div class="control">
-              <input [(ngModel)]="stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+              <input [(ngModel)]="stationsService.stationsModel.yearFrom" class="input" type="text" placeholder="1980">
             </div>
           </div>
         </div>
@@ -37,43 +37,11 @@
         <div class="field-body">
           <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-to')">
             <div class="control">
-              <input [(ngModel)]="stationsModel.yearTo" class="input" type="text" placeholder="2018">
+              <input [(ngModel)]="stationsService.stationsModel.yearTo" class="input" type="text" placeholder="2018">
             </div>
           </div>
         </div>
       </div>
-
-      <!-- <div class="field is-horizontal">
-        <div class="field-label">
-          <label class="label">Network type</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="select">
-              <select [(ngModel)]="stationsModel.selectedNetworkType">
-                <option *ngFor="let t of stationsModel.networkTypes" [ngValue]="t">{{t.name}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="field is-horizontal">
-        <div class="field-label">
-          <label class="label">Network search</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input #searchBox id="search-network" (keyup)="search_network(searchBox.value)" class="input" type="text">
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <span *ngFor="let n of networks_search$ | async" class="tag">
-        {{ n.code }} ({{ n.start }})
-      </span> -->
 
       <div class="field is-horizontal">
         <div class="field-label">
@@ -82,7 +50,7 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network')">
-              <select [(ngModel)]="stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
+              <select [(ngModel)]="stationsService.stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
                 style="width:100%;">
                 <option selected>All</option>
                 <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
@@ -122,7 +90,7 @@
           <div class="field-body">
             <div class="field">
               <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-station')">
-                <select [(ngModel)]="stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
+                <select [(ngModel)]="stationsService.stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
                   style="width:100%;">
                   <option selected>All</option>
                   <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})
@@ -142,7 +110,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-n')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.coordinateN" class="input" type="text" placeholder="90">
+                <input [(ngModel)]="stationsService.stationsModel.coordinateN" class="input" type="text" placeholder="90">
               </div>
             </div>
           </div>
@@ -155,7 +123,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-s')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.coordinateS" class="input" type="text" placeholder="-90">
+                <input [(ngModel)]="stationsService.stationsModel.coordinateS" class="input" type="text" placeholder="-90">
               </div>
             </div>
           </div>
@@ -169,7 +137,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-e')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.coordinateE" class="input" type="text" placeholder="180">
+                <input [(ngModel)]="stationsService.stationsModel.coordinateE" class="input" type="text" placeholder="180">
               </div>
             </div>
           </div>
@@ -182,7 +150,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-w')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.coordinateW" class="input" type="text" placeholder="-180">
+                <input [(ngModel)]="stationsService.stationsModel.coordinateW" class="input" type="text" placeholder="-180">
               </div>
             </div>
           </div>
@@ -197,7 +165,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-from')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.eventDistanceFrom" class="input" type="text" placeholder="0">
+                <input [(ngModel)]="stationsService.stationsModel.eventDistanceFrom" class="input" type="text" placeholder="0">
               </div>
             </div>
           </div>
@@ -209,7 +177,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-to')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.eventDistanceTo" class="input" type="text" placeholder="180">
+                <input [(ngModel)]="stationsService.stationsModel.eventDistanceTo" class="input" type="text" placeholder="180">
               </div>
             </div>
           </div>
@@ -221,7 +189,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-from')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.eventAzimuthFrom" class="input" type="text" placeholder="0">
+                <input [(ngModel)]="stationsService.stationsModel.eventAzimuthFrom" class="input" type="text" placeholder="0">
               </div>
             </div>
           </div>
@@ -233,7 +201,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-to')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.eventAzimuthTo" class="input" type="text" placeholder="360">
+                <input [(ngModel)]="stationsService.stationsModel.eventAzimuthTo" class="input" type="text" placeholder="360">
               </div>
             </div>
           </div>
@@ -261,7 +229,7 @@
       <div id="streamsByCodeContent">
         <!-- <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-streams')">
           <select multiple>
-            <option *ngFor="let s of stationsModel.streams" [ngValue]="s" (click)="handleStreamSelection(s);">
+            <option *ngFor="let s of stationsService.stationsModel.streams" [ngValue]="s" (click)="handleStreamSelection(s);">
               {{ s.channelCode }} ({{ s.appearances }})</option>
           </select>
         </div> -->
@@ -308,7 +276,7 @@
           <div class="field-body">
             <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-sampling-rate')">
               <div class="control">
-                <input [(ngModel)]="stationsModel.targetSamplingRate" class="input" type="text" placeholder="20">
+                <input [(ngModel)]="stationsService.stationsModel.targetSamplingRate" class="input" type="text" placeholder="20">
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Subject ,  Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Injectable, Input } from '@angular/core';
+import { Subject ,  Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
 import { EventsService } from './events.service';
 import { 
@@ -15,6 +15,8 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StationsService {
+  // Binding object for stations tab
+  @Input() stationsModel = new StationsModel();
   public allNetworks: FdsnNetwork[];
   public allStations = new Array<FdsnStationExt>();
   public selectedStations = new Subject<FdsnStationExt[]>();
@@ -211,17 +213,6 @@ export class StationsService {
     this.refreshStations(this._mapStations);
   }
 
-  // searchNetwork(term: string): Observable<FdsnNetwork[]> {
-  //   if (!term.trim()) {
-  //     return of([]);
-  //   }
-  //   return this._eidaService.http.get<FdsnNetwork[]>(this.networksUrl)
-  //     .pipe(
-  //       tap(_ => this._eidaService.log(`found heroes matching "${term}"`)),
-  //       catchError(this._eidaService.handleError<FdsnNetwork[]>('searchNetwork', []))
-  //     );
-  // }
-
   getNetworksStations(): Observable<FdsnNetwork[]> {
     return this._eidaService.http.get<FdsnNetwork[]>(this.networksStationsUrl)
       .pipe(
@@ -229,5 +220,4 @@ export class StationsService {
         catchError(this._eidaService.handleError('getNetworksStations', []))
       );
   }
-
 }

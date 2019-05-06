@@ -1,35 +1,25 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of, Subject, Subscription } from 'rxjs';
-// import {
-//   debounceTime, distinctUntilChanged, switchMap
-// } from 'rxjs/operators';
-
+import { Component, OnInit } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import {
   StationsModel, StationStreamModel, FdsnNetwork, FdsnStationExt,
   MapDragBoxCoordinates
 } from '../modules/models';
 import { ConsoleService } from '../console.service';
 import { StationsService } from '../stations.service';
-import { RequestService } from '../request.service';
 import { MapService } from '../map.service';
 import { TextService } from '../text.service';
 import { PaginatorService } from '../paginator.service';
-// import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { Enums } from '../modules/enums';
 
 declare var $: any;
-// declare var Mousetrap: any;
 
 @Component({
   selector: 'app-stations',
   templateUrl: './stations.component.html',
 })
 export class StationsComponent implements OnInit {
-  @Input() stationsModel = new StationsModel();
-  
   filteredStations: FdsnStationExt[];
   selectedStations = new Array<FdsnStationExt>();
-  // networks_search$: Observable<FdsnNetwork[]>;
   paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
@@ -38,7 +28,6 @@ export class StationsComponent implements OnInit {
   constructor(
     private _consoleService: ConsoleService,
     private _mapService: MapService,
-    private _requestService: RequestService,
     public stationsService: StationsService,
     public textService: TextService) { }
 
@@ -70,12 +59,12 @@ export class StationsComponent implements OnInit {
   }
 
   allNetworks(): void {
-    this.stationsModel.selectedNetwork = new FdsnNetwork();
+    this.stationsService.stationsModel.selectedNetwork = new FdsnNetwork();
   }
 
   allStations(): void {
-    this.stationsModel.selectedNetwork = new FdsnNetwork();
-    this.stationsModel.selectedStation = new FdsnStationExt();
+    this.stationsService.stationsModel.selectedNetwork = new FdsnNetwork();
+    this.stationsService.stationsModel.selectedStation = new FdsnStationExt();
     this.filteredStations = this.stationsService.allStations;
   }
 
@@ -83,13 +72,13 @@ export class StationsComponent implements OnInit {
     if (n === 'All') {
       this.filteredStations = this.stationsService.allStations;
     } else {
-      this.stationsModel.selectedNetwork = n;
+      this.stationsService.stationsModel.selectedNetwork = n;
       this.filteredStations = this.stationsService.allStations.filter(
         s => s.net === n.code
       );
     }
 
-    this.stationsModel.clearStationSelection();
+    this.stationsService.stationsModel.clearStationSelection();
     this.refreshAvailableStreams();
   }
 
@@ -109,30 +98,30 @@ export class StationsComponent implements OnInit {
   }
 
   stationChanged(s): void {
-    this.stationsModel.selectedStation = s;
+    this.stationsService.stationsModel.selectedStation = s;
     this.refreshAvailableStreams();    
   }
 
   getAvailableStreams() {
-    return this.stationsModel.availableStreams;
+    return this.stationsService.stationsModel.availableStreams;
   }
 
   getWorksetStreams(selected: boolean) {
-    return this.stationsModel.worksetStreams.filter(x => x.selected === selected);
+    return this.stationsService.stationsModel.worksetStreams.filter(x => x.selected === selected);
   }
 
   handleStreamSelection(s) : void {
-    this.stationsModel.worksetStreams.find(
+    this.stationsService.stationsModel.worksetStreams.find(
       e => e.streamCode === s.streamCode).selected = !s.selected;
   }
 
   add() {
     $('#addButton').addClass('is-loading');
-    this.stationsService.addSelectedStation(this.stationsModel);
+    this.stationsService.addSelectedStation(this.stationsService.stationsModel);
   }
 
   reset(): void {
-    this.stationsModel = new StationsModel();
+    this.stationsService.stationsModel = new StationsModel();
   }
 
   removeAllStations(): void {
@@ -164,25 +153,25 @@ export class StationsComponent implements OnInit {
    * Refresh availalbe streams for selected network / station
    */
   refreshAvailableStreams(): void {
-    if ((this.stationsModel.stationSelectionMethod !== Enums.StationSelectionMethods.Code)) {
+    if ((this.stationsService.stationsModel.stationSelectionMethod !== Enums.StationSelectionMethods.Code)) {
       return;
     }
 
     this.stationsService.getAvailableStreams(
-      this.stationsModel.selectedNetwork.code,
-      this.stationsModel.selectedStation.stat).subscribe(
+      this.stationsService.stationsModel.selectedNetwork.code,
+      this.stationsService.stationsModel.selectedStation.stat).subscribe(
         val => this.importStationStreams(val)
     );
   }
 
   importStationStreams(array) : void {
-    this.stationsModel.clearAvailableStreams();
+    this.stationsService.stationsModel.clearAvailableStreams();
 
     for (let a in array) {
       let s = new StationStreamModel();
       s.streamCode = a;
       s.appearances = array[a];
-      this.stationsModel.availableStreams.push(s);
+      this.stationsService.stationsModel.availableStreams.push(s);
     }
   }
 
@@ -202,33 +191,33 @@ export class StationsComponent implements OnInit {
   }
 
   importWorksetStationChannels(array): void {
-    this.stationsModel.clearWorksetStreams();
+    this.stationsService.stationsModel.clearWorksetStreams();
 
     for (let a in array) {
       let s = new StationStreamModel();
       s.streamCode = a;
       s.appearances = array[a];
-      this.stationsModel.worksetStreams.push(s);
+      this.stationsService.stationsModel.worksetStreams.push(s);
     }
   }
 
   stationDataSourceChanged(s: Enums.StationDataSource): void {
-    this.stationsModel.dataSource = s;
+    this.stationsService.stationsModel.dataSource = s;
   }
 
   stationSelectionMethod(s: Enums.StationSelectionMethods): void {
-    this.stationsModel.stationSelectionMethod = s;
+    this.stationsService.stationsModel.stationSelectionMethod = s;
   }
 
   stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethods): void {
-    this.stationsModel.streamSelectionMethod = s;
+    this.stationsService.stationsModel.streamSelectionMethod = s;
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
-    this.stationsModel.coordinateN = mdbc.coordN;
-    this.stationsModel.coordinateS = mdbc.coordS;
-    this.stationsModel.coordinateE = mdbc.coordE;
-    this.stationsModel.coordinateW = mdbc.coordW;
+    this.stationsService.stationsModel.coordinateN = mdbc.coordN;
+    this.stationsService.stationsModel.coordinateS = mdbc.coordS;
+    this.stationsService.stationsModel.coordinateE = mdbc.coordE;
+    this.stationsService.stationsModel.coordinateW = mdbc.coordW;
   }
 
   handleGeneralInputTypeChange(btn: string, target: string): void {

@@ -27,7 +27,7 @@ export class EventsService {
   */
  
   private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
-  // Binding model for the Events tab
+  // Binding object for the Events tab
   @Input() public eventsModel = new EventsModel();
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
   public selectedEvents = new BehaviorSubject(new Array<FdsnEventsResponseModels.EventExt>());
