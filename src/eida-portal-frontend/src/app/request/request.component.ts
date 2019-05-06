@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { RequestService } from '../request.service';
-import { RequestModel } from '../modules/models';
 import { TextService } from '../text.service';
 import { Enums } from '../modules/enums';
 
@@ -11,7 +10,6 @@ declare var $: any;
   templateUrl: './request.component.html',
 })
 export class RequestComponent implements OnInit {
-  @Input() requestModel = new RequestModel();
 
   constructor(
     private _requestService: RequestService,
@@ -21,7 +19,7 @@ export class RequestComponent implements OnInit {
   ngOnInit() { }
 
   timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionModes) {
-    this.requestModel.timeWindowSelectionMode = t;
+    this._requestService.requestModel.timeWindowSelectionMode = t;
   }
 
   review() {
@@ -29,7 +27,7 @@ export class RequestComponent implements OnInit {
   }
 
   download() {
-    this.consoleService.add('Request/submit clicked >>> ' + this.requestModel.toString());
+    this.consoleService.add('Request/submit clicked >>> ' + this._requestService.requestModel.toString());
   }
 
   toggleModal() {
