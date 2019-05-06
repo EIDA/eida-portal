@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { EidaService } from './eida.service';
@@ -25,12 +25,15 @@ export class EventsService {
   - When something needs to be changed, we change _mapEvents and
     insert it to selectedEvents Subject
   */
+ 
   private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
+  // Binding model for the Events tab
+  @Input() public eventsModel = new EventsModel();
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
   public selectedEvents = new BehaviorSubject(new Array<FdsnEventsResponseModels.EventExt>());
   public eventsResponse = new Subject<Object>();
+  // Focued event for the map
   public focusedEvent = new Subject<FdsnEventsResponseModels.EventExt>();
-  // public eventsObjGraph = new Subject<FdsnEventsResponseModels.FdsnEventsRoot>();
 
   constructor(
     private _eidaService: EidaService

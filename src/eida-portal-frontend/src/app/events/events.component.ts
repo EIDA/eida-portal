@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { MapService } from '../map.service';
 import { EventsService } from '../events.service';
-import { RequestService } from '../request.service';
 import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
 import { TextService } from '../text.service';
 import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
@@ -15,13 +14,10 @@ declare var $: any;
   templateUrl: './events.component.html',
 })
 export class EventsComponent implements OnInit {
-  @Input() eventsModel = new EventsModel();
   paginator = new PaginatorService();
-  selectedEvents = new Array<FdsnEventsResponseModels.EventExt>();
   
   constructor(
     private _mapService: MapService,
-    private _requestService: RequestService,
     private _consoleService: ConsoleService,
     public eventsService: EventsService,
     public textService: TextService) { }
@@ -38,29 +34,28 @@ export class EventsComponent implements OnInit {
 
   search() {
     $('#searchButton').addClass('is-loading');
-    this.eventsService.getEvents(this.eventsModel);
+    this.eventsService.getEvents(this.eventsService.eventsModel);
   }
 
   reset() {
-    this.eventsModel = new EventsModel();
+    this.eventsService.eventsModel = new EventsModel();
     this._consoleService.add('Events/reset clicked');
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
-    this.eventsModel.coordinateN = mdbc.coordN;
-    this.eventsModel.coordinateS = mdbc.coordS;
-    this.eventsModel.coordinateE = mdbc.coordE;
-    this.eventsModel.coordinateW = mdbc.coordW;
+    this.eventsService.eventsModel.coordinateN = mdbc.coordN;
+    this.eventsService.eventsModel.coordinateS = mdbc.coordS;
+    this.eventsService.eventsModel.coordinateE = mdbc.coordE;
+    this.eventsService.eventsModel.coordinateW = mdbc.coordW;
   }
 
   updateSelectedEventsTable(e: FdsnEventsResponseModels.EventExt[]) {
-    this.selectedEvents = e;
     this.refreshPaginator();
     $('#searchButton').removeClass('is-loading');
   }
 
   refreshPaginator(): void {
-    this.paginator.paginate(this.selectedEvents);
+    this.paginator.paginate(this.eventsService.selectedEvents.value);
     this.paginator.getPages();
   }
 
@@ -77,7 +72,9 @@ export class EventsComponent implements OnInit {
   }
 
   countSelectedEvents(): number {
-    return this.selectedEvents.filter(e => e.selected === true).length;
+    return this.eventsService.selectedEvents.value.filter(
+      e => e.selected === true
+    ).length;
   }
 
   invertEventsSelection(): void {

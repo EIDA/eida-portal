@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ConsoleService } from './console.service'
+import { ConsoleService } from './console.service';
 
 @Injectable({
   providedIn: 'root'

@@ -8,8 +8,8 @@
       <div class="field-body">
         <div class="field">
           <div class="select" [attr.data-tippy-content]="textService.getText('events-tip-catalog')">
-            <select [(ngModel)]="eventsModel.selectedCatalog">
-              <option *ngFor="let c of eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
+            <select [(ngModel)]="eventsService.eventsModel.selectedCatalog">
+              <option *ngFor="let c of eventsService.eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
             </select>
           </div>
         </div>
@@ -23,7 +23,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-mag-min')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
+            <input [(ngModel)]="eventsService.eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-date-from')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.dateFrom" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.dateFrom" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-date-to')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.dateTo" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.dateTo" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-depth-from')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.depthFrom" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.depthFrom" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-depth-to')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.depthTo" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.depthTo" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-n')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.coordinateN" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.coordinateN" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -101,7 +101,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-s')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.coordinateS" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.coordinateS" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-e')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.coordinateE" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.coordinateE" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-w')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.coordinateW" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.coordinateW" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@
       <div class="field-body">
         <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-result-limit')">
           <div class="control">
-            <input [(ngModel)]="eventsModel.resultLimit" class="input" type="text" placeholder="1">
+            <input [(ngModel)]="eventsService.eventsModel.resultLimit" class="input" type="text" placeholder="1">
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@
     <div class="columns" *ngIf="paginator.getTotalPages() > 0">
       <div class="column is-third">
           <span class="button is-small is-danger is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">
-            Remove all ({{ selectedEvents.length }})
+            Remove all ({{ eventsService.selectedEvents.value.length }})
           </span>
       </div>
       <div class="column is-third">
