@@ -10,7 +10,7 @@ export class EidaService {
 
   constructor(
     public http: HttpClient,
-    private consoleService: ConsoleService
+    private _consoleService: ConsoleService
   ) { }
 
   public httpOptions = {
@@ -18,7 +18,7 @@ export class EidaService {
   };
 
   public log(message: string) {
-    this.consoleService.add(`EidaService: ${message}`);
+    this._consoleService.add(`EidaService: ${message}`);
   }
 
   /**

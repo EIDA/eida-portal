@@ -15,7 +15,7 @@ declare var $: any;
 })
 export class EventsComponent implements OnInit {
   paginator = new PaginatorService();
-  
+
   constructor(
     private _mapService: MapService,
     private _consoleService: ConsoleService,

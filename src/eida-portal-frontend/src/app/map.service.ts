@@ -17,7 +17,7 @@ export class MapService {
   }
 
   updateDragBoxCoordinatesByArray(a) {
-    let dbc = new MapDragBoxCoordinates();
+    const dbc = new MapDragBoxCoordinates();
     dbc.coordN = a[0];
     dbc.coordS = a[1];
     dbc.coordE = a[2];

@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PaginatorService {
-  private _currentPage: number = 0;
-  private _pageSize: number = 10;
+  private _currentPage = 0;
+  private _pageSize = 10;
   private _pages = new Array();
 
   constructor() { }
@@ -13,7 +13,7 @@ export class PaginatorService {
   paginate(data) {
     this._pages = new Array();
     for (let i = 0; i < data.length; i += this._pageSize) {
-      var tmpSlice = data.slice(i, i + this._pageSize);
+      const tmpSlice = data.slice(i, i + this._pageSize);
       if (tmpSlice.length > 0) {
         this._pages.push(tmpSlice);
       }

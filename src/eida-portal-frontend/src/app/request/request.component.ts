@@ -27,7 +27,7 @@ export class RequestComponent implements OnInit {
   }
 
   download() {
-    this._consoleService.add('Request/submit clicked >>> ' + this.requestService.requestModel.toString());
+    this.requestService.download();
   }
 
   toggleModal() {

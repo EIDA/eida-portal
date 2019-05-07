@@ -1,10 +1,8 @@
 import { Injectable, Input } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../environments/environment';
+import { catchError, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
 import { EventsModel } from './modules/models';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
 import { Parser } from 'xml2js';
 import { SerializationHelper } from './helpers/serialization.helper';

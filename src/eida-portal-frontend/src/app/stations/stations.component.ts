@@ -39,12 +39,6 @@ export class StationsComponent implements OnInit {
       s => this.stationsService.addAllStations(s)
     );
 
-    // this.networks_search$ = this.searchTerms.pipe(
-    //   debounceTime(300),
-    //   distinctUntilChanged(),
-    //   switchMap((term: string) => this.stationsService.searchNetwork(term)),
-    // );
-
     this.stationsService.selectedStations.subscribe(
       s => this.updateSelectedStationsTable(s)
     );
