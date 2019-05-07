@@ -31,6 +31,13 @@
             // "sourceMapPathOverrides": {
             //     "*": "${webRoot}/*"
             // }
+        },
+        {
+            "type": "firefox",
+            "request": "launch",
+            "name": "EPF Launch (Linux + Firefox)",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/src/eida-portal-frontend/"
         }
     ]
 }
