@@ -25,7 +25,7 @@ export class EventsService {
   - When something needs to be changed, we change _mapEvents and
     insert it to selectedEvents Subject
   */
- 
+
   private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
   // Binding object for the Events tab
   @Input() public eventsModel = new EventsModel();
@@ -49,13 +49,13 @@ export class EventsService {
 
   // Extract json data to object graph for easier operation (map rendering etc)
   eventsXmlToObjGraph(resp, allEvents) {
-    let p = new Parser();
+    const p = new Parser();
     p.parseString(resp, function(err, result) {
-      if (err) {throw err;}
+      if (err) {throw err; }
 
       try {
-        let json = JSON.parse(JSON.stringify(result));
-        let objGraph = SerializationHelper.eventsJsonToObjGraph(json);
+        const json = JSON.parse(JSON.stringify(result));
+        const objGraph = SerializationHelper.eventsJsonToObjGraph(json);
         allEvents.next(objGraph.quakeml.eventParameters.event);
       } catch (ex) {
         this.log(ex);
@@ -65,14 +65,14 @@ export class EventsService {
   }
 
   addReceivedEvents(events: FdsnEventsResponseModels.EventExt[]) {
-    for (let e of events) {
+    for (const e of events) {
       this._mapEvents.push(e);
     }
     this.updateEvents(this._mapEvents);
   }
 
   getEvents(e: EventsModel) {
-    let url = this.buildEventsUrl(e);
+    const url = this.buildEventsUrl(e);
 
     // let headers: HttpHeaders = new HttpHeaders();
     // headers = headers.append('Access-Control-Allow-Origin', '*');
@@ -115,7 +115,7 @@ export class EventsService {
   }
 
   removeEventSelection(s: FdsnEventsResponseModels.EventExt) {
-    let i = this._mapEvents.indexOf(
+    const i = this._mapEvents.indexOf(
       this._mapEvents.find(p => p._publicID === s._publicID)
     );
     this._mapEvents.splice(i, 1);
@@ -134,7 +134,7 @@ export class EventsService {
   }
 
   invertEventsSelection() {
-    for (let e of this._mapEvents) {
+    for (const e of this._mapEvents) {
       e.selected = !e.selected;
     }
 

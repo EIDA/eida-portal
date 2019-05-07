@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { RequestService } from '../request.service';
+import { EventsService } from '../events.service';
+import { StationsService } from '../stations.service';
 import { TextService } from '../text.service';
 import { Enums } from '../modules/enums';
 
@@ -13,8 +15,10 @@ export class RequestComponent implements OnInit {
 
   constructor(
     public requestService: RequestService,
-    public consoleService: ConsoleService,
-    public textService: TextService) { }
+    public textService: TextService,
+    private _eventsService: EventsService,
+    private _stationsService: StationsService,
+    private _consoleService: ConsoleService) { }
 
   ngOnInit() { }
 
@@ -23,11 +27,11 @@ export class RequestComponent implements OnInit {
   }
 
   review() {
-    this.consoleService.add('Request/review clicked');
+    this._consoleService.add('Request/review clicked');
   }
 
   download() {
-    this.consoleService.add('Request/submit clicked >>> ' + this.requestService.requestModel.toString());
+    this._consoleService.add('Request/submit clicked >>> ' + this.requestService.requestModel.toString());
   }
 
   toggleModal() {
