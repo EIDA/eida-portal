@@ -142,6 +142,8 @@ export class RequestModel {
     absoluteModeTimeMethods: {};
     datetimeFrom: string;
     datetimeTo: string;
+    absoluteModeStart: number;
+    absoluteModeEnd: number;
     timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
     selectedFdsnRequestType;
     selectedAbsoluteModeStartTimeMethod;
@@ -160,6 +162,8 @@ export class RequestModel {
         ]
         this.datetimeFrom = "2017-01-01T12:00:00";
         this.datetimeTo = "2018-01-01T12:00:00";
+        this.absoluteModeStart = 2;
+        this.absoluteModeEnd = 10;
         this.timeWindowSelectionMode = Enums.RequestTimeWindowSelectionModes.Absolute;
         this.selectedFdsnRequestType = this.fdsnRequestTypes[0];
         this.selectedAbsoluteModeStartTimeMethod = this.absoluteModeTimeMethods[0];
