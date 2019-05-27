@@ -7,6 +7,8 @@ export const environment = {
   // networksUrl:  'http://127.0.0.1:3000/n',
   // stationsUrl: 'http://127.0.0.1:3000/s',
   // channelsUrl: 'http://127.0.0.1:3000/streams',
+  federatorStationUrl: 'http://federator.orfeus-eu.org/fdsnws/station/1/query?',
+  federatorDataselectUrl: 'http://federator.orfeus-eu.org/fdsnws/dataselect/1/query?',
   networksUrl:  'https://www.orfeus-eu.org/epb/n',
   stationsUrl: 'https://www.orfeus-eu.org/epb/s',
   channelsUrl: 'https://www.orfeus-eu.org/epb/streams',
