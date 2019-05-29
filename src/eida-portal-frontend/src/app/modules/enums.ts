@@ -25,4 +25,9 @@ export namespace Enums {
         Absolute = 0,
         Relative = 1
     }
+
+    export enum MetadataFormats {
+        StationXML = 1,
+        Text = 1
+    }
 }

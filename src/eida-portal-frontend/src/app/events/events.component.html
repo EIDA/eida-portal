@@ -203,7 +203,7 @@
           <tr *ngFor="let event of paginator.getCurrentPage()">
             <td>
               <a (click)="focusOnEvent(event)">{{event.description.text | titlecase}}</a>
-              <p class="is-size-7">{{event.origin.time | date:'medium'}}<br>Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
+              <p class="is-size-7">{{event.origin.time.value | date:'medium'}}<br>Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
             </td>
             <td>
               <button style="width: 100%;" (click)="eventsService.toggleEventSelection(event)" [ngClass]="event.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('events-tip-toggle-select')">

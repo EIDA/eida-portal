@@ -10,11 +10,11 @@ export namespace FdsnEventsResponseModels {
     }
 
     export class Time {
-        value: Date;
+        value: string;
 
-        constructor() {
-            this.value = new Date();
-        }
+        // constructor() {
+        //     this.value = new Date();
+        // }
     }
 
     export class CreationInfo {
@@ -104,7 +104,7 @@ export namespace FdsnEventsResponseModels {
 
         getMapPopupText(): string {
             return `
-            <b>Time:</b> ${this.origin.time}<br>
+            <b>Time:</b> ${this.origin.time.value}<br>
             <b>Region:</b> ${this.description.text}<br>
             <b>Magnitude:</b> ${this.magnitude.mag.value}<br>
             <b>Depth:</b> ${this.origin.depth}<br>

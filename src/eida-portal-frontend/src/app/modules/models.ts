@@ -61,6 +61,14 @@ export class StationsModel {
     clearWorksetStreams() {
         this.worksetStreams = new Array<StationStreamModel>();
     }
+
+    getSelectedStreams() {
+        return this.worksetStreams.filter(k => k.selected);
+    }
+
+    allStreamsSelected(): boolean {
+        return this.worksetStreams.find(k => !k.selected) === undefined;
+    }
 }
 
 export class StationStreamModel {

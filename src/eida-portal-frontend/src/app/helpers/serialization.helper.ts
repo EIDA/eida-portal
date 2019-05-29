@@ -42,7 +42,7 @@ export class SerializationHelper {
               ) ? e.magnitude[0].creationInfo[0].author[0] : 'none';
 
           event.magnitude.mag.value = e.magnitude[0].mag[0].value[0];
-          event.origin.time = e.origin[0].time[0].value[0];
+          event.origin.time.value = e.origin[0].time[0].value[0];
 
           // Not provided by EMSC
           event.origin.creationInfo.author = (
