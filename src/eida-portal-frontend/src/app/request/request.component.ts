@@ -27,7 +27,7 @@ export class RequestComponent implements OnInit {
   }
 
   download() {
-    this.requestService.download();
+    this.requestService.downloadMiniseed();
   }
 
   toggleModal() {

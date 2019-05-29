@@ -13,6 +13,8 @@ import { FdsnEventsResponseModels } from './modules/models.fdsn-events';
 })
 export class RequestService {
   private _routingUrl = environment.routingUrl;
+  private _fedDataselectUrl = environment.federatorDataselectUrl;
+  private _fedStationUrl = environment.federatorStationUrl;
 
   // Binding object for Request tab
   @Input() requestModel = new RequestModel();
@@ -26,7 +28,7 @@ export class RequestService {
     this._consoleService.add(`RequestService: ${message}`);
   }
 
-  public download(): void {
+  public downloadMiniseed(): void {
     for (const s of this._stationsService.selectedStations.value) {
       const url = this.findDataselectSource(s);
     }
