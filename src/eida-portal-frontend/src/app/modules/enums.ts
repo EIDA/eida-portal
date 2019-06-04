@@ -27,7 +27,7 @@ export namespace Enums {
     }
 
     export enum MetadataFormats {
-        StationXML = 1,
+        StationXML = 0,
         Text = 1
     }
 }
