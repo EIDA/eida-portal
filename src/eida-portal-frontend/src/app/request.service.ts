@@ -14,6 +14,7 @@ import { DateHelper } from './helpers/date.helper';
 })
 export class RequestService {
   private _fedDataselectUrl = environment.federatorDataselectUrl;
+  private _fedStationUrl = environment.federatorStationUrl;
 
   // Binding object for Request tab
   @Input() requestModel = new RequestModel();
@@ -88,8 +89,10 @@ export class RequestService {
       url += `&${t}`;
 
       urls.push(url);
-      console.log(urls);
+      window.open(url);
     }
+    
+    console.log(urls);
   }
 
   getTimeWindow(e: FdsnEventsResponseModels.EventExt): string {
@@ -99,8 +102,15 @@ export class RequestService {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
         let momentStart = dh.getDate(e.origin.time.value);
         let momentEnd = dh.getDate(e.origin.time.value);
-        let startTime = momentStart.add(-this.requestModel.absoluteModeStart, 'minutes').format("YYYY-MM-DDTHH:mm:ss");
-        let endTime = momentEnd.add(this.requestModel.absoluteModeEnd, 'minutes').format("YYYY-MM-DDTHH:mm:ss");
+
+        let startTime = momentStart.add(
+          -this.requestModel.absoluteModeStart, 'minutes'
+        ).format("YYYY-MM-DDTHH:mm:ss");
+
+        let endTime = momentEnd.add(
+          this.requestModel.absoluteModeEnd, 'minutes'
+        ).format("YYYY-MM-DDTHH:mm:ss");
+
         return `starttime=${startTime}&endtime=${endTime}`;
       case Enums.RequestTimeWindowSelectionModes.Relative:
         return;
@@ -109,6 +119,30 @@ export class RequestService {
 
   
   private _downloadMetadata(format: Enums.MetadataFormats): void {
+    let urlSta = null;
 
+      // Check if there are stations selected and
+      // create a comma-separated list of them for the URL query
+      if (this._stationsService.selectedStations.value.length > 0) {
+        urlSta = Object.keys(this._stationsService.selectedStations.value)
+          .map(k => this._stationsService.selectedStations.value[k].stat)
+          .join(',');
+      }
+
+      let url = '';
+      switch (format) {
+        case Enums.MetadataFormats.StationXML:
+          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
+          break;
+        case Enums.MetadataFormats.Text:
+          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
+          break;
+        default:
+          url = `${this._fedStationUrl}sta=${urlSta}`;
+          break;
+      }
+      window.open(url);
+
+    console.log(url);
   }
 }
