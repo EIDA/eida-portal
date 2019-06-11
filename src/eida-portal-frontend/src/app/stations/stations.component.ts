@@ -62,6 +62,10 @@ export class StationsComponent implements OnInit {
     this.filteredStations = this.stationsService.allStations;
   }
 
+  /**
+   * Triggered from stations tab when network combo value changes
+   * @param n - String "All" or FdsnNetwork instance
+   */
   networkChanged(n) {
     if (n === 'All') {
       this.filteredStations = this.stationsService.allStations;
