@@ -8,6 +8,8 @@ import { FdsnStationExt } from './modules/models';
 import { FdsnEventsResponseModels } from './modules/models.fdsn-events';
 import { Enums } from './modules/enums';
 import { DateHelper } from './helpers/date.helper';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +50,7 @@ export class RequestService {
   }
 
   private _downloadMiniSeed(): void {
-    let urls = Array<string>();
+    let urls = Array<string[]>();
 
     let selectedStreams = this._stationsService.stationsModel.getSelectedStreams();
     let allStreamsSelected = this._stationsService.stationsModel.allStreamsSelected();
@@ -85,17 +87,51 @@ export class RequestService {
       }
 
       // Get the time window based on event
-      let t = this.getTimeWindow(e);
+      let t = this._getTimeWindow(e);
       url += `&${t}`;
 
-      urls.push(url);
-      window.open(url);
+      urls.push([`${e._publicID}.mseed`, url]);
     }
-    
-    console.log(urls);
+
+    this._saveToZip('event-data.zip', urls);
+  }
+  
+  private _downloadMetadata(format: Enums.MetadataFormats): void {
+    let urls = Array<string[]>();
+    let filename = '';
+    let urlSta = null;
+
+      // Check if there are stations selected and
+      // create a comma-separated list of them for the URL query
+      if (this._stationsService.selectedStations.value.length > 0) {
+        urlSta = Object.keys(this._stationsService.selectedStations.value)
+          .map(k => this._stationsService.selectedStations.value[k].stat)
+          .join(',');
+      }
+
+      let url = '';
+      switch (format) {
+        case Enums.MetadataFormats.StationXML:
+          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
+          filename = 'metadata.xml'
+          break;
+        case Enums.MetadataFormats.Text:
+          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
+          filename = 'metadata.txt';
+          break;
+        default:
+          url = `${this._fedStationUrl}sta=${urlSta}`;
+          filename = 'metadata';
+          break;
+      }
+      urls.push([filename, url]);
+      this._saveToZip(
+        `station-metadata-${Enums.MetadataFormats[format]}.zip`,
+        urls
+      );
   }
 
-  getTimeWindow(e: FdsnEventsResponseModels.EventExt): string {
+  private _getTimeWindow(e: FdsnEventsResponseModels.EventExt): string {
     let dh = new DateHelper();
 
     switch (this.requestModel.timeWindowSelectionMode) {
@@ -117,32 +153,23 @@ export class RequestService {
     }
   }
 
-  
-  private _downloadMetadata(format: Enums.MetadataFormats): void {
-    let urlSta = null;
+  private _saveToZip(filename, urls): void {
+    this._consoleService.add(`Downloading and packing: ${urls}`);
+    const zip = new JSZip();
+    const folder = zip.folder('data');
+    urls.forEach((url) => {
+      const blobPromise = fetch(url[1]).then(r => {
+        if (r.status === 200) {
+          return r.blob();
+        }
+        return Promise.reject(new Error(r.statusText))
+      })
+      const name = url[0];
+      folder.file(name, blobPromise);
+    })
 
-      // Check if there are stations selected and
-      // create a comma-separated list of them for the URL query
-      if (this._stationsService.selectedStations.value.length > 0) {
-        urlSta = Object.keys(this._stationsService.selectedStations.value)
-          .map(k => this._stationsService.selectedStations.value[k].stat)
-          .join(',');
-      }
-
-      let url = '';
-      switch (format) {
-        case Enums.MetadataFormats.StationXML:
-          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
-          break;
-        case Enums.MetadataFormats.Text:
-          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
-          break;
-        default:
-          url = `${this._fedStationUrl}sta=${urlSta}`;
-          break;
-      }
-      window.open(url);
-
-    console.log(url);
+    zip.generateAsync({ type: "blob" })
+      .then(blob => saveAs(blob, filename))
+      .catch(e => console.log(e));
   }
 }
