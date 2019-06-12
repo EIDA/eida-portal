@@ -3,6 +3,7 @@ import { ConsoleService } from '../console.service';
 import { RequestService } from '../request.service';
 import { TextService } from '../text.service';
 import { Enums } from '../modules/enums';
+import { ProgressBar } from '../modules/models';
 
 declare var $: any;
 @Component({
@@ -16,7 +17,11 @@ export class RequestComponent implements OnInit {
     public textService: TextService,
     private _consoleService: ConsoleService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.requestService.progressReporter.subscribe(
+      n => this._handleProgressBar(n)
+    );
+  }
 
   timeWindowSelectionModeChanges(t: Enums.RequestTimeWindowSelectionModes) {
     this.requestService.requestModel.timeWindowSelectionMode = t;
@@ -39,5 +44,21 @@ export class RequestComponent implements OnInit {
     $('#modesTabs').find('li').removeClass('is-active');
     $(`#${btn}`).addClass('is-active');
     $(`#${target}`).show('fast');
+  }
+
+  _handleProgressBar(n: ProgressBar): void {
+    if (n.completed) {
+      $('#request-button-download').removeClass('is-loading');
+      $('#request-download-progress').attr('value', 0);
+      $('#request-download-progress').attr('max', 100);
+    } else {
+      $('#request-button-download').addClass('is-loading');
+      if (n.indeterminate) {
+        $('#request-download-progress').removeAttr('value');
+      } else {
+        $('#request-download-progress').attr('value', n[0]);
+        $('#request-download-progress').attr('max', n[1]);
+      }
+    }
   }
 }

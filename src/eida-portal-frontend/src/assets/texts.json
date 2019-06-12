@@ -348,6 +348,12 @@
         }
     },
     {
+        "key": "request-download-progress",
+        "values": {
+            "en": "Visualizes download progress"
+        }
+    },
+    {
         "key": "request-tip-node",
         "values": {
             "en": "Select desired node and stage data package prepared using provided criteria there"

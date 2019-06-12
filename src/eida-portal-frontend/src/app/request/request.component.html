@@ -116,12 +116,12 @@
     <hr>
 
     <div class="columns">
-      <div class="column">
+      <!-- <div class="column">
         <span class="button is-warning is-fullwidth" (click)="review();"
           [attr.data-tippy-content]="textService.getText('request-tip-review')">Review</span>
-      </div>
+      </div> -->
       <div class="column">
-        <span class="button is-success is-fullwidth" (click)="download();"
+        <span id="request-button-download" class="button is-success is-fullwidth" (click)="download();"
           [attr.data-tippy-content]="textService.getText('request-tip-download')">Download</span>
       </div>
       <div class="column">
@@ -129,6 +129,8 @@
           [attr.data-tippy-content]="textService.getText('request-tip-cloud-staging')">Cloud staging</span>
       </div>
     </div>
+    <progress id="request-download-progress" class="progress" value="0" max="100"
+      [attr.data-tippy-content]="textService.getText('request-download-progress')"></progress>
   </div>
   <div class="column">
     <article class="message is-info">

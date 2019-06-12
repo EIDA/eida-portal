@@ -1,10 +1,11 @@
 import { Injectable, Input } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from '../environments/environment';
 import { ConsoleService } from './console.service';
 import { EventsService } from './events.service';
 import { StationsService } from './stations.service';
 import { RequestModel } from './modules/models';
-import { FdsnStationExt } from './modules/models';
+import { ProgressBar } from './modules/models';
 import { FdsnEventsResponseModels } from './modules/models.fdsn-events';
 import { Enums } from './modules/enums';
 import { DateHelper } from './helpers/date.helper';
@@ -17,6 +18,7 @@ import { saveAs } from 'file-saver';
 export class RequestService {
   private _fedDataselectUrl = environment.federatorDataselectUrl;
   private _fedStationUrl = environment.federatorStationUrl;
+  public progressReporter = new Subject<ProgressBar>();
 
   // Binding object for Request tab
   @Input() requestModel = new RequestModel();
@@ -95,40 +97,40 @@ export class RequestService {
 
     this._saveToZip('event-data.zip', urls);
   }
-  
+
   private _downloadMetadata(format: Enums.MetadataFormats): void {
     let urls = Array<string[]>();
     let filename = '';
     let urlSta = null;
 
-      // Check if there are stations selected and
-      // create a comma-separated list of them for the URL query
-      if (this._stationsService.selectedStations.value.length > 0) {
-        urlSta = Object.keys(this._stationsService.selectedStations.value)
-          .map(k => this._stationsService.selectedStations.value[k].stat)
-          .join(',');
-      }
+    // Check if there are stations selected and
+    // create a comma-separated list of them for the URL query
+    if (this._stationsService.selectedStations.value.length > 0) {
+      urlSta = Object.keys(this._stationsService.selectedStations.value)
+        .map(k => this._stationsService.selectedStations.value[k].stat)
+        .join(',');
+    }
 
-      let url = '';
-      switch (format) {
-        case Enums.MetadataFormats.StationXML:
-          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
-          filename = 'metadata.xml'
-          break;
-        case Enums.MetadataFormats.Text:
-          url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
-          filename = 'metadata.txt';
-          break;
-        default:
-          url = `${this._fedStationUrl}sta=${urlSta}`;
-          filename = 'metadata';
-          break;
-      }
-      urls.push([filename, url]);
-      this._saveToZip(
-        `station-metadata-${Enums.MetadataFormats[format]}.zip`,
-        urls
-      );
+    let url = '';
+    switch (format) {
+      case Enums.MetadataFormats.StationXML:
+        url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
+        filename = 'metadata.xml'
+        break;
+      case Enums.MetadataFormats.Text:
+        url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
+        filename = 'metadata.txt';
+        break;
+      default:
+        url = `${this._fedStationUrl}sta=${urlSta}`;
+        filename = 'metadata';
+        break;
+    }
+    urls.push([filename, url]);
+    this._saveToZip(
+      `station-metadata-${Enums.MetadataFormats[format]}.zip`,
+      urls
+    );
   }
 
   private _getTimeWindow(e: FdsnEventsResponseModels.EventExt): string {
@@ -157,9 +159,13 @@ export class RequestService {
     this._consoleService.add(`Downloading and packing: ${urls}`);
     const zip = new JSZip();
     const folder = zip.folder('data');
+    this.reportProgress(null, null, false, true);
+    let progressCount = 1;
+
     urls.forEach((url) => {
       const blobPromise = fetch(url[1]).then(r => {
         if (r.status === 200) {
+          this.reportProgress(progressCount++, urls.length);
           return r.blob();
         }
         return Promise.reject(new Error(r.statusText))
@@ -169,7 +175,19 @@ export class RequestService {
     })
 
     zip.generateAsync({ type: "blob" })
-      .then(blob => saveAs(blob, filename))
+      .then(blob => {
+        this.reportProgress(null, null, true);
+        saveAs(blob, filename);
+      })
       .catch(e => console.log(e));
+  }
+
+  reportProgress(dividend, divisor, completed = false, indeterminate = false): void {
+    let pb = new ProgressBar();
+    pb.dividend = dividend;
+    pb.divisor = divisor;
+    pb.completed = completed;
+    pb.indeterminate = indeterminate;
+    this.progressReporter.next(pb);
   }
 }

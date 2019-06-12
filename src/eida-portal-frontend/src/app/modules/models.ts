@@ -264,3 +264,17 @@ export class MapDragBoxCoordinates {
         return this;
     }
 }
+
+export class ProgressBar {
+    dividend: string;
+    divisor: string;
+    completed: boolean;
+    indeterminate: boolean;
+
+    constructor() {
+        this.dividend = '1';
+        this.divisor = '100';
+        this.completed = false;
+        this.indeterminate = false;
+    }
+}
