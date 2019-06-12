@@ -125,7 +125,6 @@ export class StationsService {
       } else {
         this._filteredStations = this._mapStations.concat(this.allStations.filter(
           m => m.net === sm.selectedNetwork.code
-          && m.start === sm.selectedNetwork.start
         ));
       }
 
