@@ -68,17 +68,14 @@
         [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
         <ul id="stationsTabs">
           <li id="stationsByCodeTab" class="is-active"
-            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0);">
-            <a>By
-              code</a></li>
+            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0); handleAvailableStreamsVisibility(true)">
+            <a>By code</a></li>
           <li id="stationsByRegionTab"
-            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1);">
-            <a>By
-              region</a></li>
+            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1); handleAvailableStreamsVisibility(false)">
+            <a>By region</a></li>
           <li id="stationsByEventsTab"
-            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2);">
-            <a>By
-              events</a></li>
+            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2); handleAvailableStreamsVisibility(false)">
+            <a>By events</a></li>
         </ul>
       </div>
 
@@ -217,12 +214,10 @@
         <ul id="streamsTabs">
           <li id="streamsByCodeTab" class="is-active"
             (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent'); stationStreamSelectionMethod(0);">
-            <a>By
-              code</a></li>
+            <a>By code</a></li>
           <li id="streamsBySamplingTab"
             (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent'); stationStreamSelectionMethod(1);">
-            <a>By
-              sampling</a></li>
+            <a>By sampling</a></li>
         </ul>
       </div>
 
@@ -234,6 +229,7 @@
           </select>
         </div> -->
 
+        <div id="available-streams">
         <h1 class="title is-6 has-text-centered">Streams available in selection</h1>
         <div class="field is-grouped is-grouped-multiline">
           <div *ngFor="let s of getAvailableStreams();" class="control">
@@ -242,8 +238,8 @@
             </div>
           </div>
         </div>
-
         <hr>
+        </div>
 
         <h1 class="title is-6 has-text-centered">Streams <b>included</b> in the working set</h1>
         <div class="field is-grouped is-grouped-multiline">

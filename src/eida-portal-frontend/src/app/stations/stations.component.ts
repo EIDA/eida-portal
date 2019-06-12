@@ -238,4 +238,12 @@ export class StationsComponent implements OnInit {
     $(`#${btn}`).addClass('is-active');
     $(`#${target}`).show("fast");
   }
+
+  handleAvailableStreamsVisibility(v: boolean) {
+    if (v) {
+      $('#available-streams').show();
+    } else {
+      $('#available-streams').hide();
+    }
+  }
 }
