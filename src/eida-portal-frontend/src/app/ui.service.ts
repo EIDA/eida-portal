@@ -48,9 +48,9 @@ export class UiService {
         for (let e of elements) {
           tippy(e, {
             arrow: true,
-            arrowType: 'round',
+            followCursor: 'horizontal',
             size: 'large',
-            duration: [250, 1000],
+            duration: [250, 250],
             animation: 'perspective'
           });
         }
