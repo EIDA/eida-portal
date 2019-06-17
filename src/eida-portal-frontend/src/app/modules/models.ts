@@ -116,8 +116,8 @@ export class EventsModel {
             }
         ];
         this.minimumMagnitude = 0.0;
-        this.dateFrom = dh.getDateWithOffset();
-        this.dateTo = dh.getDateWithOffset(-1);
+        this.dateFrom = dh.getDateWithOffset(-1);
+        this.dateTo = dh.getDateWithOffset();
         this.depthFrom = 0;
         this.depthTo = 999;
         this.coordinateN = 90.0;
