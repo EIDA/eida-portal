@@ -277,11 +277,13 @@ export class ProgressBar {
     divisor: string;
     completed: boolean;
     indeterminate: boolean;
+    message: string;
 
     constructor() {
         this.dividend = '1';
         this.divisor = '100';
         this.completed = false;
         this.indeterminate = false;
+        this.message = '';
     }
 }
