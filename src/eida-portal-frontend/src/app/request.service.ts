@@ -52,7 +52,7 @@ export class RequestService {
   }
 
   private _downloadMiniSeed(): void {
-    const urls = Array<string[]>();
+    const urls = Array<{}>();
 
     const selectedStreams = this._stationsService.stationsModel.getSelectedStreams();
     const allStreamsSelected = this._stationsService.stationsModel.allStreamsSelected();
@@ -92,14 +92,14 @@ export class RequestService {
       const t = this._getTimeWindow(e);
       url += `&${t}`;
 
-      urls.push([`${e._publicID}.mseed`, url]);
+      urls.push({'filename': `${e._publicID}.mseed`, 'url': url});
     }
 
     this._saveToZip('event-data.zip', urls);
   }
 
   private _downloadMetadata(format: Enums.MetadataFormats): void {
-    const urls = Array<string[]>();
+    const urls = Array<{}>();
     let filename = '';
     let urlSta = null;
 
@@ -126,7 +126,7 @@ export class RequestService {
         filename = 'metadata';
         break;
     }
-    urls.push([filename, url]);
+    urls.push({'filename': filename, 'url': url});
     this._saveToZip(
       `station-metadata-${Enums.MetadataFormats[format]}.zip`,
       urls
@@ -156,21 +156,22 @@ export class RequestService {
   }
 
   private _saveToZip(filename, urls): void {
-    this._consoleService.add(`Downloading and packing: ${urls}`);
+    this._consoleService.add(`Downloading and packing: ${JSON.stringify(urls)}`);
     const zip = new JSZip();
     const folder = zip.folder('data');
     this.reportProgress(null, null, false, true);
     let progressCount = 1;
 
     urls.forEach((url) => {
-      const blobPromise = fetch(url[1]).then(r => {
+      const blobPromise = fetch(url.url).then(r => {
         if (r.status === 200) {
           this.reportProgress(progressCount++, urls.length);
           return r.blob();
         }
+        this.reportProgress(null, null, true, null, r.statusText);
         return Promise.reject(new Error(r.statusText));
       });
-      const name = url[0];
+      const name = url.filename;
       folder.file(name, blobPromise);
     });
 
@@ -182,12 +183,21 @@ export class RequestService {
       .catch(e => console.log(e));
   }
 
-  reportProgress(dividend, divisor, completed = false, indeterminate = false): void {
+  /**
+   * Report the download progress to the listeners
+   * @param dividend {number} Dividend
+   * @param divisor {number} Divisor
+   * @param completed {boolean} True for completer, false otherwise
+   * @param indeterminate {boolean} True if progress is uknown, false otherwise
+   * @param message {string} Message to be rendered on the screen
+   */
+  reportProgress(dividend, divisor, completed = false, indeterminate = false, message = ''): void {
     const pb = new ProgressBar();
     pb.dividend = dividend;
     pb.divisor = divisor;
     pb.completed = completed;
     pb.indeterminate = indeterminate;
+    pb.message = message;
     this.progressReporter.next(pb);
   }
 }

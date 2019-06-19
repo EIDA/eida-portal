@@ -2,6 +2,7 @@
 
 import { Enums } from './enums';
 import { environment } from '../../environments/environment';
+import { DateHelper } from '../helpers/date.helper';
 
 export class StationsModel {
     yearFrom: string;
@@ -24,8 +25,10 @@ export class StationsModel {
     worksetStreams: Array<StationStreamModel>;
 
     constructor() {
-        this.yearFrom = "1900";
-        this.yearTo = "2100";
+        let dh = new DateHelper();
+
+        this.yearFrom = dh.getYearWithOffset(-50);
+        this.yearTo = dh.getYearWithOffset();
         this.coordinateN = 90.0;
         this.coordinateS = -90.0;
         this.coordinateE = 180.0;
@@ -98,6 +101,8 @@ export class EventsModel {
     selectedCatalog;
 
     constructor() {
+        let dh = new DateHelper();
+        
         this.catalogs = [
             {
                 'id':0,
@@ -111,8 +116,8 @@ export class EventsModel {
             }
         ];
         this.minimumMagnitude = 0.0;
-        this.dateFrom = "2018-01-01";
-        this.dateTo = "2019-01-01";
+        this.dateFrom = dh.getDateWithOffset(-1);
+        this.dateTo = dh.getDateWithOffset();
         this.depthFrom = 0;
         this.depthTo = 999;
         this.coordinateN = 90.0;
@@ -158,6 +163,8 @@ export class RequestModel {
     selectedAbsoluteModeEndTimeMethod;
 
     constructor() {
+        let dh = new DateHelper();
+
         this.fdsnRequestTypes = [
             { 'id': 0, 'name': 'Waveform (Mini-SEED)' },
             { 'id': 1, 'name': 'Metadata (StationXML)' },
@@ -168,8 +175,8 @@ export class RequestModel {
             { 'id': 1, 'name': 'P/Pdiff'},
             { 'id': 2, 'name': 'S/Sdiff'}
         ]
-        this.datetimeFrom = "2017-01-01T12:00:00";
-        this.datetimeTo = "2018-01-01T12:00:00";
+        this.datetimeFrom = dh.getDateTimeWithOffset(null, -1);
+        this.datetimeTo = dh.getDateTimeWithOffset();
         this.absoluteModeStart = 2;
         this.absoluteModeEnd = 10;
         this.timeWindowSelectionMode = Enums.RequestTimeWindowSelectionModes.Absolute;
@@ -270,11 +277,13 @@ export class ProgressBar {
     divisor: string;
     completed: boolean;
     indeterminate: boolean;
+    message: string;
 
     constructor() {
         this.dividend = '1';
         this.divisor = '100';
         this.completed = false;
         this.indeterminate = false;
+        this.message = '';
     }
 }
