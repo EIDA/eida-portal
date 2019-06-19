@@ -52,21 +52,21 @@ export class RequestService {
   }
 
   private _downloadMiniSeed(): void {
-    let urls = Array<string[]>();
+    const urls = Array<string[]>();
 
-    let selectedStreams = this._stationsService.stationsModel.getSelectedStreams();
-    let allStreamsSelected = this._stationsService.stationsModel.allStreamsSelected();
+    const selectedStreams = this._stationsService.stationsModel.getSelectedStreams();
+    const allStreamsSelected = this._stationsService.stationsModel.allStreamsSelected();
 
-    for (let e of this._eventsService.selectedEvents.value) {
+    for (const e of this._eventsService.selectedEvents.value.filter(n => n.selected === true)) {
       let urlSta = null;
       let urlStream = null;
 
+      const selectedStations = this._stationsService.selectedStations.value.filter(n => n.selected === true);
+
       // Check if there are stations selected and
       // create a comma-separated list of them for the URL query
-      if (this._stationsService.selectedStations.value.length > 0) {
-        urlSta = Object.keys(this._stationsService.selectedStations.value)
-          .map(k => this._stationsService.selectedStations.value[k].stat)
-          .join(',');
+      if (selectedStations.length > 0) {
+        urlSta = Object.keys(selectedStations).map(k => selectedStations[k].stat).join(',');
       }
 
       // Check if there are streams selected and create a comma-separated
@@ -89,7 +89,7 @@ export class RequestService {
       }
 
       // Get the time window based on event
-      let t = this._getTimeWindow(e);
+      const t = this._getTimeWindow(e);
       url += `&${t}`;
 
       urls.push([`${e._publicID}.mseed`, url]);
@@ -99,23 +99,23 @@ export class RequestService {
   }
 
   private _downloadMetadata(format: Enums.MetadataFormats): void {
-    let urls = Array<string[]>();
+    const urls = Array<string[]>();
     let filename = '';
     let urlSta = null;
 
     // Check if there are stations selected and
     // create a comma-separated list of them for the URL query
-    if (this._stationsService.selectedStations.value.length > 0) {
-      urlSta = Object.keys(this._stationsService.selectedStations.value)
-        .map(k => this._stationsService.selectedStations.value[k].stat)
-        .join(',');
+    if (this._stationsService.selectedStations.value.filter(n => n.selected === true).length > 0) {
+      urlSta = Object.keys(
+        this._stationsService.selectedStations.value.filter(n => n.selected === true)
+      ).map(k => this._stationsService.selectedStations.value[k].stat).join(',');
     }
 
     let url = '';
     switch (format) {
       case Enums.MetadataFormats.StationXML:
         url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=xml`;
-        filename = 'metadata.xml'
+        filename = 'metadata.xml';
         break;
       case Enums.MetadataFormats.Text:
         url = `${this._fedStationUrl}sta=${urlSta}&level=channel&format=text`;
@@ -134,20 +134,20 @@ export class RequestService {
   }
 
   private _getTimeWindow(e: FdsnEventsResponseModels.EventExt): string {
-    let dh = new DateHelper();
+    const dh = new DateHelper();
 
     switch (this.requestModel.timeWindowSelectionMode) {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
-        let momentStart = dh.getDate(e.origin.time.value);
-        let momentEnd = dh.getDate(e.origin.time.value);
+        const momentStart = dh.getDate(e.origin.time.value);
+        const momentEnd = dh.getDate(e.origin.time.value);
 
-        let startTime = momentStart.add(
+        const startTime = momentStart.add(
           -this.requestModel.absoluteModeStart, 'minutes'
-        ).format("YYYY-MM-DDTHH:mm:ss");
+        ).format('YYYY-MM-DDTHH:mm:ss');
 
-        let endTime = momentEnd.add(
+        const endTime = momentEnd.add(
           this.requestModel.absoluteModeEnd, 'minutes'
-        ).format("YYYY-MM-DDTHH:mm:ss");
+        ).format('YYYY-MM-DDTHH:mm:ss');
 
         return `starttime=${startTime}&endtime=${endTime}`;
       case Enums.RequestTimeWindowSelectionModes.Relative:
@@ -168,13 +168,13 @@ export class RequestService {
           this.reportProgress(progressCount++, urls.length);
           return r.blob();
         }
-        return Promise.reject(new Error(r.statusText))
-      })
+        return Promise.reject(new Error(r.statusText));
+      });
       const name = url[0];
       folder.file(name, blobPromise);
-    })
+    });
 
-    zip.generateAsync({ type: "blob" })
+    zip.generateAsync({ type: 'blob' })
       .then(blob => {
         this.reportProgress(null, null, true);
         saveAs(blob, filename);
@@ -183,7 +183,7 @@ export class RequestService {
   }
 
   reportProgress(dividend, divisor, completed = false, indeterminate = false): void {
-    let pb = new ProgressBar();
+    const pb = new ProgressBar();
     pb.dividend = dividend;
     pb.divisor = divisor;
     pb.completed = completed;
