@@ -47,6 +47,8 @@ export class RequestComponent implements OnInit {
   }
 
   _handleProgressBar(n: ProgressBar): void {
+    this._consoleService.add(n.message);
+
     if (n.completed) {
       $('#request-button-download').removeClass('is-loading');
       $('#request-download-progress').attr('value', 0);
