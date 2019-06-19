@@ -56,8 +56,8 @@ export class RequestComponent implements OnInit {
       if (n.indeterminate) {
         $('#request-download-progress').removeAttr('value');
       } else {
-        $('#request-download-progress').attr('value', n[0]);
-        $('#request-download-progress').attr('max', n[1]);
+        $('#request-download-progress').attr('value', n.dividend);
+        $('#request-download-progress').attr('max', n.divisor);
       }
     }
   }
