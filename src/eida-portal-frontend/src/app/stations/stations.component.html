@@ -45,6 +45,22 @@
 
       <div class="field is-horizontal">
         <div class="field-label">
+          <label class="label">Network type</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network-type')">
+              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType">
+                <option *ngFor="let nt of stationsService.stationsModel.networkTypes" [ngValue]="nt">{{nt.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
           <label class="label">Network</label>
         </div>
         <div class="field-body">

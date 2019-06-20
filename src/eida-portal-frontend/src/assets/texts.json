@@ -144,6 +144,12 @@
         }
     },
     {
+        "key": "stations-tip-network-type",
+        "values": {
+            "en": "Filter base on network type<br><b style='color:gold'>All networks</b>: No filtering applied<br><b style='color:gold'>Permanent networks</b>: Show only operational networks<br><b style='color:gold'>Temporary networks</b>: Show only discontinued networks"
+        }
+    },
+    {
         "key": "stations-tip-network",
         "values": {
             "en": "Network selection<br><b style='color:gold'>All</b>: all of the networks will be added to the working set<br><b style='color:gold'>XX</b>: network XX will be added to the set"

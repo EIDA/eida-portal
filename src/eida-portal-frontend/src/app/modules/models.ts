@@ -5,12 +5,14 @@ import { environment } from '../../environments/environment';
 import { DateHelper } from '../helpers/date.helper';
 
 export class StationsModel {
+    networkTypes: {}
     yearFrom: string;
     yearTo: string;
     coordinateN: number;
     coordinateS: number;
     coordinateE: number;
     coordinateW: number;
+    selectedNetworkType;
     selectedNetwork;
     selectedStation;
     dataSource: Enums.StationDataSource;
@@ -27,12 +29,28 @@ export class StationsModel {
     constructor() {
         let dh = new DateHelper();
 
+        this.networkTypes = [
+            {
+                'id': 0,
+                'name': "All networks"
+            },
+            {
+                'id': 1,
+                'name': "Permanent networks"
+            },
+            {
+                'id': 2,
+                'name': "Temporary networks"
+            }
+        ];
+
         this.yearFrom = dh.getYearWithOffset(-50);
         this.yearTo = dh.getYearWithOffset();
         this.coordinateN = 90.0;
         this.coordinateS = -90.0;
         this.coordinateE = 180.0;
         this.coordinateW = -180.0;
+        this.selectedNetworkType = this.networkTypes[0];
         this.selectedNetwork = 'All';
         this.selectedStation = 'All';
         this.dataSource = Enums.StationDataSource.Inventory;
@@ -170,11 +188,13 @@ export class RequestModel {
             { 'id': 1, 'name': 'Metadata (StationXML)' },
             { 'id': 2, 'name': 'Metadata (Text)' }
         ];
+
         this.absoluteModeTimeMethods = [
             { 'id': 0, 'name': 'Origin Time'},
             { 'id': 1, 'name': 'P/Pdiff'},
             { 'id': 2, 'name': 'S/Sdiff'}
-        ]
+        ];
+
         this.datetimeFrom = dh.getDateTimeWithOffset(null, -1);
         this.datetimeTo = dh.getDateTimeWithOffset();
         this.absoluteModeStart = 2;
