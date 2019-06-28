@@ -19,6 +19,42 @@ $ npm install
 $ npm start
 ```
 
+## Backend Flask ##
+
+### Quick start guide ###
+
+1. Create the virtual environment:
+    ```
+    $ python3 -m venv env
+    ```
+1. Activate the virtual environment:
+    ```
+    $ source env/bin/activate
+    ```
+1. Install the dependencies:
+    ```
+    (env) $ pip install -r requirements.txt
+    ```
+1. Initialize the DB:
+
+    ```
+    (env) $ flask db init
+    ```
+1. Create migration package:
+
+    ```
+    (env) $ flask db migrate
+    ```
+1. Apply migrations:
+
+    ```
+    (env) $ flask db upgrade
+    ```
+1. Run:
+    ```
+    (env) $ flask run
+    ```
+
 ## Frontend ##
 
 ### Config of eida-portal-frontend ###
