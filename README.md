@@ -22,7 +22,10 @@ $ npm start
 ## Backend Flask ##
 
 ### Quick start guide ###
-
+1. Go to the root directory:
+    ```
+    $ src/eida-portal-backend-flask/
+    ```
 1. Create the virtual environment:
     ```
     $ python3 -m venv env
