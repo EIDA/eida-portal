@@ -1,3 +1,5 @@
+from dateutil import parser
+
 from app import db
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -37,11 +39,15 @@ class FdsnNode(db.Model):
 
     id = Column(Integer, Sequence('node_seq'), primary_key=True)
 
-    networks = relationship("FdsnNetwork", backref="node")
+    # FdsnNode -> FdsnNetwork relation
+    # networks = relationship("FdsnNetwork", backref="node")
+    networks = relationship("FdsnNetwork")
 
     code = Column(String(STRING_LENGTH_SHORT))
 
     description = Column(String(STRING_LENGTH_SHORT))
+
+    url_base = Column(String(STRING_LENGTH_SHORT))
 
     url_dataselect = Column(String(STRING_LENGTH_SHORT))
 
@@ -62,18 +68,28 @@ class FdsnNetwork(db.Model):
                 Sequence('network_seq'),
                 primary_key=True)
 
-    stations = relationship("FdsnStation", backref="network")
+    # FdsnNetwork -> FdsnNode relation
+    node_id = Column(Integer, ForeignKey("nodes.id"))
+    node = relationship("FdsnNode", back_populates="networks")
+
+    # FdsnNetwork -> FdsnStation relation
+    stations = relationship("FdsnStation")
+    # station_id = Column(Integer, ForeignKey("nodes.id"))
+    # stations = relationship("FdsnStation", backref="network")
 
     code = Column(String(STRING_LENGTH_SHORT))
 
     description = Column(String(STRING_LENGTH_SHORT))
 
-    start_date = Column(String(STRING_LENGTH_SHORT))
+    start_date = Column(DateTime)
 
     restricted_status = Column(String(STRING_LENGTH_SHORT))
 
     def __str__(self):
         return self.code
+
+    def get_start_year(self):
+        return parser.parse(self.start_date).year
 
 
 class FdsnStation(db.Model):
@@ -83,7 +99,13 @@ class FdsnStation(db.Model):
                 Sequence('station_seq'),
                 primary_key=True)
 
-    channels = relationship("FdsnStationChannel", backref="station")
+    # FdsnStation -> FdsnNetwork relation
+    network_id = Column(Integer, ForeignKey("networks.id"))
+    network = relationship("FdsnNetwork", back_populates="stations")
+
+    # FdsnStation -> FdsnStationChannel relation
+    # channels = relationship("FdsnStationChannel", backref="station")
+    channels = relationship("FdsnStationChannel")
 
     code = Column(String(STRING_LENGTH_SHORT))
 
@@ -95,11 +117,14 @@ class FdsnStation(db.Model):
 
     restricted_status = Column(String(STRING_LENGTH_SHORT))
 
-    start_date = Column(String(STRING_LENGTH_SHORT))
+    start_date = Column(DateTime)
 
-    end_date = Column(String(STRING_LENGTH_SHORT))
+    end_date = Column(DateTime)
 
     site_name = Column(String(STRING_LENGTH_SHORT))
+
+    def get_start_year(self):
+        return parser.parse(self.start_date).year
 
 
 class FdsnStationChannel(db.Model):
@@ -108,6 +133,10 @@ class FdsnStationChannel(db.Model):
     id = Column(Integer,
                 Sequence('channel_seq'),
                 primary_key=True)
+
+    # FdsnStationChannel -> FdsnStation relation
+    station_id = Column(Integer, ForeignKey("stations.id"))
+    station = relationship("FdsnStation", back_populates="channels")
 
     code = Column(String(STRING_LENGTH_SHORT))
 

@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "src/eida-portal-backend-flask/env/bin/python"
+    "python.pythonPath": "src/eida-portal-backend-flask/env/bin/python",
+    "python.linting.pep8Enabled": true,
+    "python.linting.enabled": true
 }

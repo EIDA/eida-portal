@@ -1,3 +1,5 @@
+from dateutil import parser
+
 NO_FDSNWS_DATA = 'n/a'
 NSMAP = {'mw': 'http://www.fdsn.org/xml/station/1'}
 
@@ -40,21 +42,21 @@ class NodeWrapper(object):
         self.networks = []
 
     def build_url_station_station_level(self):
-        return self.url_station + '?network={0}&level=station'
+        return self.url_station + 'network={0}&level=station'
 
     def build_url_station_network_station_level(
             self, network_code, station_code):
-        return self.url_station + '?network={0}&station={1}'.format(
+        return self.url_station + 'network={0}&station={1}'.format(
             network_code, station_code)
 
     def build_url_station_network_level(self):
-        return self.url_station + '?network=*&level=network'
+        return self.url_station + 'network=*&level=network'
 
     def build_url_station_channel_level(self):
-        return self.url_station + '?network={0}&station={1}&level=channel'
+        return self.url_station + 'network={0}&station={1}&level=channel'
 
     def build_url_routing_network_level(self, network_code):
-        return self.url_routing + '?network={0}'.format(network_code)
+        return self.url_routing + 'network={0}'.format(network_code)
 
 
 # Single network instance  wrapper and collection of stations
@@ -77,7 +79,7 @@ class NetworkWrapper(object):
         self.stations = []
 
     def parse_start_date_year(self):
-        return self.start_date
+        return parser.parse(self.start_date).year
 
 
 # Single station instance wrapper
