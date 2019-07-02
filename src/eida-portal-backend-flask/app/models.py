@@ -83,13 +83,15 @@ class FdsnNetwork(db.Model):
 
     start_date = Column(DateTime)
 
+    end_date = Column(DateTime)
+
     restricted_status = Column(String(STRING_LENGTH_SHORT))
 
     def __str__(self):
         return self.code
 
     def get_start_year(self):
-        return parser.parse(self.start_date).year
+        return self.start_date.year
 
 
 class FdsnStation(db.Model):
@@ -124,7 +126,7 @@ class FdsnStation(db.Model):
     site_name = Column(String(STRING_LENGTH_SHORT))
 
     def get_start_year(self):
-        return parser.parse(self.start_date).year
+        return self.start_date.year
 
 
 class FdsnStationChannel(db.Model):

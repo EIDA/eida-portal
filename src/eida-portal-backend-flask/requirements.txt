@@ -16,6 +16,7 @@ kiwisolver==1.1.0
 lxml==4.3.4
 Mako==1.0.12
 MarkupSafe==1.1.1
+marshmallow==2.19.5
 matplotlib==3.1.0
 numpy==1.16.4
 obspy==1.1.1

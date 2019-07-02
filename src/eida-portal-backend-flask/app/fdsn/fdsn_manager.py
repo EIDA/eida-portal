@@ -12,11 +12,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from .base_classes import \
     NO_FDSNWS_DATA, NSMAP, \
     RouteWrapper, RouteDatacenterWrapper, RouteParamWrapper, \
-    NodeWrapper, NetworkWrapper, StationWrapper, \
-    StationChannels, StationChannel, StationChannelSampleRateRatio, \
-    StationChannelSensor, StationChannelDataLogger, StationChannelResponse, \
-    StationChannelResponseInstrumentSensitivity, \
-    StationChannelResponseInputUnits, StationChannelResponseOutputUnits
+    NodeWrapper, NetworkWrapper, StationWrapper, StationChannel
 
 from ..models import FdsnNode, FdsnNetwork, FdsnStation, FdsnStationChannel
 
@@ -64,8 +60,8 @@ class FdsnHttpBase():
             x = db.session.query(FdsnNetwork).join(FdsnNode).filter(
                 FdsnNode.code == node_wrapper.code,
                 FdsnNetwork.code == network_wrapper.code,
-                extract(
-                    'year', FdsnNetwork.start_date) == network_wrapper.parse_start_date_year()
+                extract('year', FdsnNetwork.start_date) ==
+                network_wrapper.parse_start_date_year()
             ).first()
 
             return x
@@ -75,12 +71,16 @@ class FdsnHttpBase():
 
     def get_station_if_known(self, node_wrapper, network_wrapper, station_wrapper):
         try:
-            return FdsnStation.query.join(FdsnNetwork).join(FdsnNode).filter(
+            s = FdsnStation.query.join(FdsnNetwork).join(FdsnNode).filter(
                 FdsnNode.code == node_wrapper.code,
                 FdsnNetwork.code == network_wrapper.code,
-                FdsnNetwork.get_start_year == network_wrapper.parse_start_date_year(),
+                extract('year', FdsnNetwork.start_date) ==
+                network_wrapper.parse_start_date_year(),
                 FdsnStation.code == station_wrapper.code,
-                extract('year', FdsnStation.start_date) == station_wrapper.parse_start_date_year()).first()
+                extract('year', FdsnStation.start_date) ==
+                station_wrapper.parse_start_date_year()).first()
+
+            return s
             # return FdsnStation.query.get(
             #     fdsn_network__fdsn_node__code=node_wrapper.code,
             #     fdsn_network__code=network_wrapper.code,
@@ -137,6 +137,10 @@ class FdsnNetworkManager(FdsnHttpBase):
                     # )
                     continue
 
+                tmp = network.get('endDate')
+                if tmp is not None:
+                    net_wrapper.end_date = self.validate_string(tmp)
+
                 tmp = network.get('restrictedStatus')
                 if tmp is not None:
                     net_wrapper.restricted_status = self.validate_string(tmp)
@@ -160,19 +164,20 @@ class FdsnNetworkManager(FdsnHttpBase):
 
             if net:
                 net.description = network_wrapper.description
+                net.end_date = network_wrapper.parse_end_date()
                 # net.start_date = network_wrapper.start_date
                 net.restricted_status = network_wrapper.restricted_status
             else:
-                # self.log_information(
-                #     'Adding: node {0} Network {1} Year {2}'.format(
-                #         node_wrapper.code,
-                #         network_wrapper.code,
-                #         network_wrapper.parse_start_date_year()))
+                print('Adding: node {0} Network {1} Year {2}'.format(
+                    node_wrapper.code,
+                    network_wrapper.code,
+                    network_wrapper.parse_start_date_year()))
 
                 net = FdsnNetwork()
                 net.code = network_wrapper.code
                 net.description = network_wrapper.description
-                net.start_date = parser.parse(network_wrapper.start_date)
+                net.start_date = network_wrapper.parse_start_date()
+                net.end_date = network_wrapper.parse_end_date()
                 net.restricted_status = network_wrapper.restricted_status
                 net.node = FdsnNode.query.filter(
                     FdsnNode.code == node_wrapper.code).first()
@@ -196,148 +201,6 @@ class FdsnNetworkManager(FdsnHttpBase):
         except Exception:
             # self.log_exception()
             raise
-
-
-class FdsnStationChannelsManager(FdsnHttpBase):
-
-    def __init__(self):
-        super(FdsnStationChannelsManager, self).__init__()
-
-    def discover_station_channels(self, network_pk, station_pk):
-        try:
-            network = FdsnNetwork.query.get(pk=network_pk)
-            station = FdsnStation.query.get(pk=station_pk)
-            node_wrapper = NodeWrapper(network.fdsn_node)
-            channels_graph = StationChannels()
-
-            response = self.fdsn_request(
-                node_wrapper.build_url_station_channel_level().format(
-                    network.code.upper(), station.code.upper()))
-            root = ET.fromstring(response)
-
-            for channel in root.findall('.//mw:Channel', namespaces=NSMAP):
-                cha = StationChannel()
-
-                tmp = channel.get('code')
-                if tmp is not None:
-                    cha.code = self.validate_string(tmp)
-
-                tmp = channel.get('startDate')
-                if tmp is not None:
-                    cha.start_date = self.validate_string(tmp)
-
-                tmp = channel.get('restrictedStatus')
-                if tmp is not None:
-                    cha.restricted_status = self.validate_string(tmp)
-
-                tmp = channel.get('locationCode')
-                if tmp is not None:
-                    cha.location_code = self.validate_string(tmp)
-
-                tmp = channel.find(
-                    './/mw:Latitude', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.latitude = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Longitude', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.longitude = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Elevation', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.elevation = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Depth', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.depth = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Azimuth', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.azimuth = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Dip', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.dip = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:SampleRate', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.sample_rate = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:StorageFormat', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.storage_format = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:ClockDrift', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.clock_drift = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Sensor//mw:Type', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.sensor.type = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Sensor//mw:Manufacturer', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.sensor.manufacturer = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Sensor//mw:Description', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.sensor.description = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Sensor//mw:Model', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.sensor.model = self.validate_string(tmp.text)
-
-                tmp = channel.find(
-                    './/mw:DataLogger//mw:Description', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.data_logger.description = self.validate_string(
-                        tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Response//mw:InstrumentSensitivity/mw:Value', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.response.instrument_sensitivity.value = self.validate_string(
-                        tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Response//mw:InstrumentSensitivity//mw:Frequency', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.response.instrument_sensitivity.frequency = self.validate_string(
-                        tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Response//mw:InstrumentSensitivity//mw:InputUnits//mw:Name', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.response.instrument_sensitivity.input_units.name = self.validate_string(
-                        tmp.text)
-
-                tmp = channel.find(
-                    './/mw:Response//mw:InstrumentSensitivity//mw:OutputUnits//mw:Name', namespaces=NSMAP)
-                if tmp is not None:
-                    cha.response.instrument_sensitivity.output_units.name = self.validate_string(
-                        tmp.text)
-
-                channels_graph.channels.append(cha)
-
-            return channels_graph
-        except ParseError:
-            # self.log_exception()
-            return StationChannels()
-        except Exception:
-            # self.log_exception()
-            return StationChannels()
 
 
 class FdsnRoutingManager(FdsnHttpBase):
@@ -437,7 +300,7 @@ class FdsnRoutingManager(FdsnHttpBase):
             node_wrapper = NodeWrapper(node_entity)
 
             response = self.fdsn_request(
-                node_wrapper.build_url_station_network_station_level(
+                node_wrapper.build_url_station_channel_level(
                     param_wrapper.net, param_wrapper.sta))
 
             if not response:
@@ -506,6 +369,20 @@ class FdsnRoutingManager(FdsnHttpBase):
                     if tmp is not None:
                         stat_wrapper.site_name = self.validate_string(tmp.text)
 
+                    for channel in station.findall('.//mw:Channel', namespaces=NSMAP):
+                        channel_wrapper = StationChannel()
+
+                        tmp = channel.get('code')
+                        if tmp is not None:
+                            channel_wrapper.code = self.validate_string(tmp)
+
+                        tmp = channel.find('.//mw:SampleRate', namespaces=NSMAP)
+                        if tmp is not None:
+                            channel_wrapper.sample_rate = self.validate_string(
+                                tmp.text)
+
+                        stat_wrapper.channels.append(channel_wrapper)
+
                     yield node_wrapper, network_wrapper, stat_wrapper
         except ParseError:
             # self.log_exception()
@@ -528,9 +405,18 @@ class FdsnRoutingManager(FdsnHttpBase):
                 stat.elevation = station_wrapper.elevation
                 stat.restricted_status = station_wrapper.restricted_status
                 # stat.start_date = station_wrapper.start_date
-                stat.end_date = station_wrapper.end_date
-                stat.creation_date = station_wrapper.creation_date
+                stat.end_date = station_wrapper.parse_end_date()
+                stat.creation_date = station_wrapper.parse_creation_date()
                 stat.site_name = station_wrapper.site_name
+
+                FdsnStationChannel.query.filter_by(station_id=stat.id).delete()
+
+                for channel in station_wrapper.channels:
+                    cha = FdsnStationChannel()
+                    cha.station = stat
+                    cha.code = channel.code
+                    cha.sample_rate = channel.sample_rate
+
             else:
                 print(
                     'Adding: node {0} Network {1} Year {2} Station {3} Year {4}'.format(
@@ -547,7 +433,8 @@ class FdsnRoutingManager(FdsnHttpBase):
                 stat.network = FdsnNetwork.query.join(FdsnNode).filter(
                     FdsnNode.code == node_wrapper.code,
                     FdsnNetwork.code == network_wrapper.code,
-                    extract('year', FdsnNetwork.start_date) == network_wrapper.parse_start_date_year()).first()
+                    extract('year', FdsnNetwork.start_date) ==
+                    network_wrapper.parse_start_date_year()).first()
 
                 # Fill data obtained from the Web Service
                 stat.code = station_wrapper.code
@@ -555,10 +442,16 @@ class FdsnRoutingManager(FdsnHttpBase):
                 stat.longitude = station_wrapper.longitude
                 stat.elevation = station_wrapper.elevation
                 stat.restricted_status = station_wrapper.restricted_status
-                stat.start_date = parser.parse(station_wrapper.start_date)
-                stat.end_date = parser.parse(station_wrapper.end_date) if station_wrapper.end_date else None
-                stat.creation_date = parser.parse(station_wrapper.creation_date) if station_wrapper.creation_date else None
+                stat.start_date = station_wrapper.parse_start_date()
+                stat.end_date = station_wrapper.parse_end_date()
+                stat.creation_date = station_wrapper.parse_creation_date()
                 stat.site_name = station_wrapper.site_name
+
+                for channel in station_wrapper.channels:
+                    cha = FdsnStationChannel()
+                    cha.station = stat
+                    cha.code = channel.code
+                    cha.sample_rate = channel.sample_rate
 
             # Commit the db session changes
             db.session.commit()
@@ -592,11 +485,17 @@ class FdsnManager():
         self.fdsn_netman = FdsnNetworkManager()
         self.fdsn_routman = FdsnRoutingManager()
 
+    def _prune_db(self):
+        FdsnStationChannel.query.delete()
+        FdsnStation.query.delete()
+        FdsnNetwork.query.delete()
+
     def process_fdsn(self):
         try:
             print('FDSN sync started!')
-            # self.fdsn_netman._sync_fdsn_networks()
+            self._prune_db()
+            self.fdsn_netman._sync_fdsn_networks()
             self.fdsn_routman._sync_fdsn_stations()
-            # self.log_information('FDSN sync completed!')
+            print('FDSN sync completed!')
         except KeyboardInterrupt:
             print('FDSN sync interrupted manually!')
