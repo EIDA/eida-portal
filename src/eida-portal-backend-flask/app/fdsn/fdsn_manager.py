@@ -177,7 +177,9 @@ class FdsnNetworkManager(FdsnHttpBase):
                 net.code = network_wrapper.code
                 net.description = network_wrapper.description
                 net.start_date = network_wrapper.parse_start_date()
+                net.start_year = network_wrapper.parse_start_date_year()
                 net.end_date = network_wrapper.parse_end_date()
+                net.end_year = network_wrapper.parse_end_date_year()
                 net.restricted_status = network_wrapper.restricted_status
                 net.node = FdsnNode.query.filter(
                     FdsnNode.code == node_wrapper.code).first()
@@ -406,6 +408,7 @@ class FdsnRoutingManager(FdsnHttpBase):
                 stat.restricted_status = station_wrapper.restricted_status
                 # stat.start_date = station_wrapper.start_date
                 stat.end_date = station_wrapper.parse_end_date()
+                stat.end_year = station_wrapper.parse_end_date_year()
                 stat.creation_date = station_wrapper.parse_creation_date()
                 stat.site_name = station_wrapper.site_name
 
@@ -438,12 +441,16 @@ class FdsnRoutingManager(FdsnHttpBase):
 
                 # Fill data obtained from the Web Service
                 stat.code = station_wrapper.code
+                stat.network_code = network_wrapper.code
+                stat.network_start_year = network_wrapper.parse_start_date_year()
                 stat.latitude = station_wrapper.latitude
                 stat.longitude = station_wrapper.longitude
                 stat.elevation = station_wrapper.elevation
                 stat.restricted_status = station_wrapper.restricted_status
                 stat.start_date = station_wrapper.parse_start_date()
+                stat.start_year = station_wrapper.parse_start_date_year()
                 stat.end_date = station_wrapper.parse_end_date()
+                stat.end_year = station_wrapper.parse_end_date_year()
                 stat.creation_date = station_wrapper.parse_creation_date()
                 stat.site_name = station_wrapper.site_name
 

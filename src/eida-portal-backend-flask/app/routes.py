@@ -1,15 +1,10 @@
 from flask import request, Response, jsonify
 
 from app import app
-from .resp.networks import NetworksResp
 
 from .fdsn.fdsn_manager import FdsnManager
-
-
-@app.route('/')
-@app.route('/index')
-def index():
-    return "Hello, World!"
+from .resp.networks import NetworksResp
+from .resp.stations import StationsResp
 
 
 @app.route('/n', methods=['GET'])
@@ -19,8 +14,15 @@ def networks():
     return jsonify(x)
 
 
-@app.route('/harvest')
+@app.route('/s', methods=['GET'])
 def stations():
+    s = StationsResp(request.args)
+    x = s.simple_response()
+    return jsonify(x)
+
+
+@app.route('/harvest')
+def harvest():
     fm = FdsnManager()
     fm.process_fdsn()
     return "Done!"

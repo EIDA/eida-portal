@@ -83,7 +83,11 @@ class FdsnNetwork(db.Model):
 
     start_date = Column(DateTime)
 
+    start_year = Column(String(STRING_LENGTH_SHORT))
+
     end_date = Column(DateTime)
+
+    end_year = Column(String(STRING_LENGTH_SHORT))
 
     restricted_status = Column(String(STRING_LENGTH_SHORT))
 
@@ -109,6 +113,10 @@ class FdsnStation(db.Model):
     # channels = relationship("FdsnStationChannel", backref="station")
     channels = relationship("FdsnStationChannel")
 
+    network_code = Column(String(STRING_LENGTH_SHORT))
+
+    network_start_year = Column(String(STRING_LENGTH_SHORT))
+
     code = Column(String(STRING_LENGTH_SHORT))
 
     latitude = Column(String(STRING_LENGTH_SHORT))
@@ -121,7 +129,11 @@ class FdsnStation(db.Model):
 
     start_date = Column(DateTime)
 
+    start_year = Column(String(STRING_LENGTH_SHORT))
+
     end_date = Column(DateTime)
+
+    end_year = Column(String(STRING_LENGTH_SHORT))
 
     site_name = Column(String(STRING_LENGTH_SHORT))
 

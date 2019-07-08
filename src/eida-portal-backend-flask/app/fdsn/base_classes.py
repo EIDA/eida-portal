@@ -69,7 +69,9 @@ class NetworkWrapper(object):
         self.code = NO_FDSNWS_DATA
         self.description = NO_FDSNWS_DATA
         self.start_date = None
+        self.start_year = None
         self.end_date = None
+        self.end_year = None
         self.restricted_status = NO_FDSNWS_DATA
         self.stations = []
 
@@ -83,13 +85,16 @@ class NetworkWrapper(object):
         self.stations = []
 
     def parse_start_date(self):
-        return parser.parse(self.start_date)
+        return parser.parse(self.start_date) if self.start_date else None
+
+    def parse_start_date_year(self):
+        return parser.parse(self.start_date).year if self.start_date else None
 
     def parse_end_date(self):
         return parser.parse(self.end_date) if self.end_date else None
 
-    def parse_start_date_year(self):
-        return parser.parse(self.start_date).year
+    def parse_end_date_year(self):
+        return parser.parse(self.end_date).year if self.end_date else None
 
 
 # Single station instance wrapper
@@ -97,6 +102,8 @@ class StationWrapper(object):
 
     def __init__(self):
         self.code = NO_FDSNWS_DATA
+        self.network_code = NO_FDSNWS_DATA
+        self.network_start_year = NO_FDSNWS_DATA
         self.latitude = NO_FDSNWS_DATA
         self.longitude = NO_FDSNWS_DATA
         self.elevation = NO_FDSNWS_DATA
@@ -108,16 +115,19 @@ class StationWrapper(object):
         self.channels = []
 
     def parse_start_date(self):
-        return parser.parse(self.start_date)
+        return parser.parse(self.start_date) if self.start_date else None
+
+    def parse_start_date_year(self):
+        return parser.parse(self.start_date).year if self.start_date else None
 
     def parse_end_date(self):
         return parser.parse(self.end_date) if self.end_date else None
 
+    def parse_end_date_year(self):
+        return parser.parse(self.end_date).year if self.end_date else None
+
     def parse_creation_date(self):
         return parser.parse(self.creation_date) if self.creation_date else None
-
-    def parse_start_date_year(self):
-        return parser.parse(self.start_date).year
 
 
 class StationChannel(object):
