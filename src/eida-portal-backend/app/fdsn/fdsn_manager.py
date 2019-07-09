@@ -58,7 +58,7 @@ class FdsnHttpBase():
     def get_network_if_known(self, node_wrapper, network_wrapper):
         try:
             x = db.session.query(FdsnNetwork).join(FdsnNode).filter(
-                FdsnNode.code == node_wrapper.code,
+                # FdsnNode.code == node_wrapper.code,
                 FdsnNetwork.code == network_wrapper.code,
                 extract('year', FdsnNetwork.start_date) ==
                 network_wrapper.parse_start_date_year()
@@ -72,7 +72,7 @@ class FdsnHttpBase():
     def get_station_if_known(self, node_wrapper, network_wrapper, station_wrapper):
         try:
             s = FdsnStation.query.join(FdsnNetwork).join(FdsnNode).filter(
-                FdsnNode.code == node_wrapper.code,
+                # FdsnNode.code == node_wrapper.code,
                 FdsnNetwork.code == network_wrapper.code,
                 extract('year', FdsnNetwork.start_date) ==
                 network_wrapper.parse_start_date_year(),
@@ -164,9 +164,11 @@ class FdsnNetworkManager(FdsnHttpBase):
 
             if net:
                 net.description = network_wrapper.description
-                net.end_date = network_wrapper.parse_end_date()
                 # net.start_date = network_wrapper.start_date
+                net.end_date = network_wrapper.parse_end_date()
+                net.end_year = network_wrapper.parse_end_date_year()
                 net.restricted_status = network_wrapper.restricted_status
+                net.temporary = network_wrapper.is_temporary()
             else:
                 print('Adding: node {0} Network {1} Year {2}'.format(
                     node_wrapper.code,
@@ -181,6 +183,7 @@ class FdsnNetworkManager(FdsnHttpBase):
                 net.end_date = network_wrapper.parse_end_date()
                 net.end_year = network_wrapper.parse_end_date_year()
                 net.restricted_status = network_wrapper.restricted_status
+                net.temporary = network_wrapper.is_temporary()
                 net.node = FdsnNode.query.filter(
                     FdsnNode.code == node_wrapper.code).first()
                 db.session.add(net)

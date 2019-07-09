@@ -73,6 +73,7 @@ class NetworkWrapper(object):
         self.end_date = None
         self.end_year = None
         self.restricted_status = NO_FDSNWS_DATA
+        self.temporary = False
         self.stations = []
 
     def _buildWrapper(self, network):
@@ -95,6 +96,10 @@ class NetworkWrapper(object):
 
     def parse_end_date_year(self):
         return parser.parse(self.end_date).year if self.end_date else None
+
+    # We assume network is temporary if it has end_date defined
+    def is_temporary(self):
+        return True if self.end_date else False
 
 
 # Single station instance wrapper

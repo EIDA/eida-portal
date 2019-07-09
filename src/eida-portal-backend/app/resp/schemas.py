@@ -1,6 +1,11 @@
 from marshmallow import Schema, fields
 
 
+class StationChannelAggregationSchema(Schema):
+    code = fields.Str()
+    occurences = fields.Int()
+
+
 class FdsnStationChannelSchema(Schema):
     code = fields.Str()
     sample_rate = fields.Str()
@@ -30,4 +35,5 @@ class FdsnNetworkSchema(Schema):
     end_date = fields.Str()
     end_year = fields.Str()
     restricted_status = fields.Str()
-    stations = fields.Nested(FdsnStationSchema, many=True)
+    temporary = fields.Boolean()
+    # stations = fields.Nested(FdsnStationSchema, many=True)

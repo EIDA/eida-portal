@@ -91,6 +91,8 @@ class FdsnNetwork(db.Model):
 
     restricted_status = Column(String(STRING_LENGTH_SHORT))
 
+    temporary = Column(Boolean)
+
     def __str__(self):
         return self.code
 

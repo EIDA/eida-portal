@@ -5,19 +5,27 @@ from app import app
 from .fdsn.fdsn_manager import FdsnManager
 from .resp.networks import NetworksResp
 from .resp.stations import StationsResp
+from .resp.channels import ChannelsResp
 
 
 @app.route('/n', methods=['GET'])
 def networks():
     m = NetworksResp(request.args)
-    x = m.simple_response()
+    x = m.networks_resp()
     return jsonify(x)
 
 
 @app.route('/s', methods=['GET'])
 def stations():
     s = StationsResp(request.args)
-    x = s.simple_response()
+    x = s.stations_resp()
+    return jsonify(x)
+
+
+@app.route('/c', methods=['GET'])
+def channels():
+    s = ChannelsResp(request.args)
+    x = s.channels_resp()
     return jsonify(x)
 
 
