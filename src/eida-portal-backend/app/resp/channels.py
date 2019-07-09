@@ -5,7 +5,7 @@ from sqlalchemy import extract
 from sqlalchemy.orm.exc import NoResultFound
 from marshmallow import pprint
 
-from .schemas import FdsnStationChannelSchema, StationChannelAggregationSchema
+from .schemas import FdsnStationChannelSchema
 from ..models import FdsnNode, FdsnNetwork, FdsnStation, FdsnStationChannel
 
 

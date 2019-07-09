@@ -1,11 +1,6 @@
 from marshmallow import Schema, fields
 
 
-class StationChannelAggregationSchema(Schema):
-    code = fields.Str()
-    occurences = fields.Int()
-
-
 class FdsnStationChannelSchema(Schema):
     code = fields.Str()
     sample_rate = fields.Str()
