@@ -2,11 +2,6 @@
 
 ## Backend ##
 
-### Config of eida-portal-backend ###
-n/a
-
-## Backend ##
-
 ### Quick start guide ###
 1. Go to the root directory:
     ```
