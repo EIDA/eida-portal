@@ -5,26 +5,12 @@
 ### Config of eida-portal-backend ###
 n/a
 
-### To build the eida-portal-backend docker image ###
-```
-$ cd src/eida-portal-backend/
-$ docker build -t eida/backend:latest .
-$ docker run -p 49160:3000 -d eida/backend:latest
-```
-
-### Start local dev server for eida-portal-backend ###
-```
-$ cd src/eida-portal-backend
-$ npm install
-$ npm start
-```
-
-## Backend Flask ##
+## Backend ##
 
 ### Quick start guide ###
 1. Go to the root directory:
     ```
-    $ src/eida-portal-backend-flask/
+    $ src/eida-portal-backend/
     ```
 1. Create the virtual environment:
     ```
@@ -101,12 +87,6 @@ $ npm start
 #### Mac + Chrome + VS Code ####
 1. Start the EIDA Portal frontend: `npm start`
 1. VS Code -> Debug -> Start Debugging (make sure to select right profile)
-
-## Docker-compose ##
-```
-$ cd src/
-$ docker-compose -p 'eidaportal' up -d
-```
 
 # CDN dependencies #
 * Frontend is using icons from http://fontawesome.com/
