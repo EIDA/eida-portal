@@ -16,13 +16,15 @@ class NetworksResp(object):
 
     def networks_resp(self):
         if not self.query:
-            data = FdsnNetwork.query.all()
+            data = FdsnNetwork.query.order_by(FdsnNetwork.code).all()
         elif self.query.get('code'):
             data = FdsnNetwork.query.filter(
-                FdsnNetwork.code == self.query.get('code')).all()
+                FdsnNetwork.code ==
+                self.query.get('code')).order_by(FdsnNetwork.code).all()
         elif self.query.get('temporary'):
             data = FdsnNetwork.query.filter(
-                FdsnNetwork.temporary == self.query.get('temporary')).all()
+                FdsnNetwork.temporary ==
+                self.query.get('temporary')).order_by(FdsnNetwork.code).all()
         return self._dump(data)
 
     def _dump(self, data):

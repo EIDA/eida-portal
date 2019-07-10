@@ -69,8 +69,7 @@
               <select [(ngModel)]="stationsService.stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
                 style="width:100%;">
                 <option selected>All</option>
-                <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start}}) -
-                  {{n.desc}}</option>
+                <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start_year}}) - {{n.description}}</option>
               </select>
             </div>
           </div>
@@ -106,7 +105,7 @@
                 <select [(ngModel)]="stationsService.stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
                   style="width:100%;">
                   <option selected>All</option>
-                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.stat}} - {{s.name}} ({{s.start}})
+                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.code}} - {{s.site_name}} ({{s.start_year}})
                   </option>
                 </select>
               </div>
@@ -401,8 +400,8 @@
         <tbody>
           <tr *ngFor="let station of paginator.getCurrentPage()">
             <td>
-              <a (click)="focusOnStation(station)">{{station.net}} / {{station.stat}}</a>
-              <p class="is-size-7">{{station.name}} ({{station.getCoordinates()}})</p>
+              <a (click)="focusOnStation(station)">{{station.network_code}} / {{station.code}}</a>
+              <p class="is-size-7">{{station.site_name}} ({{station.getCoordinates()}})</p>
             </td>
             <td>
               <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)"

@@ -37,14 +37,18 @@ export class StationsService {
   addAllStations(fs: FdsnStation[]) {
     for (const f of fs) {
       let tmp = new FdsnStationExt();
-      tmp.net = f.net;
-      tmp.stat = f.stat;
-      tmp.lat = f.lat;
-      tmp.lon = f.lon;
-      tmp.elev = f.elev;
-      tmp.name = f.name;
-      tmp.start = f.start;
-      tmp.end = f.end;
+      tmp.network_code = f.network_code;
+      tmp.network_start_year = f.network_start_year;
+      tmp.code = f.code;
+      tmp.latitude = f.latitude;
+      tmp.longitude = f.longitude;
+      tmp.elevation = f.elevation;
+      tmp.site_name = f.site_name;
+      tmp.start_date = f.start_date;
+      tmp.start_year = f.start_year;
+      tmp.end_date = f.end_date;
+      tmp.end_year = f.end_year;
+      tmp.restricted_status = f.restricted_status;
       tmp.selected = true;
       this.allStations.push(tmp);
     }
@@ -54,7 +58,7 @@ export class StationsService {
   updateStations(filteredStations: FdsnStationExt[]) {
     for (const fs of filteredStations) {
       if (this._mapStations.filter(
-        e => (e.net === fs.net && e.stat === fs.stat)).length === 0) {
+        e => (e.network_code === fs.network_code && e.code === fs.code)).length === 0) {
           this._mapStations.push(fs);
       }
     }
@@ -100,8 +104,8 @@ export class StationsService {
     );
   }
 
-  getStreamsForWorkingSet(st: FdsnStationExt[]) {
-    const url = `${this._channelsUrl}?level=0&`;
+  getChannelsForWorkingSet(st: FdsnStationExt[]) {
+    const url = `${this._channelsUrl}?aggregated=1&`;
     return this._eidaService.http.post(
       url,
       JSON.stringify(st),
@@ -121,10 +125,11 @@ export class StationsService {
 
       // All all networks or selected network based on the combo selection
       if (sm.selectedNetwork === 'All') {
-        this._filteredStations = this.allStations.filter(m => m.net);
+        this._filteredStations = this.allStations.filter(m => m.network_code);
       } else {
         this._filteredStations = this._mapStations.concat(this.allStations.filter(
-          m => m.net === sm.selectedNetwork.code
+          m => m.network_code === sm.selectedNetwork.code
+          && m.network_start_year === sm.selectedNetwork.start_year
         ));
       }
 
@@ -132,15 +137,15 @@ export class StationsService {
       if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Code) {
         if (sm.selectedStation !== 'All') {
           this._filteredStations = this._filteredStations.filter(
-            m => m.stat === sm.selectedStation.stat
+            m => m.code === sm.selectedStation.stat
           );
         }
       } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Region) {
         this._filteredStations = this._filteredStations.filter(
-          m => m.lat >= sm.coordinateS
-          && m.lat <= sm.coordinateN
-          && m.lon >= sm.coordinateW
-          && m.lon <= sm.coordinateE
+          m => m.latitude >= sm.coordinateS
+          && m.latitude <= sm.coordinateN
+          && m.longitude >= sm.coordinateW
+          && m.longitude <= sm.coordinateE
         );
       } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Events) {
         for (let i = this._filteredStations.length - 1; i >= 0; i--) {
@@ -182,14 +187,14 @@ export class StationsService {
 
   toggleStationSelection(s: FdsnStationExt) {
     this._mapStations.find(
-      p => p.net === s.net && p.stat === s.stat
+      p => p.network_code === s.network_code && p.code === s.code
     ).selected = !s.selected;
     this.refreshStations(this._mapStations);
   }
 
   removeStationSelection(s: FdsnStation) {
     const i = this._mapStations.indexOf(
-      this._mapStations.find(p => p.net === s.net && p.stat === s.stat)
+      this._mapStations.find(p => p.network_code === s.network_code && p.code === s.code)
     );
     this._mapStations.splice(i, 1);
     this.refreshStations(this._mapStations);

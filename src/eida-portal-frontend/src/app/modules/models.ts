@@ -213,43 +213,51 @@ export class RequestModel {
 
 export class FdsnNetwork {
     code: string;
-    desc: string;
-    start: string;
-    end: string;
+    description: string;
+    start_date: string;
+    start_year: string;
+    end_date: string;
+    end_year: string;
+    temporary: boolean;
 
     constructor() {
         this.code = 'ALL';
-        this.desc = 'ALL';
-        this.start = '';
-        this.end = '';
+        this.description = 'ALL';
+        this.start_date = '';
+        this.start_year = '';
+        this.end_date = '';
+        this.end_year = '';
+        this.temporary = false;
     }
 }
 
 export class FdsnStation {
-    net: string;
-    stat: string;
-    loc: string;
-    cha: string;
-    lat: number;
-    lon: number;
-    elev: number;
-    dep: string;
-    name: string;
-    start: string;
-    end: string;
+    network_code: string;
+    network_start_year: string;
+    code: string;
+    latitude: number;
+    longitude: number;
+    elevation: number;
+    site_name: string;
+    start_date: string;
+    start_year: string;
+    end_date: string;
+    end_year: string;
+    restricted_status: string;
 
     constructor() {
-        this.net = 'ALL';
-        this.stat = 'ALL';
-        this.loc = 'ALL';
-        this.cha = 'ALL';
-        this.lat = 0.0;
-        this.lon = 0.0;
-        this.elev = 0.0;
-        this.dep = 'ALL';
-        this.name = 'ALL';
-        this.start = 'ALL';
-        this.end = 'ALL';
+        this.network_code = 'ALL';
+        this.network_start_year = 'ALL'
+        this.code = 'ALL';
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+        this.elevation = 0.0;
+        this.site_name = 'ALL';
+        this.start_date = 'ALL';
+        this.start_year = 'ALL';
+        this.end_date = 'ALL';
+        this.end_year = 'ALL';
+        this.restricted_status = 'ALL';
     }
 }
 
@@ -263,9 +271,9 @@ export class FdsnStationExt extends FdsnStation {
 
     getCoordinates() : string {
         try {
-            return `Lat: ${Number(this.lat).toFixed(2)}, Lon: ${Number(this.lon).toFixed(2)}`;   
+            return `Lat: ${Number(this.latitude).toFixed(2)}, Lon: ${Number(this.longitude).toFixed(2)}`;   
         } catch {
-            return `Lat: ${this.lat}, Lon: ${this.lon}`;
+            return `Lat: ${this.latitude}, Lon: ${this.longitude}`;
         }
     }
 }

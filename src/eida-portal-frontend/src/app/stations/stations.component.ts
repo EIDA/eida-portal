@@ -72,7 +72,7 @@ export class StationsComponent implements OnInit {
     } else {
       this.stationsService.stationsModel.selectedNetwork = n;
       this.filteredStations = this.stationsService.allStations.filter(
-        s => s.net === n.code
+        s => s.network_code === n.code && s.network_start_year === n.start_year
       );
     }
 
@@ -181,7 +181,7 @@ export class StationsComponent implements OnInit {
       this._streamSubscription.unsubscribe();
     }
     
-    this._streamSubscription = this.stationsService.getStreamsForWorkingSet(
+    this._streamSubscription = this.stationsService.getChannelsForWorkingSet(
       this.selectedStations.filter(n => n.selected === true)
     ).subscribe(
       result => this.importWorksetStationChannels(result)

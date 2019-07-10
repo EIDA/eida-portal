@@ -183,9 +183,9 @@ export class MapComponent implements OnInit {
     for (let s of stations) {
       var point = new ol.Feature({
         geometry: new ol.geom.Point(
-          ol.proj.fromLonLat([+s.lon, +s.lat])
+          ol.proj.fromLonLat([+s.longitude, +s.latitude])
         ),
-        name: `<b>Network:</b> ${s.net}<br><b>Station:</b> ${s.stat}<br><b>Name:</b> ${s.name}`
+        name: `<b>Network:</b> ${s.network_code}<br><b>Station:</b> ${s.code}<br><b>Name:</b> ${s.site_name}`
       });
 
       point.setStyle(new ol.style.Style({
@@ -202,7 +202,7 @@ export class MapComponent implements OnInit {
 
   focusStation(s: FdsnStationExt) {
     this._map.getView().animate({
-      center: ol.proj.fromLonLat([+s.lon, +s.lat]),
+      center: ol.proj.fromLonLat([+s.longitude, +s.latitude]),
       duration: 1000,
       zoom: 13
     })
@@ -252,7 +252,7 @@ export class MapComponent implements OnInit {
   }
 
   removeStation(s: FdsnStationExt): void {
-    console.log(s.stat);
+    console.log(s.code);
   }
 
   toggleStationSelection(s): void {

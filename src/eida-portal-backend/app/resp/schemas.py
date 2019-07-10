@@ -19,7 +19,7 @@ class FdsnStationSchema(Schema):
     end_date = fields.Str()
     end_year = fields.Str()
     site_name = fields.Str()
-    channels = fields.Nested(FdsnStationChannelSchema, many=True)
+    # channels = fields.Nested(FdsnStationChannelSchema, many=True)
 
 
 class FdsnNetworkSchema(Schema):

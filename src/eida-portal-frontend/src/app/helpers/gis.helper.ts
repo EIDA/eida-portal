@@ -13,7 +13,7 @@ export class GisHelper {
     ): number {
         try {
             let p1 = turf.point([eventOrigin.longitude, eventOrigin.latitude]);
-            let p2 = turf.point([station.lon, station.lat]);
+            let p2 = turf.point([station.longitude, station.latitude]);
             let options = {units: 'kilometers'};
             var d = turf.distance(p1, p2, options);
             return d;
@@ -28,7 +28,7 @@ export class GisHelper {
     ): number {
         try {
             let p1 = turf.point([eventOrigin.longitude, eventOrigin.latitude]);
-            let p2 = turf.point([station.lon, station.lat]);
+            let p2 = turf.point([station.longitude, station.latitude]);
             let b = turf.bearingToAzimuth(turf.bearing(p1, p2));
             return b;
         } catch (ex) {
