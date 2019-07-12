@@ -83,5 +83,13 @@ $ npm start
 1. Start the EIDA Portal frontend: `npm start`
 1. VS Code -> Debug -> Start Debugging (make sure to select right profile)
 
+## Docker ##
+
+1. Build and run the images:
+```
+$ cd src/eida-portal-backend/
+$ docker-compose -p 'epb' up -d
+```
+
 # CDN dependencies #
 * Frontend is using icons from http://fontawesome.com/

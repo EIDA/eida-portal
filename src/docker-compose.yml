@@ -1,22 +1,16 @@
 version: '2'
 services:
-  epback:
+  epb:
     restart: always
     build: ./eida-portal-backend/
+    user: "994:1019"
     ports:
-      - "49160:3000"
+      - "8010:8010"
+    volumes:
+      - ./eida-portal-backend/app/db:/data/epb/db
     networks:
-      - ep_net
-
-  epfront:
-    restart: always
-    build: ./eida-portal-frontend/
-    depends_on:
-      - epback
-    ports:
-      - "49161:4200"
-    networks:
-      - ep_net
+      - epb_net
+    command: gunicorn -b localhost:8010 -w 2 app:app
 
 networks:
-  ep_net:
+  epb_net:
