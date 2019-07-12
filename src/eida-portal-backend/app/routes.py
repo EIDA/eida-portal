@@ -33,9 +33,3 @@ def channels():
 
     return jsonify(x)
 
-
-@app.route('/harvest')
-def harvest():
-    fm = FdsnManager()
-    fm.process_fdsn()
-    return "Done!"
