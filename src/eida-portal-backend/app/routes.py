@@ -32,4 +32,3 @@ def channels():
         x = s.channels_get_resp()
 
     return jsonify(x)
-
