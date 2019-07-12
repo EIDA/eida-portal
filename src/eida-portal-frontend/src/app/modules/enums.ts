@@ -16,7 +16,7 @@ export namespace Enums {
         Events = 2
     }
 
-    export enum StationStreamSelectionMethods {
+    export enum stationChannelSelectionMethods {
         Code = 0,
         Sampling = 1
     }

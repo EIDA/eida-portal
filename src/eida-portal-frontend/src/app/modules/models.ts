@@ -17,14 +17,14 @@ export class StationsModel {
     selectedStation;
     dataSource: Enums.StationDataSource;
     stationSelectionMethod: Enums.StationSelectionMethods;
-    streamSelectionMethod: Enums.StationStreamSelectionMethods;
+    channelSelectionMethod: Enums.stationChannelSelectionMethods;
     eventDistanceFrom: number;
     eventDistanceTo: number;
     eventAzimuthFrom: number;
     eventAzimuthTo: number;
     targetSamplingRate: number;
-    availableStreams: Array<StationStreamModel>;
-    worksetStreams: Array<StationStreamModel>;
+    availableChannels: Array<StationChannelModel>;
+    worksetChannels: Array<StationChannelModel>;
 
     constructor() {
         let dh = new DateHelper();
@@ -55,14 +55,14 @@ export class StationsModel {
         this.selectedStation = 'All';
         this.dataSource = Enums.StationDataSource.Inventory;
         this.stationSelectionMethod = Enums.StationSelectionMethods.Code;
-        this.streamSelectionMethod = Enums.StationStreamSelectionMethods.Code;
+        this.channelSelectionMethod = Enums.stationChannelSelectionMethods.Code;
         this.eventDistanceFrom = 0.0;
         this.eventDistanceTo = 100.0;
         this.eventAzimuthFrom = 0.0;
         this.eventAzimuthTo = 360.0;
         this.targetSamplingRate = 20.0;
-        this.availableStreams = new Array<StationStreamModel>();
-        this.worksetStreams = new Array<StationStreamModel>();
+        this.availableChannels = new Array<StationChannelModel>();
+        this.worksetChannels = new Array<StationChannelModel>();
     }
 
     toString() {
@@ -75,30 +75,30 @@ export class StationsModel {
         this.selectedStation = 'All';
     }
 
-    clearAvailableStreams() {
-        this.availableStreams = new Array<StationStreamModel>();
+    clearAvailableChannels() {
+        this.availableChannels = new Array<StationChannelModel>();
     }
 
-    clearWorksetStreams() {
-        this.worksetStreams = new Array<StationStreamModel>();
+    clearWorksetChannels() {
+        this.worksetChannels = new Array<StationChannelModel>();
     }
 
-    getSelectedStreams() {
-        return this.worksetStreams.filter(k => k.selected);
+    getSelectedChannels() {
+        return this.worksetChannels.filter(k => k.selected);
     }
 
-    allStreamsSelected(): boolean {
-        return this.worksetStreams.find(k => !k.selected) === undefined;
+    allChannelsSelected(): boolean {
+        return this.worksetChannels.find(k => !k.selected) === undefined;
     }
 }
 
-export class StationStreamModel {
-    streamCode: string;
+export class StationChannelModel {
+    channelCode: string;
     appearances: number;
     selected: boolean;
 
     constructor() {
-        this.streamCode = '';
+        this.channelCode = '';
         this.appearances = 0;
         this.selected = true;
     }

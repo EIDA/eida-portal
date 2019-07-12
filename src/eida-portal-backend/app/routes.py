@@ -22,10 +22,15 @@ def stations():
     return jsonify(x)
 
 
-@app.route('/c', methods=['GET'])
+@app.route('/c', methods=['GET', 'POST'])
 def channels():
     s = ChannelsResp(request.args)
-    x = s.channels_resp()
+
+    if request.method == 'POST':
+        x = s.channels_post_resp(request.json)
+    else:
+        x = s.channels_get_resp()
+
     return jsonify(x)
 
 

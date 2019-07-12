@@ -216,15 +216,15 @@
         }
     },
     {
-        "key": "stations-tip-tabs-streams",
+        "key": "stations-tip-tabs-channels",
         "values": {
-            "en": "<b style='color:gold'>By code</b>: select streams by code (streams are sorted in a descending manner based on data availability)<br><b style='color:gold'>By sampling</b>: select streams by sampling (streams closest to the desired sampling will be selected)"
+            "en": "<b style='color:gold'>By code</b>: select channels by code (channels are sorted in a descending manner based on data availability)<br><b style='color:gold'>By sampling</b>: select channels by sampling (channels closest to the desired sampling will be selected)"
         }
     },
     {
-        "key": "stations-tip-streams",
+        "key": "stations-tip-channels",
         "values": {
-            "en": "Select streams (multiple selection is possible using CTRL + click / CMD + click)"
+            "en": "Select channels (multiple selection is possible using CTRL + click / CMD + click)"
         }
     },
     {

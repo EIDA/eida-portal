@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import {
-  StationsModel, StationStreamModel, FdsnNetwork, FdsnStationExt,
+  StationsModel, StationChannelModel, FdsnNetwork, FdsnStationExt,
   MapDragBoxCoordinates
 } from '../modules/models';
 import { ConsoleService } from '../console.service';
@@ -23,7 +23,7 @@ export class StationsComponent implements OnInit {
   paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
-  private _streamSubscription: Subscription;
+  private _channelSubscription: Subscription;
 
   constructor(
     private _consoleService: ConsoleService,
@@ -100,17 +100,17 @@ export class StationsComponent implements OnInit {
     this.refreshAvailableStreams();    
   }
 
-  getAvailableStreams() {
-    return this.stationsService.stationsModel.availableStreams;
+  getAvailableChannels() {
+    return this.stationsService.stationsModel.availableChannels;
   }
 
-  getWorksetStreams(selected: boolean) {
-    return this.stationsService.stationsModel.worksetStreams.filter(x => x.selected === selected);
+  getWorksetChannels(selected: boolean) {
+    return this.stationsService.stationsModel.worksetChannels.filter(x => x.selected === selected);
   }
 
-  handleStreamSelection(s) : void {
-    this.stationsService.stationsModel.worksetStreams.find(
-      e => e.streamCode === s.streamCode).selected = !s.selected;
+  handleChannelSelection(s) : void {
+    this.stationsService.stationsModel.worksetChannels.find(
+      e => e.channelCode === s.channelCode).selected = !s.selected;
   }
 
   add() {
@@ -155,21 +155,22 @@ export class StationsComponent implements OnInit {
       return;
     }
 
-    this.stationsService.getAvailableStreams(
+    this.stationsService.getAvailableChannels(
       this.stationsService.stationsModel.selectedNetwork.code,
-      this.stationsService.stationsModel.selectedStation.stat).subscribe(
-        val => this.importStationStreams(val)
+      this.stationsService.stationsModel.selectedNetwork.start_year,
+      this.stationsService.stationsModel.selectedStation.code).subscribe(
+        val => this.importStationChannels(val)
     );
   }
 
-  importStationStreams(array) : void {
-    this.stationsService.stationsModel.clearAvailableStreams();
+  importStationChannels(array) : void {
+    this.stationsService.stationsModel.clearAvailableChannels();
 
     for (let a in array) {
-      let s = new StationStreamModel();
-      s.streamCode = a;
+      let s = new StationChannelModel();
+      s.channelCode = a;
       s.appearances = array[a];
-      this.stationsService.stationsModel.availableStreams.push(s);
+      this.stationsService.stationsModel.availableChannels.push(s);
     }
   }
 
@@ -177,11 +178,11 @@ export class StationsComponent implements OnInit {
    * When stations in the rowking set change, refresh the station channels list
    */
   refreshWorksetStationChannels(): void {
-    if (this._streamSubscription) {
-      this._streamSubscription.unsubscribe();
+    if (this._channelSubscription) {
+      this._channelSubscription.unsubscribe();
     }
     
-    this._streamSubscription = this.stationsService.getChannelsForWorkingSet(
+    this._channelSubscription = this.stationsService.getChannelsForWorkingSet(
       this.selectedStations.filter(n => n.selected === true)
     ).subscribe(
       result => this.importWorksetStationChannels(result)
@@ -189,13 +190,13 @@ export class StationsComponent implements OnInit {
   }
 
   importWorksetStationChannels(array): void {
-    this.stationsService.stationsModel.clearWorksetStreams();
+    this.stationsService.stationsModel.clearWorksetChannels();
 
     for (let a in array) {
-      let s = new StationStreamModel();
-      s.streamCode = a;
+      let s = new StationChannelModel();
+      s.channelCode = a;
       s.appearances = array[a];
-      this.stationsService.stationsModel.worksetStreams.push(s);
+      this.stationsService.stationsModel.worksetChannels.push(s);
     }
   }
 
@@ -207,8 +208,8 @@ export class StationsComponent implements OnInit {
     this.stationsService.stationsModel.stationSelectionMethod = s;
   }
 
-  stationStreamSelectionMethod(s: Enums.StationStreamSelectionMethods): void {
-    this.stationsService.stationsModel.streamSelectionMethod = s;
+  stationChannelSelectionMethod(s: Enums.stationChannelSelectionMethods): void {
+    this.stationsService.stationsModel.channelSelectionMethod = s;
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
@@ -232,18 +233,18 @@ export class StationsComponent implements OnInit {
     $(`#${target}`).show("fast");
   }
 
-  handleStreamsTabChange(btn: string, target: string): void {
-    $('#streamsByCodeContent, #streamsBySamplingContent').hide();
-    $('#streamsTabs').find('li').removeClass('is-active');
+  handleChannelTabChange(btn: string, target: string): void {
+    $('#channelsByCodeContent, #channelsBySamplingContent').hide();
+    $('#channelsTabs').find('li').removeClass('is-active');
     $(`#${btn}`).addClass('is-active');
     $(`#${target}`).show("fast");
   }
 
-  handleAvailableStreamsVisibility(v: boolean) {
+  handleAvailableChannelsVisibility(v: boolean) {
     if (v) {
-      $('#available-streams').show();
+      $('#available-channels').show();
     } else {
-      $('#available-streams').hide();
+      $('#available-channels').hide();
     }
   }
 }

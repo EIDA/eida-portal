@@ -83,13 +83,13 @@
         [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
         <ul id="stationsTabs">
           <li id="stationsByCodeTab" class="is-active"
-            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0); handleAvailableStreamsVisibility(true)">
+            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0); handleAvailableChannelsVisibility(true)">
             <a>By code</a></li>
           <li id="stationsByRegionTab"
-            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1); handleAvailableStreamsVisibility(false)">
+            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1); handleAvailableChannelsVisibility(false)">
             <a>By region</a></li>
           <li id="stationsByEventsTab"
-            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2); handleAvailableStreamsVisibility(false)">
+            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2); handleAvailableChannelsVisibility(false)">
             <a>By events</a></li>
         </ul>
       </div>
@@ -222,64 +222,64 @@
 
       <hr>
 
-      <h1 class="title is-5 has-text-centered">Streams</h1>
+      <h1 class="title is-5 has-text-centered">Channels</h1>
 
       <div class="tabs is-toggle is-small is-fullwidth"
-        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-streams')">
-        <ul id="streamsTabs">
-          <li id="streamsByCodeTab" class="is-active"
-            (click)="handleStreamsTabChange('streamsByCodeTab', 'streamsByCodeContent'); stationStreamSelectionMethod(0);">
+        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-channels')">
+        <ul id="channelsTabs">
+          <li id="channelsByCodeTab" class="is-active"
+            (click)="handleChannelTabChange('channelsByCodeTab', 'channelsByCodeContent'); stationChannelSelectionMethod(0);">
             <a>By code</a></li>
-          <li id="streamsBySamplingTab"
-            (click)="handleStreamsTabChange('streamsBySamplingTab', 'streamsBySamplingContent'); stationStreamSelectionMethod(1);">
+          <li id="channelsBySamplingTab"
+            (click)="handleChannelTabChange('channelsBySamplingTab', 'channelsBySamplingContent'); stationChannelSelectionMethod(1);">
             <a>By sampling</a></li>
         </ul>
       </div>
 
-      <div id="streamsByCodeContent">
-        <!-- <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-streams')">
+      <div id="channelsByCodeContent">
+        <!-- <div class="select is-multiple is-fullwidth" [attr.data-tippy-content]="textService.getText('stations-tip-channels')">
           <select multiple>
-            <option *ngFor="let s of stationsService.stationsModel.streams" [ngValue]="s" (click)="handleStreamSelection(s);">
+            <option *ngFor="let s of stationsService.stationsModel.channels" [ngValue]="s" (click)="handleChannelSelection(s);">
               {{ s.channelCode }} ({{ s.appearances }})</option>
           </select>
         </div> -->
 
-        <div id="available-streams">
-        <h1 class="title is-6 has-text-centered">Streams available in selection</h1>
+        <div id="available-channels">
+        <h1 class="title is-6 has-text-centered">Channels available in selection</h1>
         <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getAvailableStreams();" class="control">
+          <div *ngFor="let s of getAvailableChannels();" class="control">
             <div class="tags">
-              <span class="tag is-small">{{ s.streamCode }} ({{ s.appearances }})</span>
+              <span class="tag is-small">{{ s.channelCode }} ({{ s.appearances }})</span>
             </div>
           </div>
         </div>
         <hr>
         </div>
 
-        <h1 class="title is-6 has-text-centered">Streams <b>included</b> in the working set</h1>
+        <h1 class="title is-6 has-text-centered">Channels <b>included</b> in the working set</h1>
         <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getWorksetStreams(true);" class="control">
+          <div *ngFor="let s of getWorksetChannels(true);" class="control">
             <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.streamCode }} ({{ s.appearances }})</span>
-              <a class="tag is-warning" (click)="handleStreamSelection(s);">-</a>
+              <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+              <a class="tag is-warning" (click)="handleChannelSelection(s);">-</a>
             </div>
           </div>
         </div>
 
         <hr>
 
-        <h1 class="title is-6 has-text-centered">Streams <b>excluded</b> from the working set</h1>
+        <h1 class="title is-6 has-text-centered">Channels <b>excluded</b> from the working set</h1>
         <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getWorksetStreams(false);" class="control">
+          <div *ngFor="let s of getWorksetChannels(false);" class="control">
             <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.streamCode }} ({{ s.appearances }})</span>
-              <a class="tag is-success" (click)="handleStreamSelection(s);">+</a>
+              <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+              <a class="tag is-success" (click)="handleChannelSelection(s);">+</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="streamsBySamplingContent" hidden>
+      <div id="channelsBySamplingContent" hidden>
         <div class="field is-horizontal">
           <div class="field-label">
             <label class="label">Sampling rate</label>

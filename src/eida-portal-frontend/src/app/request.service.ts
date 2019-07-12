@@ -54,27 +54,27 @@ export class RequestService {
   private _downloadMiniSeed(): void {
     const urls = Array<{}>();
 
-    const selectedStreams = this._stationsService.stationsModel.getSelectedStreams();
-    const allStreamsSelected = this._stationsService.stationsModel.allStreamsSelected();
+    const selectedChannels = this._stationsService.stationsModel.getSelectedChannels();
+    const allChannelsSelected = this._stationsService.stationsModel.allChannelsSelected();
 
     for (const e of this._eventsService.selectedEvents.value.filter(n => n.selected === true)) {
       let urlSta = null;
-      let urlStream = null;
+      let urlChannel = null;
 
       const selectedStations = this._stationsService.selectedStations.value.filter(n => n.selected === true);
 
       // Check if there are stations selected and
       // create a comma-separated list of them for the URL query
       if (selectedStations.length > 0) {
-        urlSta = Object.keys(selectedStations).map(k => selectedStations[k].stat).join(',');
+        urlSta = Object.keys(selectedStations).map(k => selectedStations[k].code).join(',');
       }
 
-      // Check if there are streams selected and create a comma-separated
+      // Check if there are channels selected and create a comma-separated
       // list of them for the URL query Add question mark on at the end of
-      // stream code to include all stream components
-      if (!allStreamsSelected && selectedStreams.length > 0) {
-        urlStream = Object.keys(selectedStreams)
-          .map(k => selectedStreams[k].streamCode + '?')
+      // channel code to include all channel components
+      if (!allChannelsSelected && selectedChannels.length > 0) {
+        urlChannel = Object.keys(selectedChannels)
+          .map(k => selectedChannels[k].channelCode + '?')
           .join(',');
       }
 
@@ -84,8 +84,8 @@ export class RequestService {
         url = `${this._fedDataselectUrl}sta=${urlSta}`;
       }
 
-      if (!allStreamsSelected) {
-        url += `&channel=${urlStream}`;
+      if (!allChannelsSelected) {
+        url += `&channel=${urlChannel}`;
       }
 
       // Get the time window based on event
@@ -108,7 +108,7 @@ export class RequestService {
     if (this._stationsService.selectedStations.value.filter(n => n.selected === true).length > 0) {
       urlSta = Object.keys(
         this._stationsService.selectedStations.value.filter(n => n.selected === true)
-      ).map(k => this._stationsService.selectedStations.value[k].stat).join(',');
+      ).map(k => this._stationsService.selectedStations.value[k].code).join(',');
     }
 
     let url = '';
