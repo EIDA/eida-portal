@@ -25,21 +25,19 @@ class ChannelsResp(object):
                 FdsnNetwork.start_year == self.query.get('netstartyear'),
                 FdsnStation.code == self.query.get('statcode')
             ).all()
-
-            if self.query.get('aggregate'):
-                data = self._aggregate(data)
-                return data
-
         elif self.query.get('netcode') \
         and self.query.get('netstartyear'):
             data = FdsnStationChannel.query.join(FdsnStation).join(FdsnNetwork).filter(
                 FdsnNetwork.code == self.query.get('netcode'),
                 FdsnNetwork.start_year == self.query.get('netstartyear')
             ).all()
+        elif self.query.get('aggregate'):
+            data = FdsnStationChannel.query.all()
 
-            if self.query.get('aggregate'):
-                data = self._aggregate(data)
-                return data
+        # Aggregated data requested
+        if self.query.get('aggregate') and data:
+            data = self._aggregate(data)
+            return data
 
         return self._dump(data)
 
