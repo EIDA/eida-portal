@@ -140,7 +140,7 @@ export class StationsService {
       if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Code) {
         if (sm.selectedStation !== 'All') {
           this._filteredStations = this._filteredStations.filter(
-            m => m.code === sm.selectedStation.stat
+            m => m.code === sm.selectedStation.code
           );
         }
       } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Region) {

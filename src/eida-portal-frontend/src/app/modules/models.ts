@@ -68,7 +68,7 @@ export class StationsModel {
     toString() {
         return `Year: ${this.yearFrom} - ${this.yearTo}, 
         coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W,
-        network: ${this.selectedNetwork.code}, station: ${this.selectedStation.stat}`;
+        network: ${this.selectedNetwork.code}, station: ${this.selectedStation.code}`;
     }
 
     clearStationSelection() {
