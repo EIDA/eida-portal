@@ -234,6 +234,7 @@ export class FdsnNetwork {
 export class FdsnStation {
     network_code: string;
     network_start_year: string;
+    network_temporary: boolean;
     code: string;
     latitude: number;
     longitude: number;
@@ -247,7 +248,8 @@ export class FdsnStation {
 
     constructor() {
         this.network_code = 'ALL';
-        this.network_start_year = 'ALL'
+        this.network_start_year = 'ALL';
+        this.network_temporary = false;
         this.code = 'ALL';
         this.latitude = 0.0;
         this.longitude = 0.0;

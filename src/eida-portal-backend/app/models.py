@@ -119,6 +119,8 @@ class FdsnStation(db.Model):
 
     network_start_year = Column(String(STRING_LENGTH_SHORT))
 
+    network_temporary = Column(Boolean)
+
     code = Column(String(STRING_LENGTH_SHORT))
 
     latitude = Column(String(STRING_LENGTH_SHORT))

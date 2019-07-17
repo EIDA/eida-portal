@@ -33,7 +33,7 @@ export class StationsComponent implements OnInit {
 
   ngOnInit() {
     this.stationsService.getNetworks().subscribe(
-      n => this.stationsService.allNetworks = n
+      n => this.stationsService.addAllNetworks(n)
     );
     this.stationsService.getStations().subscribe(
       s => this.stationsService.addAllStations(s)
@@ -66,9 +66,24 @@ export class StationsComponent implements OnInit {
    * Triggered from stations tab when network combo value changes
    * @param n - String "All" or FdsnNetwork instance
    */
-  networkChanged(n) {
+  networkChanged() {
+    const n = this.stationsService.stationsModel.selectedNetwork;
     if (n === 'All') {
-      this.filteredStations = this.stationsService.allStations;
+      switch (this.stationsService.stationsModel.selectedNetworkType.id) {
+        case 0:
+            this.filteredStations = this.stationsService.allStations;
+            break;
+        case 1:
+            this.filteredStations = this.stationsService.allStations.filter(
+              s => s.network_temporary === false
+            );
+            break;
+        case 2:
+            this.filteredStations = this.stationsService.allStations.filter(
+              s => s.network_temporary === true
+            );
+            break;
+      }
     } else {
       this.stationsService.stationsModel.selectedNetwork = n;
       this.filteredStations = this.stationsService.allStations.filter(
@@ -97,7 +112,7 @@ export class StationsComponent implements OnInit {
 
   stationChanged(s): void {
     this.stationsService.stationsModel.selectedStation = s;
-    this.refreshAvailableStreams();    
+    this.refreshAvailableStreams();
   }
 
   getAvailableChannels() {
@@ -158,12 +173,13 @@ export class StationsComponent implements OnInit {
     this.stationsService.getAvailableChannels(
       this.stationsService.stationsModel.selectedNetwork.code,
       this.stationsService.stationsModel.selectedNetwork.start_year,
-      this.stationsService.stationsModel.selectedStation.code).subscribe(
+      this.stationsService.stationsModel.selectedStation.code,
+      this.stationsService.stationsModel.selectedNetworkType).subscribe(
         val => this.importStationChannels(val)
     );
   }
 
-  importStationChannels(array) : void {
+  importStationChannels(array): void {
     this.stationsService.stationsModel.clearAvailableChannels();
 
     for (let a in array) {
@@ -181,7 +197,7 @@ export class StationsComponent implements OnInit {
     if (this._channelSubscription) {
       this._channelSubscription.unsubscribe();
     }
-    
+  
     this._channelSubscription = this.stationsService.getChannelsForWorkingSet(
       this.selectedStations.filter(n => n.selected === true)
     ).subscribe(

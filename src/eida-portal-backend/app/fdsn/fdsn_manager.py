@@ -405,6 +405,10 @@ class FdsnRoutingManager(FdsnHttpBase):
             # latest FDSN data, otherwise add it to the database
             if stat:
                 # stat.code = station_wrapper.code
+                stat.network_code = network_wrapper.code
+                stat.network_start_year = \
+                    network_wrapper.parse_start_date_year()
+                stat.network_temporary = network_wrapper.is_temporary()
                 stat.latitude = station_wrapper.latitude
                 stat.longitude = station_wrapper.longitude
                 stat.elevation = station_wrapper.elevation
@@ -445,7 +449,9 @@ class FdsnRoutingManager(FdsnHttpBase):
                 # Fill data obtained from the Web Service
                 stat.code = station_wrapper.code
                 stat.network_code = network_wrapper.code
-                stat.network_start_year = network_wrapper.parse_start_date_year()
+                stat.network_start_year = \
+                    network_wrapper.parse_start_date_year()
+                stat.network_temporary = network_wrapper.is_temporary()
                 stat.latitude = station_wrapper.latitude
                 stat.longitude = station_wrapper.longitude
                 stat.elevation = station_wrapper.elevation

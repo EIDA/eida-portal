@@ -17,7 +17,8 @@ import { HttpHeaders } from '@angular/common/http';
 export class StationsService {
   // Binding object for stations tab
   @Input() stationsModel = new StationsModel();
-  public allNetworks: FdsnNetwork[];
+  public allNetworks = new Array<FdsnNetwork>();
+  public filteredNetworks = new BehaviorSubject(new Array<FdsnNetwork>());
   public allStations = new Array<FdsnStationExt>();
   public selectedStations = new BehaviorSubject(new Array<FdsnStationExt>());
   public focuedStation = new Subject<FdsnStationExt>();
@@ -36,7 +37,7 @@ export class StationsService {
 
   addAllStations(fs: FdsnStation[]) {
     for (const f of fs) {
-      let tmp = new FdsnStationExt();
+      const tmp = new FdsnStationExt();
       tmp.network_code = f.network_code;
       tmp.network_start_year = f.network_start_year;
       tmp.code = f.code;
@@ -52,6 +53,21 @@ export class StationsService {
       tmp.selected = true;
       this.allStations.push(tmp);
     }
+  }
+
+  addAllNetworks(nets: FdsnNetwork[]) {
+    for (const n of nets) {
+      const tmp = new FdsnNetwork();
+      tmp.code = n.code;
+      tmp.description = n.description;
+      tmp.start_date = n.start_date;
+      tmp.start_year = n.start_year;
+      tmp.end_date = n.end_date;
+      tmp.end_year = n.end_year;
+      tmp.temporary = n.temporary;
+      this.allNetworks.push(tmp);
+    }
+    this.networkTypeChanged(this.stationsModel.selectedNetworkType);
   }
 
   // Add filtered stations to the working set and skip the duplicates
@@ -80,6 +96,16 @@ export class StationsService {
       );
   }
 
+  networkTypeChanged(n) {
+    if (n.id === 0) {
+      this.filteredNetworks.next(this.allNetworks);
+    } else if (n.id === 1) {
+      this.filteredNetworks.next(this.allNetworks.filter(m => !m.temporary));
+    } else {
+      this.filteredNetworks.next(this.allNetworks.filter(m => m.temporary));
+    }
+  }
+
   getStations(): Observable<FdsnStation[]> {
     return this._eidaService.http.get<FdsnStation[]>(this._stationsUrl).pipe(
         tap(_ => this._eidaService.log('fetched stations data')),
@@ -87,7 +113,10 @@ export class StationsService {
       );
   }
 
-  getAvailableChannels(net: string, netStartYear: string, stat: string): Observable<Object> {
+  getAvailableChannels(net: string,
+  netStartYear: string,
+  stat: string,
+  netType: boolean): Observable<Object> {
     let url = `${this._channelsUrl}?aggregate=1&`;
 
     if (net) {
@@ -96,6 +125,10 @@ export class StationsService {
 
     if (netStartYear) {
       url += `netstartyear=${netStartYear}&`;
+    }
+
+    if (netType) {
+      url += `nettype=${netType}`;
     }
 
     if (stat) {

@@ -10,6 +10,7 @@ class FdsnStationSchema(Schema):
     code = fields.Str()
     network_code = fields.Str()
     network_start_year = fields.Str()
+    network_temporary = fields.Boolean()
     latitude = fields.Str()
     longitude = fields.Str()
     elevation = fields.Str()

@@ -50,7 +50,7 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network-type')">
-              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType">
+              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType" (ngModelChange)="networkChanged($event)">
                 <option *ngFor="let nt of stationsService.stationsModel.networkTypes" [ngValue]="nt">{{nt.name}}
                 </option>
               </select>
@@ -69,7 +69,7 @@
               <select [(ngModel)]="stationsService.stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
                 style="width:100%;">
                 <option selected>All</option>
-                <option *ngFor="let n of stationsService.allNetworks" [ngValue]="n">{{n.code}} - ({{n.start_year}}) - {{n.description}}</option>
+                <option *ngFor="let n of stationsService.filteredNetworks.value" [ngValue]="n">{{n.code}} - ({{n.start_year}}) - {{n.description}}</option>
               </select>
             </div>
           </div>
