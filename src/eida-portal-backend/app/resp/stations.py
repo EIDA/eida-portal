@@ -15,23 +15,16 @@ class StationsResp(object):
         self.query = query_parameters
 
     def stations_resp(self):
-        if not self.query:
-            data = FdsnStation.query.all()
-        elif self.query.get('code') \
-                and self.query.get('netcode') \
-                and self.query.get('netstartyear'):
-            data = FdsnStation.query.join(FdsnNetwork).filter(
-                FdsnNetwork.code == self.query.get('netcode'),
-                FdsnNetwork.start_year == self.query.get('netstartyear')).all()
-        elif self.query.get('netcode') \
-                and self.query.get('netstartyear'):
-            data = FdsnStation.query.join(FdsnNetwork).filter(
-                FdsnNetwork.code == self.query.get('netcode'),
-                FdsnNetwork.start_year == self.query.get('netstartyear')).all()
-        elif self.query.get('code'):
-            data = FdsnStation.query.filter(
-                FdsnStation.code == self.query.get('code')).all()
-        return self._dump(data)
+        query = db.session.query(FdsnStation).join(FdsnNetwork)
+        for qp in self.query:
+            if hasattr(FdsnStation, qp):
+                query = query.filter(
+                    getattr(FdsnStation, qp) == self.query[qp])
+            elif hasattr(FdsnNetwork, qp):
+                query = query.filter(
+                    getattr(FdsnNetwork, qp) == self.query[qp])
+        result = query.all()
+        return self._dump(result)
 
     def _dump(self, data):
         schema = FdsnStationSchema(many=True)

@@ -61,7 +61,7 @@ export class RequestService {
       let urlSta = null;
       let urlChannel = null;
 
-      const selectedStations = this._stationsService.selectedStations.value.filter(n => n.selected === true);
+      const selectedStations = this._stationsService.selectedStations.value.filter(n => n.station_selected === true);
 
       // Check if there are stations selected and
       // create a comma-separated list of them for the URL query
@@ -105,9 +105,9 @@ export class RequestService {
 
     // Check if there are stations selected and
     // create a comma-separated list of them for the URL query
-    if (this._stationsService.selectedStations.value.filter(n => n.selected === true).length > 0) {
+    if (this._stationsService.selectedStations.value.filter(n => n.station_selected === true).length > 0) {
       urlSta = Object.keys(
-        this._stationsService.selectedStations.value.filter(n => n.selected === true)
+        this._stationsService.selectedStations.value.filter(n => n.station_selected === true)
       ).map(k => this._stationsService.selectedStations.value[k].code).join(',');
     }
 

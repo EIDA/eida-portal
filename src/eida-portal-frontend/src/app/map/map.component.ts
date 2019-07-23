@@ -183,15 +183,15 @@ export class MapComponent implements OnInit {
     for (let s of stations) {
       var point = new ol.Feature({
         geometry: new ol.geom.Point(
-          ol.proj.fromLonLat([+s.longitude, +s.latitude])
+          ol.proj.fromLonLat([+s.station_longitude, +s.station_latitude])
         ),
-        name: `<b>Network:</b> ${s.network_code}<br><b>Station:</b> ${s.code}<br><b>Name:</b> ${s.site_name}`
+        name: `<b>Network:</b> ${s.station_network_code}<br><b>Station:</b> ${s.station_code}<br><b>Name:</b> ${s.station_site_name}`
       });
 
       point.setStyle(new ol.style.Style({
         image: new ol.style.Icon({
           src: (
-            s.selected
+            s.station_selected
             ? 'assets/img/markers/triangle-green.png'
             : 'assets/img/markers/triangle-grey.png'
           )
@@ -202,7 +202,7 @@ export class MapComponent implements OnInit {
 
   focusStation(s: FdsnStationExt) {
     this._map.getView().animate({
-      center: ol.proj.fromLonLat([+s.longitude, +s.latitude]),
+      center: ol.proj.fromLonLat([+s.station_longitude, +s.station_latitude]),
       duration: 1000,
       zoom: 13
     })
@@ -252,7 +252,7 @@ export class MapComponent implements OnInit {
   }
 
   removeStation(s: FdsnStationExt): void {
-    console.log(s.code);
+    console.log(s.station_code);
   }
 
   toggleStationSelection(s): void {

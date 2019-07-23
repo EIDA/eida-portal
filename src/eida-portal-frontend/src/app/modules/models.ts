@@ -27,20 +27,20 @@ export class StationsModel {
     worksetChannels: Array<StationChannelModel>;
 
     constructor() {
-        let dh = new DateHelper();
+        const dh = new DateHelper();
 
         this.networkTypes = [
             {
                 'id': 0,
-                'name': "All networks"
+                'name': 'All networks'
             },
             {
                 'id': 1,
-                'name': "Permanent networks"
+                'name': 'Permanent networks'
             },
             {
                 'id': 2,
-                'name': "Temporary networks"
+                'name': 'Temporary networks'
             }
         ];
 
@@ -119,8 +119,8 @@ export class EventsModel {
     selectedCatalog;
 
     constructor() {
-        let dh = new DateHelper();
-        
+        const dh = new DateHelper();
+
         this.catalogs = [
             {
                 'id':0,
@@ -156,7 +156,7 @@ export class EventsModel {
 
     // Get selected catalog URL
     getSelCatUrl() {
-        for (var i = 0; i < Object.keys(this.catalogs).length; i++) {
+        for (let i = 0; i < Object.keys(this.catalogs).length; i++) {
             if (this.catalogs[i].id === this.selectedCatalog.id) {
                 return this.catalogs[i].url;
             }
@@ -181,7 +181,7 @@ export class RequestModel {
     selectedAbsoluteModeEndTimeMethod;
 
     constructor() {
-        let dh = new DateHelper();
+        const dh = new DateHelper();
 
         this.fdsnRequestTypes = [
             { 'id': 0, 'name': 'Waveform (Mini-SEED)' },
@@ -212,70 +212,70 @@ export class RequestModel {
 }
 
 export class FdsnNetwork {
-    code: string;
-    description: string;
-    start_date: string;
-    start_year: string;
-    end_date: string;
-    end_year: string;
-    temporary: boolean;
+    network_code: string;
+    network_description: string;
+    network_start_date: string;
+    network_start_year: string;
+    network_end_date: string;
+    network_end_year: string;
+    network_temporary: boolean;
 
     constructor() {
-        this.code = 'ALL';
-        this.description = 'ALL';
-        this.start_date = '';
-        this.start_year = '';
-        this.end_date = '';
-        this.end_year = '';
-        this.temporary = false;
+        this.network_code = 'ALL';
+        this.network_description = 'ALL';
+        this.network_start_date = '';
+        this.network_start_year = '';
+        this.network_end_date = '';
+        this.network_end_year = '';
+        this.network_temporary = false;
     }
 }
 
 export class FdsnStation {
-    network_code: string;
-    network_start_year: string;
-    network_temporary: boolean;
-    code: string;
-    latitude: number;
-    longitude: number;
-    elevation: number;
-    site_name: string;
-    start_date: string;
-    start_year: string;
-    end_date: string;
-    end_year: string;
-    restricted_status: string;
+    station_network_code: string;
+    station_network_start_year: string;
+    station_network_temporary: boolean;
+    station_code: string;
+    station_latitude: number;
+    station_longitude: number;
+    station_elevation: number;
+    station_site_name: string;
+    station_start_date: string;
+    station_start_year: string;
+    station_end_date: string;
+    station_end_year: string;
+    station_restricted_status: string;
 
     constructor() {
-        this.network_code = 'ALL';
-        this.network_start_year = 'ALL';
-        this.network_temporary = false;
-        this.code = 'ALL';
-        this.latitude = 0.0;
-        this.longitude = 0.0;
-        this.elevation = 0.0;
-        this.site_name = 'ALL';
-        this.start_date = 'ALL';
-        this.start_year = 'ALL';
-        this.end_date = 'ALL';
-        this.end_year = 'ALL';
-        this.restricted_status = 'ALL';
+        this.station_network_code = 'ALL';
+        this.station_network_start_year = 'ALL';
+        this.station_network_temporary = false;
+        this.station_code = 'ALL';
+        this.station_latitude = 0.0;
+        this.station_longitude = 0.0;
+        this.station_elevation = 0.0;
+        this.station_site_name = 'ALL';
+        this.station_start_date = 'ALL';
+        this.station_start_year = 'ALL';
+        this.station_end_date = 'ALL';
+        this.station_end_year = 'ALL';
+        this.station_restricted_status = 'ALL';
     }
 }
 
 export class FdsnStationExt extends FdsnStation {
-    selected: boolean;
+    station_selected: boolean;
 
     constructor() {
         super();
-        this.selected = true;
+        this.station_selected = true;
     }
 
     getCoordinates() : string {
         try {
-            return `Lat: ${Number(this.latitude).toFixed(2)}, Lon: ${Number(this.longitude).toFixed(2)}`;   
+            return `Lat: ${Number(this.station_latitude).toFixed(2)}, Lon: ${Number(this.station_longitude).toFixed(2)}`;   
         } catch {
-            return `Lat: ${this.latitude}, Lon: ${this.longitude}`;
+            return `Lat: ${this.station_latitude}, Lon: ${this.station_longitude}`;
         }
     }
 }

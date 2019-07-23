@@ -18,40 +18,25 @@ class ChannelsResp(object):
         response = []
         for p in post_data:
             response.extend(
-                FdsnStationChannel.query.join(FdsnStation).filter(
-                FdsnStation.network_code == p['network_code'],
-                FdsnStation.network_start_year == p['network_start_year'],
-                FdsnStation.code == p['code']).all())
+                FdsnStationChannel.query.join(FdsnStation).join(FdsnNetwork).filter(
+                    FdsnNetwork.network_code == p['network_code'],
+                    FdsnNetwork.network_start_year == p['network_start_year'],
+                    FdsnStation.station_code == p['code']).all())
 
         data = self._aggregate(response)
         return data
 
     def channels_get_resp(self):
-        if not self.query:
-            data = FdsnStationChannel.query.all()
-        elif self.query.get('netcode') \
-        and self.query.get('netstartyear') \
-        and self.query.get('statcode'):
-            data = FdsnStationChannel.query.join(FdsnStation).filter(
-                FdsnStation.network_code == self.query.get('netcode'),
-                FdsnStation.network_start_year == self.query.get('netstartyear'),
-                FdsnStation.code == self.query.get('statcode')
-            ).all()
-        elif self.query.get('netcode') \
-        and self.query.get('netstartyear'):
-            data = FdsnStationChannel.query.join(FdsnStation).filter(
-                FdsnStation.network_code == self.query.get('netcode'),
-                FdsnStation.network_start_year == self.query.get('netstartyear')
-            ).all()
-        elif self.query.get('aggregate'):
-            data = FdsnStationChannel.query.all()
-
-        # Aggregated data requested
-        if self.query.get('aggregate') and data:
-            data = self._aggregate(data)
-            return data
-
-        return self._dump(data)
+        query = db.session.query(FdsnStationChannel).join(FdsnStation)
+        for qp in self.query:
+            if hasattr(FdsnStationChannel, qp):
+                query = query.filter(
+                    getattr(FdsnStationChannel, qp) == self.query[qp])
+            elif hasattr(FdsnStation, qp):
+                query = query.filter(
+                    getattr(FdsnStation, qp) == self.query[qp])
+        result = query.all()
+        return self._dump(result)
 
     def _aggregate(self, data):
         result = {}

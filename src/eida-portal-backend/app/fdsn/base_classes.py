@@ -33,12 +33,12 @@ class RouteParamWrapper(object):
 class NodeWrapper(object):
 
     def __init__(self, node):
-        self.code = node.code
-        self.description = node.description
-        self.url_dataselect = node.url_dataselect
-        self.url_station = node.url_station
-        self.url_routing = node.url_routing
-        self.url_wfcatalog = node.url_wfcatalog
+        self.code = node.node_code
+        self.description = node.node_description
+        self.url_dataselect = node.node_url_dataselect
+        self.url_station = node.node_url_station
+        self.url_routing = node.node_url_routing
+        self.url_wfcatalog = node.node_url_wfcatalog
         self.networks = []
 
     def build_url_station_station_level(self):
@@ -65,7 +65,7 @@ class NodeWrapper(object):
 class NetworkWrapper(object):
 
     def __init__(self):
-        self.pk = 0
+        self.id = 0
         self.code = NO_FDSNWS_DATA
         self.description = NO_FDSNWS_DATA
         self.start_date = None
@@ -77,11 +77,11 @@ class NetworkWrapper(object):
         self.stations = []
 
     def _buildWrapper(self, network):
-        self.pk = network.pk
-        self.code = network.code
-        self.description = network.description
-        self.start_date = str(network.start_date)
-        self.end_date = str(network.end_date)
+        self.id = network.network_id
+        self.code = network.network_code
+        self.description = network.network_description
+        self.start_date = str(network.network_start_date)
+        self.end_date = str(network.network_end_date)
         self.restricted_status = network.restricted_status
         self.stations = []
 
@@ -120,19 +120,24 @@ class StationWrapper(object):
         self.channels = []
 
     def parse_start_date(self):
-        return parser.parse(self.start_date) if self.start_date else None
+        return parser.parse(self.start_date) \
+            if self.start_date else None
 
     def parse_start_date_year(self):
-        return parser.parse(self.start_date).year if self.start_date else None
+        return parser.parse(self.start_date).year \
+            if self.start_date else None
 
     def parse_end_date(self):
-        return parser.parse(self.end_date) if self.end_date else None
+        return parser.parse(self.end_date) \
+            if self.end_date else None
 
     def parse_end_date_year(self):
-        return parser.parse(self.end_date).year if self.end_date else None
+        return parser.parse(self.end_date).year \
+            if self.end_date else None
 
     def parse_creation_date(self):
-        return parser.parse(self.creation_date) if self.creation_date else None
+        return parser.parse(self.creation_date) \
+            if self.creation_date else None
 
 
 class StationChannel(object):

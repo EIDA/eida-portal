@@ -75,19 +75,19 @@ export class StationsComponent implements OnInit {
             break;
         case 1:
             this.filteredStations = this.stationsService.allStations.filter(
-              s => s.network_temporary === false
+              s => s.station_network_temporary === false
             );
             break;
         case 2:
             this.filteredStations = this.stationsService.allStations.filter(
-              s => s.network_temporary === true
+              s => s.station_network_temporary === true
             );
             break;
       }
     } else {
       this.stationsService.stationsModel.selectedNetwork = n;
       this.filteredStations = this.stationsService.allStations.filter(
-        s => s.network_code === n.code && s.network_start_year === n.start_year
+        s => s.station_network_code === n.code && s.station_network_start_year === n.start_year
       );
     }
 
@@ -148,7 +148,7 @@ export class StationsComponent implements OnInit {
   }
 
   countSelectedStations(): number {
-    return this.selectedStations.filter(e => e.selected === true).length;
+    return this.selectedStations.filter(e => e.station_selected === true).length;
   }
 
   invertStationsSelection(): void {
@@ -199,7 +199,7 @@ export class StationsComponent implements OnInit {
     }
   
     this._channelSubscription = this.stationsService.getChannelsForWorkingSet(
-      this.selectedStations.filter(n => n.selected === true)
+      this.selectedStations.filter(n => n.station_selected === true)
     ).subscribe(
       result => this.importWorksetStationChannels(result)
     );

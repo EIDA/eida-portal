@@ -1,13 +1,13 @@
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('1',
 	'ODC',
 	'ORFEUS Data Center',
@@ -19,14 +19,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('2',
 	'GFZ',
 	'Helmholz-Zentrum Potsdam',
@@ -38,14 +38,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('3',
 	'RESIF',
 	'Reseau Sismologique & Geodesique Francais',
@@ -57,14 +57,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('4',
 	'INGV',
 	'Istituto Nazionale di Geofisica e Vulcanologia',
@@ -76,14 +76,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('5',
 	'ETHZ',
 	'ETH Zurich Schweizerischer Erdbebendienst (SED)',
@@ -95,14 +95,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('6',
 	'BGR',
 	'Bundesanstalt für Geowissenschaften und Rohstoffe',
@@ -114,14 +114,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('7',
 	'NIEP',
 	'National Institute for Earth Physics',
@@ -133,14 +133,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('8',
 	'KOERI',
 	'Kandilli Observatory and Earthquake Research Institute',
@@ -152,14 +152,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('9',
 	'LMU',
 	'Ludwig Maximilians Universitat Munchen',
@@ -171,14 +171,14 @@ insert
 
 insert
 	into
-		nodes ("id",
-		"code",
-		"description",
-		"url_base",
-		"url_dataselect",
-		"url_station",
-		"url_routing",
-		"url_wfcatalog")
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
 	values ('10',
 	'NOA',
 	'National Observatory of Athens',

@@ -50,7 +50,7 @@ class FdsnHttpBase():
             # 'geofon.gfz-potsdam.de'
             u = url.split('/')[2]
             x = db.session.query(FdsnNode).filter(
-                FdsnNode.url_base.contains(u)).first()
+                FdsnNode.node_url_base.contains(u)).first()
             return x
         except Exception:
             raise
@@ -59,8 +59,8 @@ class FdsnHttpBase():
         try:
             x = db.session.query(FdsnNetwork).join(FdsnNode).filter(
                 # FdsnNode.code == node_wrapper.code,
-                FdsnNetwork.code == network_wrapper.code,
-                extract('year', FdsnNetwork.start_date) ==
+                FdsnNetwork.network_code == network_wrapper.code,
+                extract('year', FdsnNetwork.network_start_date) ==
                 network_wrapper.parse_start_date_year()
             ).first()
 
@@ -73,11 +73,11 @@ class FdsnHttpBase():
         try:
             s = FdsnStation.query.join(FdsnNetwork).join(FdsnNode).filter(
                 # FdsnNode.code == node_wrapper.code,
-                FdsnNetwork.code == network_wrapper.code,
-                extract('year', FdsnNetwork.start_date) ==
+                FdsnNetwork.network_code == network_wrapper.code,
+                extract('year', FdsnNetwork.network_start_date) ==
                 network_wrapper.parse_start_date_year(),
-                FdsnStation.code == station_wrapper.code,
-                extract('year', FdsnStation.start_date) ==
+                FdsnStation.station_code == station_wrapper.code,
+                extract('year', FdsnStation.station_start_date) ==
                 station_wrapper.parse_start_date_year()).first()
 
             return s
@@ -163,12 +163,17 @@ class FdsnNetworkManager(FdsnHttpBase):
             net = self.get_network_if_known(node_wrapper, network_wrapper)
 
             if net:
-                net.description = network_wrapper.description
-                # net.start_date = network_wrapper.start_date
-                net.end_date = network_wrapper.parse_end_date()
-                net.end_year = network_wrapper.parse_end_date_year()
-                net.restricted_status = network_wrapper.restricted_status
-                net.temporary = network_wrapper.is_temporary()
+                net.network_description = \
+                    network_wrapper.description
+                # net.network_start_date = network_wrapper.start_date
+                net.network_end_date = \
+                    network_wrapper.parse_end_date()
+                net.network_end_year = \
+                    network_wrapper.parse_end_date_year()
+                net.network_restricted_status = \
+                    network_wrapper.restricted_status
+                net.network_temporary = \
+                    network_wrapper.is_temporary()
             else:
                 print('Adding: node {0} Network {1} Year {2}'.format(
                     node_wrapper.code,
@@ -176,16 +181,24 @@ class FdsnNetworkManager(FdsnHttpBase):
                     network_wrapper.parse_start_date_year()))
 
                 net = FdsnNetwork()
-                net.code = network_wrapper.code
-                net.description = network_wrapper.description
-                net.start_date = network_wrapper.parse_start_date()
-                net.start_year = network_wrapper.parse_start_date_year()
-                net.end_date = network_wrapper.parse_end_date()
-                net.end_year = network_wrapper.parse_end_date_year()
-                net.restricted_status = network_wrapper.restricted_status
-                net.temporary = network_wrapper.is_temporary()
-                net.node = FdsnNode.query.filter(
-                    FdsnNode.code == node_wrapper.code).first()
+                net.network_code = \
+                    network_wrapper.code
+                net.network_description = \
+                    network_wrapper.description
+                net.network_start_date = \
+                    network_wrapper.parse_start_date()
+                net.network_start_year = \
+                    network_wrapper.parse_start_date_year()
+                net.network_end_date = \
+                    network_wrapper.parse_end_date()
+                net.network_end_year = \
+                    network_wrapper.parse_end_date_year()
+                net.network_restricted_status = \
+                    network_wrapper.restricted_status
+                net.network_temporary = \
+                    network_wrapper.is_temporary()
+                net.network_node = FdsnNode.query.filter(
+                    FdsnNode.node_code == node_wrapper.code).first()
                 db.session.add(net)
 
             # Commit the db session changes
@@ -214,7 +227,8 @@ class FdsnRoutingManager(FdsnHttpBase):
         super(FdsnRoutingManager, self).__init__()
         self.netman = FdsnNetworkManager()
 
-        n = db.session.query(FdsnNode).filter(FdsnNode.code == 'ODC').first()
+        n = db.session.query(FdsnNode).filter(
+            FdsnNode.node_code == 'ODC').first()
         self.routing_node_wrapper = NodeWrapper(n)
 
     def build_fdsn_station_url(self, url, param_wrapper):
@@ -225,8 +239,8 @@ class FdsnRoutingManager(FdsnHttpBase):
 
     def _get_fdsn_networks(self):
         try:
-            for n in db.session.query(FdsnNetwork).distinct('code'):
-                yield n.code
+            for n in db.session.query(FdsnNetwork).distinct('network_code'):
+                yield n.network_code
         except Exception:
             # self.log_exception()
             raise
@@ -316,13 +330,17 @@ class FdsnRoutingManager(FdsnHttpBase):
             for network in root.findall('.//mw:Network', namespaces=NSMAP):
                 network_wrapper = NetworkWrapper()
 
-                tmp = network.get('startDate')
-                if tmp is not None:
-                    network_wrapper.start_date = self.validate_string(tmp)
-
                 tmp = network.get('code')
                 if tmp is not None:
                     network_wrapper.code = self.validate_string(tmp)
+
+                tmp = network.get('startDate')
+                if tmp is not None:
+                    network_wrapper.start_date = self.validate_string(tmp)
+          
+                tmp = network.get('endDate')
+                if tmp is not None:
+                    network_wrapper.end_date = self.validate_string(tmp)
 
                 for station in network.findall('.mw:Station', namespaces=NSMAP):
                     stat_wrapper = StationWrapper()
@@ -404,22 +422,33 @@ class FdsnRoutingManager(FdsnHttpBase):
             # If station is known in the database, just update it with the
             # latest FDSN data, otherwise add it to the database
             if stat:
-                # stat.code = station_wrapper.code
-                stat.network_code = network_wrapper.code
-                stat.network_start_year = \
+                stat.station_network_code = \
+                    network_wrapper.code
+                stat.station_network_start_year = \
                     network_wrapper.parse_start_date_year()
-                stat.network_temporary = network_wrapper.is_temporary()
-                stat.latitude = station_wrapper.latitude
-                stat.longitude = station_wrapper.longitude
-                stat.elevation = station_wrapper.elevation
-                stat.restricted_status = station_wrapper.restricted_status
-                # stat.start_date = station_wrapper.start_date
-                stat.end_date = station_wrapper.parse_end_date()
-                stat.end_year = station_wrapper.parse_end_date_year()
-                stat.creation_date = station_wrapper.parse_creation_date()
-                stat.site_name = station_wrapper.site_name
+                stat.station_network_temporary = \
+                    network_wrapper.is_temporary()
+                # stat.code = station_wrapper.code
+                stat.station_latitude = \
+                    station_wrapper.latitude
+                stat.station_longitude = \
+                    station_wrapper.longitude
+                stat.station_elevation = \
+                    station_wrapper.elevation
+                stat.station_restricted_status = \
+                    station_wrapper.restricted_status
+                # stat.station_start_date = station_wrapper.start_date
+                stat.station_end_date = \
+                    station_wrapper.parse_end_date()
+                stat.station_end_year = \
+                    station_wrapper.parse_end_date_year()
+                stat.station_creation_date = \
+                    station_wrapper.parse_creation_date()
+                stat.station_site_name = \
+                    station_wrapper.site_name
 
-                FdsnStationChannel.query.filter_by(station_id=stat.id).delete()
+                FdsnStationChannel.query.filter_by(
+                    channel_station_id=stat.station_id).delete()
 
                 for channel in station_wrapper.channels:
                     cha = FdsnStationChannel()
@@ -440,34 +469,47 @@ class FdsnRoutingManager(FdsnHttpBase):
                 stat = FdsnStation()
                 # Assign station to network
 
-                stat.network = FdsnNetwork.query.join(FdsnNode).filter(
-                    FdsnNode.code == node_wrapper.code,
-                    FdsnNetwork.code == network_wrapper.code,
-                    extract('year', FdsnNetwork.start_date) ==
+                stat.station_network = FdsnNetwork.query.join(FdsnNode).filter(
+                    FdsnNode.node_code == node_wrapper.code,
+                    FdsnNetwork.network_code == network_wrapper.code,
+                    extract('year', FdsnNetwork.network_start_date) ==
                     network_wrapper.parse_start_date_year()).first()
 
                 # Fill data obtained from the Web Service
-                stat.code = station_wrapper.code
-                stat.network_code = network_wrapper.code
-                stat.network_start_year = \
+                stat.station_network_code = \
+                    network_wrapper.code
+                stat.station_network_start_year = \
                     network_wrapper.parse_start_date_year()
-                stat.network_temporary = network_wrapper.is_temporary()
-                stat.latitude = station_wrapper.latitude
-                stat.longitude = station_wrapper.longitude
-                stat.elevation = station_wrapper.elevation
-                stat.restricted_status = station_wrapper.restricted_status
-                stat.start_date = station_wrapper.parse_start_date()
-                stat.start_year = station_wrapper.parse_start_date_year()
-                stat.end_date = station_wrapper.parse_end_date()
-                stat.end_year = station_wrapper.parse_end_date_year()
-                stat.creation_date = station_wrapper.parse_creation_date()
-                stat.site_name = station_wrapper.site_name
+                stat.station_network_temporary = \
+                    network_wrapper.is_temporary()
+                stat.station_code = \
+                    station_wrapper.code
+                stat.station_latitude = \
+                    station_wrapper.latitude
+                stat.station_longitude = \
+                    station_wrapper.longitude
+                stat.station_elevation = \
+                    station_wrapper.elevation
+                stat.station_restricted_status = \
+                    station_wrapper.restricted_status
+                stat.station_start_date = \
+                    station_wrapper.parse_start_date()
+                stat.station_start_year = \
+                    station_wrapper.parse_start_date_year()
+                stat.station_end_date = \
+                    station_wrapper.parse_end_date()
+                stat.station_end_year = \
+                    station_wrapper.parse_end_date_year()
+                stat.station_creation_date = \
+                    station_wrapper.parse_creation_date()
+                stat.station_site_name = \
+                    station_wrapper.site_name
 
                 for channel in station_wrapper.channels:
                     cha = FdsnStationChannel()
-                    cha.station = stat
-                    cha.code = channel.code
-                    cha.sample_rate = channel.sample_rate
+                    cha.channel_station = stat
+                    cha.channel_code = channel.code
+                    cha.channel_sample_rate = channel.sample_rate
 
             # Commit the db session changes
             db.session.commit()

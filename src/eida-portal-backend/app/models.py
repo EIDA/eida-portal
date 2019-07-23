@@ -37,125 +37,126 @@ Base = declarative_base()
 class FdsnNode(db.Model):
     __tablename__ = "nodes"
 
-    id = Column(Integer, Sequence('node_seq'), primary_key=True)
+    node_id = Column(Integer, Sequence('node_seq'), primary_key=True)
 
     # FdsnNode -> FdsnNetwork relation
-    # networks = relationship("FdsnNetwork", backref="node")
-    networks = relationship("FdsnNetwork")
+    node_networks = relationship("FdsnNetwork")
 
-    code = Column(String(STRING_LENGTH_SHORT))
+    node_code = Column(String(STRING_LENGTH_SHORT))
 
-    description = Column(String(STRING_LENGTH_SHORT))
+    node_description = Column(String(STRING_LENGTH_SHORT))
 
-    url_base = Column(String(STRING_LENGTH_SHORT))
+    node_url_base = Column(String(STRING_LENGTH_SHORT))
 
-    url_dataselect = Column(String(STRING_LENGTH_SHORT))
+    node_url_dataselect = Column(String(STRING_LENGTH_SHORT))
 
-    url_station = Column(String(STRING_LENGTH_SHORT))
+    node_url_station = Column(String(STRING_LENGTH_SHORT))
 
-    url_routing = Column(String(STRING_LENGTH_SHORT))
+    node_url_routing = Column(String(STRING_LENGTH_SHORT))
 
-    url_wfcatalog = Column(String(STRING_LENGTH_SHORT))
+    node_url_wfcatalog = Column(String(STRING_LENGTH_SHORT))
 
     def __str__(self):
-        return self.code
+        return self.node_code
 
 
 class FdsnNetwork(db.Model):
     __tablename__ = "networks"
 
-    id = Column(Integer,
-                Sequence('network_seq'),
-                primary_key=True)
+    network_id = Column(Integer,
+                        Sequence('network_seq'),
+                        primary_key=True)
 
     # FdsnNetwork -> FdsnNode relation
-    node_id = Column(Integer, ForeignKey("nodes.id"))
-    node = relationship("FdsnNode", back_populates="networks")
+    network_node_id = Column(Integer, ForeignKey("nodes.node_id"))
+    network_node = relationship("FdsnNode", back_populates="node_networks")
 
     # FdsnNetwork -> FdsnStation relation
-    stations = relationship("FdsnStation")
+    network_stations = relationship("FdsnStation")
     # station_id = Column(Integer, ForeignKey("nodes.id"))
     # stations = relationship("FdsnStation", backref="network")
 
-    code = Column(String(STRING_LENGTH_SHORT))
+    network_code = Column(String(STRING_LENGTH_SHORT))
 
-    description = Column(String(STRING_LENGTH_SHORT))
+    network_description = Column(String(STRING_LENGTH_SHORT))
 
-    start_date = Column(DateTime)
+    network_start_date = Column(DateTime)
 
-    start_year = Column(String(STRING_LENGTH_SHORT))
+    network_start_year = Column(String(STRING_LENGTH_SHORT))
 
-    end_date = Column(DateTime)
+    network_end_date = Column(DateTime)
 
-    end_year = Column(String(STRING_LENGTH_SHORT))
+    network_end_year = Column(String(STRING_LENGTH_SHORT))
 
-    restricted_status = Column(String(STRING_LENGTH_SHORT))
+    network_restricted_status = Column(String(STRING_LENGTH_SHORT))
 
-    temporary = Column(Boolean)
+    network_temporary = Column(Boolean)
 
     def __str__(self):
-        return self.code
+        return self.network_code
 
     def get_start_year(self):
-        return self.start_date.year
+        return self.network_start_date.year
 
 
 class FdsnStation(db.Model):
     __tablename__ = "stations"
 
-    id = Column(Integer,
-                Sequence('station_seq'),
-                primary_key=True)
+    station_id = Column(Integer,
+                        Sequence('station_seq'),
+                        primary_key=True)
 
     # FdsnStation -> FdsnNetwork relation
-    network_id = Column(Integer, ForeignKey("networks.id"))
-    network = relationship("FdsnNetwork", back_populates="stations")
+    station_network_id = Column(Integer, ForeignKey("networks.network_id"))
+    station_network = \
+        relationship("FdsnNetwork", back_populates="network_stations")
 
     # FdsnStation -> FdsnStationChannel relation
     # channels = relationship("FdsnStationChannel", backref="station")
-    channels = relationship("FdsnStationChannel")
+    station_channels = relationship("FdsnStationChannel")
 
-    network_code = Column(String(STRING_LENGTH_SHORT))
+    station_network_code = Column(String(STRING_LENGTH_SHORT))
 
-    network_start_year = Column(String(STRING_LENGTH_SHORT))
+    station_network_start_year = Column(String(STRING_LENGTH_SHORT))
 
-    network_temporary = Column(Boolean)
+    station_network_temporary = Column(Boolean)
 
-    code = Column(String(STRING_LENGTH_SHORT))
+    station_code = Column(String(STRING_LENGTH_SHORT))
 
-    latitude = Column(String(STRING_LENGTH_SHORT))
+    station_latitude = Column(String(STRING_LENGTH_SHORT))
 
-    longitude = Column(String(STRING_LENGTH_SHORT))
+    station_longitude = Column(String(STRING_LENGTH_SHORT))
 
-    elevation = Column(String(STRING_LENGTH_SHORT))
+    station_elevation = Column(String(STRING_LENGTH_SHORT))
 
-    restricted_status = Column(String(STRING_LENGTH_SHORT))
+    station_restricted_status = Column(String(STRING_LENGTH_SHORT))
 
-    start_date = Column(DateTime)
+    station_start_date = Column(DateTime)
 
-    start_year = Column(String(STRING_LENGTH_SHORT))
+    station_start_year = Column(String(STRING_LENGTH_SHORT))
 
-    end_date = Column(DateTime)
+    station_end_date = Column(DateTime)
 
-    end_year = Column(String(STRING_LENGTH_SHORT))
+    station_end_year = Column(String(STRING_LENGTH_SHORT))
 
-    site_name = Column(String(STRING_LENGTH_SHORT))
+    station_site_name = Column(String(STRING_LENGTH_SHORT))
 
     def get_start_year(self):
-        return self.start_date.year
+        return self.station_start_date.year
 
 
 class FdsnStationChannel(db.Model):
     __tablename__ = "channels"
 
-    id = Column(Integer,
-                Sequence('channel_seq'),
-                primary_key=True)
+    channel_id = Column(Integer,
+                        Sequence('channel_seq'),
+                        primary_key=True)
 
     # FdsnStationChannel -> FdsnStation relation
-    station_id = Column(Integer, ForeignKey("stations.id"))
-    station = relationship("FdsnStation", back_populates="channels")
+    channel_station_id = Column(Integer, ForeignKey("stations.station_id"))
+    channel_station = \
+        relationship("FdsnStation", back_populates="station_channels")
 
-    code = Column(String(STRING_LENGTH_SHORT))
+    channel_code = Column(String(STRING_LENGTH_SHORT))
 
-    sample_rate = Column(String(STRING_LENGTH_SHORT))
+    channel_sample_rate = Column(String(STRING_LENGTH_SHORT))
