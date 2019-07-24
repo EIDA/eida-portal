@@ -18,8 +18,6 @@ declare var $: any;
   templateUrl: './stations.component.html',
 })
 export class StationsComponent implements OnInit {
-  filteredStations: FdsnStationExt[];
-  selectedStations = new Array<FdsnStationExt>();
   paginator = new PaginatorService();
   private searchTerms = new Subject<string>();
 
@@ -59,44 +57,7 @@ export class StationsComponent implements OnInit {
   allStations(): void {
     this.stationsService.stationsModel.selectedNetwork = new FdsnNetwork();
     this.stationsService.stationsModel.selectedStation = new FdsnStationExt();
-    this.filteredStations = this.stationsService.allStations;
-  }
-
-  /**
-   * Triggered from stations tab when network combo value changes
-   * @param n - String "All" or FdsnNetwork instance
-   */
-  networkChanged() {
-    const n = this.stationsService.stationsModel.selectedNetwork;
-    if (n === 'All') {
-      switch (this.stationsService.stationsModel.selectedNetworkType.id) {
-        // All networks
-        case 0:
-            this.filteredStations = this.stationsService.allStations;
-            break;
-        // Permanent networks
-        case 1:
-            this.filteredStations = this.stationsService.allStations.filter(
-              s => !s.station_network_temporary
-            );
-            break;
-        // Temporary networks
-        case 2:
-            this.filteredStations = this.stationsService.allStations.filter(
-              s => s.station_network_temporary
-            );
-            break;
-      }
-    } else {
-      this.stationsService.stationsModel.selectedNetwork = n;
-      this.filteredStations = this.stationsService.allStations.filter(
-        s => s.station_network_code === n.network_code
-        && s.station_network_start_year === n.network_start_year
-      );
-    }
-
-    this.stationsService.stationsModel.clearStationSelection();
-    this.refreshAvailableStreams();
+    this.stationsService.filteredStations = this.stationsService.allStations;
   }
 
   /**
@@ -104,9 +65,8 @@ export class StationsComponent implements OnInit {
    * @param s - Array of FdsnStationExt objects
    */
   updateSelectedStationsTable(s: FdsnStationExt[]) {
-    this.selectedStations = s;
     this.refreshPaginator();
-    this.refreshAvailableStreams();
+    this.stationsService.refreshAvailableStreams();
     $('#addButton').removeClass('is-loading');
   }
 
@@ -116,7 +76,7 @@ export class StationsComponent implements OnInit {
 
   stationChanged(s): void {
     this.stationsService.stationsModel.selectedStation = s;
-    this.refreshAvailableStreams();
+    this.stationsService.refreshAvailableStreams();
   }
 
   getAvailableChannels() {
@@ -154,7 +114,9 @@ export class StationsComponent implements OnInit {
   }
 
   countSelectedStations(): number {
-    return this.selectedStations.filter(e => e.station_selected === true).length;
+    return this.stationsService.selectedStations.value.filter(
+      e => e.station_selected === true
+    ).length;
   }
 
   invertStationsSelection(): void {
@@ -162,41 +124,10 @@ export class StationsComponent implements OnInit {
   }
 
   refreshPaginator(): void {
-    this.paginator.paginate(this.selectedStations);
+    this.paginator.paginate(this.stationsService.selectedStations.value);
     this.paginator.getPages();
     this.refreshWorksetStationChannels();
     // $('#previousPageButton').attr('disabled', true);
-  }
-
-  /**
-   * Refresh availalbe streams for selected network / station
-   */
-  refreshAvailableStreams(): void {
-    if (
-      this.stationsService.stationsModel.stationSelectionMethod
-      !== Enums.StationSelectionMethods.Code
-    ) {
-      return;
-    }
-
-    this.stationsService.getAvailableChannels(
-      this.stationsService.stationsModel.selectedNetwork.network_code,
-      this.stationsService.stationsModel.selectedNetwork.network_start_year,
-      this.stationsService.stationsModel.selectedStation.station_code,
-      this.stationsService.stationsModel.selectedNetworkType).subscribe(
-        val => this.importStationChannels(val)
-    );
-  }
-
-  importStationChannels(array): void {
-    this.stationsService.stationsModel.clearAvailableChannels();
-
-    for (let a in array) {
-      let s = new StationChannelModel();
-      s.channel_code = a;
-      s.channel_appearances = array[a];
-      this.stationsService.stationsModel.availableChannels.push(s);
-    }
   }
 
   /**
@@ -208,7 +139,9 @@ export class StationsComponent implements OnInit {
     }
   
     this._channelSubscription = this.stationsService.getChannelsForWorkingSet(
-      this.selectedStations.filter(n => n.station_selected === true)
+      this.stationsService.selectedStations.value.filter(
+        n => n.station_selected === true
+      )
     ).subscribe(
       result => this.importWorksetStationChannels(result)
     );

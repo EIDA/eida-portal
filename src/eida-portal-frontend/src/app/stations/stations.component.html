@@ -105,7 +105,7 @@
                 <select [(ngModel)]="stationsService.stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
                   style="width:100%;">
                   <option selected>All</option>
-                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.station_code}} - {{s.station_site_name}} ({{s.station_start_year}})
+                  <option *ngFor="let s of stationsService.filteredStations" [ngValue]="s">{{s.station_code}} - {{s.station_site_name}} ({{s.station_start_year}})
                   </option>
                 </select>
               </div>
@@ -313,13 +313,13 @@
         <div class="column is-third">
           <span class="button is-small is-danger is-fullwidth" (click)="removeAllStations();"
             [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
-            Remove all ({{selectedStations.length }})
+            Remove all ({{ stationsService.selectedStations.value.length }})
           </span>
         </div>
         <div class="column is-third">
           <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedStations();"
             [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
-            Remove selected ({{countSelectedStations() }})
+            Remove selected ({{ countSelectedStations() }})
           </span>
         </div>
         <div class="column is-third">

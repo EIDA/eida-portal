@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { EidaService } from './eida.service';
 import { EventsService } from './events.service';
 import {
-  FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel
+  FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel, StationChannelModel
 } from './modules/models';
 import { environment } from '../environments/environment';
 import { Enums } from './modules/enums';
@@ -17,16 +17,25 @@ import { HttpHeaders } from '@angular/common/http';
 export class StationsService {
   // Binding object for stations tab
   @Input() stationsModel = new StationsModel();
-  // Networks
+
+  // All networks
   public allNetworks = new Array<FdsnNetwork>();
+  // Networks in the dropdown filtered on network type
   public filteredNetworks = new BehaviorSubject(new Array<FdsnNetwork>());
 
-  // Stations
+  // All stations
   public allStations = new Array<FdsnStationExt>();
+  // Stations in the dropdown filtered on network type and network code + year
+  public filteredStations: FdsnStationExt[];
+  // Stations present in the working set
   public selectedStations = new BehaviorSubject(new Array<FdsnStationExt>());
+  // Station focused on the map
   public focuedStation = new Subject<FdsnStationExt>();
-  private _mapStations = new Array<FdsnStationExt>();
+
+  // Stations filtered to be added to the station working set
   private _filteredStations = new Array<FdsnStationExt>();
+  // Stations rendered on the map, used also to fill selectedStations
+  private _mapStations = new Array<FdsnStationExt>();
 
   constructor(
     private _eidaService: EidaService,
@@ -104,13 +113,88 @@ export class StationsService {
   }
 
   networkTypeChanged(n) {
-    this.stationsModel.selectedStation = 'All';
+    this.stationsModel.selectedNetwork = new FdsnNetwork();
+    this.stationsModel.selectedStation = new FdsnStationExt();
+
     if (n.id === 0) {
       this.filteredNetworks.next(this.allNetworks);
     } else if (n.id === 1) {
       this.filteredNetworks.next(this.allNetworks.filter(m => !m.network_temporary));
     } else {
       this.filteredNetworks.next(this.allNetworks.filter(m => m.network_temporary));
+    }
+
+    this.networkChanged();
+  }
+
+  /**
+   * Triggered from stations tab when network combo value changes
+   * @param n - String "All" or FdsnNetwork instance
+   */
+  networkChanged() {
+    const n = this.stationsModel.selectedNetwork;
+    if (n === 'All') {
+      switch (this.stationsModel.selectedNetworkType.id) {
+        // All networks
+        case 0:
+            this.filteredStations =
+            this.allStations;
+            break;
+        // Permanent networks
+        case 1:
+            this.filteredStations =
+            this.allStations.filter(
+              s => !s.station_network_temporary
+            );
+            break;
+        // Temporary networks
+        case 2:
+            this.filteredStations =
+            this.allStations.filter(
+              s => s.station_network_temporary
+            );
+            break;
+      }
+    } else {
+      this.stationsModel.selectedNetwork = n;
+      this.filteredStations = this.allStations.filter(
+        s => s.station_network_code === n.network_code
+        && s.station_network_start_year === n.network_start_year
+      );
+    }
+
+    this.stationsModel.clearStationSelection();
+    this.refreshAvailableStreams();
+  }
+
+  /**
+   * Refresh availalbe streams for selected network / station
+   */
+  refreshAvailableStreams(): void {
+    if (
+      this.stationsModel.stationSelectionMethod
+      !== Enums.StationSelectionMethods.Code
+    ) {
+      return;
+    }
+
+    this.getAvailableChannels(
+      this.stationsModel.selectedNetwork.network_code,
+      this.stationsModel.selectedNetwork.network_start_year,
+      this.stationsModel.selectedStation.station_code,
+      this.stationsModel.selectedNetworkType).subscribe(
+        val => this.importStationChannels(val)
+    );
+  }
+
+  importStationChannels(array): void {
+    this.stationsModel.clearAvailableChannels();
+
+    for (let a in array) {
+      let s = new StationChannelModel();
+      s.channel_code = a;
+      s.channel_appearances = array[a];
+      this.stationsModel.availableChannels.push(s);
     }
   }
 
@@ -163,20 +247,29 @@ export class StationsService {
   addSelectedStation(sm: StationsModel) {
     if (sm.dataSource === Enums.StationDataSource.Inventory) {
       // Inventory based search
-      if (sm.selectedNetworkType.id === 0) {
-        this._filteredStations = this.allStations.filter(m => m.station_network_code);
-      } else if (sm.selectedNetworkType.id === 1) {
-        this._filteredStations = this.allStations.filter(m => !m.station_network_temporary);
+      if (sm.selectedNetworkType.id === 1) {
+        this._filteredStations = this.allStations.filter(
+          m => !m.station_network_temporary
+        );
+      } else if (sm.selectedNetworkType.id === 2) {
+        this._filteredStations = this.allStations.filter(
+          m => m.station_network_temporary
+        );
       } else {
-        this._filteredStations = this.allStations.filter(m => m.station_network_temporary);
+        // Handle sm.selectedNetworkType.id === 0
+        this._filteredStations = this.allStations.filter(
+          m => m.station_network_code
+        );
       }
 
-      // All all networks or selected network based on the combo selection
+      // Add all networks or selected network based on the combo selection
       if (sm.selectedNetwork !== 'All') {
-        this._filteredStations = this._mapStations.concat(this.allStations.filter(
-          m => m.station_network_code === sm.selectedNetwork.network_code
-          && m.station_network_start_year === sm.selectedNetwork.network_start_year
-        ));
+        this._filteredStations = this._mapStations.concat(
+          this.allStations.filter(
+            m => m.station_network_code === sm.selectedNetwork.network_code
+            && m.station_network_start_year === sm.selectedNetwork.network_start_year
+          )
+        );
       }
 
       // Station selection method-dependent
