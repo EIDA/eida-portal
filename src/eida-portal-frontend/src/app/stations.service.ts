@@ -17,8 +17,11 @@ import { HttpHeaders } from '@angular/common/http';
 export class StationsService {
   // Binding object for stations tab
   @Input() stationsModel = new StationsModel();
+  // Networks
   public allNetworks = new Array<FdsnNetwork>();
   public filteredNetworks = new BehaviorSubject(new Array<FdsnNetwork>());
+
+  // Stations
   public allStations = new Array<FdsnStationExt>();
   public selectedStations = new BehaviorSubject(new Array<FdsnStationExt>());
   public focuedStation = new Subject<FdsnStationExt>();
@@ -40,6 +43,7 @@ export class StationsService {
       const tmp = new FdsnStationExt();
       tmp.station_network_code = f.station_network_code;
       tmp.station_network_start_year = f.station_network_start_year;
+      tmp.station_network_temporary = f.station_network_temporary;
       tmp.station_code = f.station_code;
       tmp.station_latitude = f.station_latitude;
       tmp.station_longitude = f.station_longitude;
@@ -74,9 +78,12 @@ export class StationsService {
   updateStations(filteredStations: FdsnStationExt[]) {
     for (const fs of filteredStations) {
       if (this._mapStations.filter(
-        e => (e.station_network_code === fs.station_network_code && e.station_code === fs.station_code)).length === 0) {
+        e => (
+          e.station_network_code === fs.station_network_code
+          && e.station_code === fs.station_code
+        )).length === 0) {
           this._mapStations.push(fs);
-      }
+        }
     }
     this.selectedStations.next(this._mapStations);
   }
@@ -97,6 +104,7 @@ export class StationsService {
   }
 
   networkTypeChanged(n) {
+    this.stationsModel.selectedStation = 'All';
     if (n.id === 0) {
       this.filteredNetworks.next(this.allNetworks);
     } else if (n.id === 1) {
@@ -113,26 +121,23 @@ export class StationsService {
       );
   }
 
-  getAvailableChannels(net: string,
-  netStartYear: string,
-  stat: string,
-  netType: boolean): Observable<Object> {
+  getAvailableChannels(net, netStartYear, stat, netType): Observable<Object> {
     let url = `${this._channelsUrl}?aggregate=1&`;
 
     if (net) {
-      url += `netcode=${net}&`;
+      url += `station_network_code=${net}&`;
     }
 
     if (netStartYear) {
-      url += `netstartyear=${netStartYear}&`;
+      url += `station_network_start_year=${netStartYear}&`;
     }
 
     if (netType) {
-      url += `nettype=${netType}`;
+      url += `station_network_type=${netType.id}&`;
     }
 
     if (stat) {
-      url += `statcode=${stat}`;
+      url += `station_code=${stat}`;
     }
 
     return this._eidaService.http.get<Object>(url).pipe(
@@ -158,14 +163,19 @@ export class StationsService {
   addSelectedStation(sm: StationsModel) {
     if (sm.dataSource === Enums.StationDataSource.Inventory) {
       // Inventory based search
+      if (sm.selectedNetworkType.id === 0) {
+        this._filteredStations = this.allStations.filter(m => m.station_network_code);
+      } else if (sm.selectedNetworkType.id === 1) {
+        this._filteredStations = this.allStations.filter(m => !m.station_network_temporary);
+      } else {
+        this._filteredStations = this.allStations.filter(m => m.station_network_temporary);
+      }
 
       // All all networks or selected network based on the combo selection
-      if (sm.selectedNetwork === 'All') {
-        this._filteredStations = this.allStations.filter(m => m.station_network_code);
-      } else {
+      if (sm.selectedNetwork !== 'All') {
         this._filteredStations = this._mapStations.concat(this.allStations.filter(
-          m => m.station_network_code === sm.selectedNetwork.code
-          && m.station_network_start_year === sm.selectedNetwork.start_year
+          m => m.station_network_code === sm.selectedNetwork.network_code
+          && m.station_network_start_year === sm.selectedNetwork.network_start_year
         ));
       }
 
@@ -173,7 +183,7 @@ export class StationsService {
       if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Code) {
         if (sm.selectedStation !== 'All') {
           this._filteredStations = this._filteredStations.filter(
-            m => m.station_code === sm.selectedStation.code
+            m => m.station_code === sm.selectedStation.station_code
           );
         }
       } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Region) {

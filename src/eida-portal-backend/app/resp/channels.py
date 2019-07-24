@@ -27,6 +27,7 @@ class ChannelsResp(object):
         return data
 
     def channels_get_resp(self):
+        result = []
         query = db.session.query(FdsnStationChannel).join(FdsnStation)
         for qp in self.query:
             if hasattr(FdsnStationChannel, qp):
@@ -36,15 +37,19 @@ class ChannelsResp(object):
                 query = query.filter(
                     getattr(FdsnStation, qp) == self.query[qp])
         result = query.all()
-        return self._dump(result)
+
+        if 'aggregate' in self.query:
+            return self._aggregate(result)
+        else:
+            return self._dump(result)
 
     def _aggregate(self, data):
         result = {}
         for d in data:
-            if not d.code[:2] in result:
-                result[d.code[:2]] = 1
+            if not d.channel_code[:2] in result:
+                result[d.channel_code[:2]] = 1
             else:
-                result[d.code[:2]] += 1
+                result[d.channel_code[:2]] += 1
         return result
 
     def _dump(self, data):

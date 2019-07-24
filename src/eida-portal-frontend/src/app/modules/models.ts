@@ -84,23 +84,23 @@ export class StationsModel {
     }
 
     getSelectedChannels() {
-        return this.worksetChannels.filter(k => k.selected);
+        return this.worksetChannels.filter(k => k.channel_selected);
     }
 
     allChannelsSelected(): boolean {
-        return this.worksetChannels.find(k => !k.selected) === undefined;
+        return this.worksetChannels.find(k => !k.channel_selected) === undefined;
     }
 }
 
 export class StationChannelModel {
-    channelCode: string;
-    appearances: number;
-    selected: boolean;
+    channel_code: string;
+    channel_appearances: number;
+    channel_selected: boolean;
 
     constructor() {
-        this.channelCode = '';
-        this.appearances = 0;
-        this.selected = true;
+        this.channel_code = '';
+        this.channel_appearances = 0;
+        this.channel_selected = true;
     }
 }
 

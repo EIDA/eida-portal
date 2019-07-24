@@ -50,7 +50,7 @@
         <div class="field-body">
           <div class="field">
             <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network-type')">
-              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType" (ngModelChange)="networkChanged($event)">
+              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType" (ngModelChange)="stationsService.networkTypeChanged($event);">
                 <option *ngFor="let nt of stationsService.stationsModel.networkTypes" [ngValue]="nt">{{nt.name}}
                 </option>
               </select>
@@ -69,7 +69,7 @@
               <select [(ngModel)]="stationsService.stationsModel.selectedNetwork" (ngModelChange)="networkChanged($event)"
                 style="width:100%;">
                 <option selected>All</option>
-                <option *ngFor="let n of stationsService.filteredNetworks.value" [ngValue]="n">{{n.code}} - ({{n.start_year}}) - {{n.description}}</option>
+                <option *ngFor="let n of stationsService.filteredNetworks.value" [ngValue]="n">{{n.network_code}} - ({{n.network_start_year}}) - {{n.network_description}}</option>
               </select>
             </div>
           </div>
@@ -105,7 +105,7 @@
                 <select [(ngModel)]="stationsService.stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
                   style="width:100%;">
                   <option selected>All</option>
-                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.code}} - {{s.site_name}} ({{s.start_year}})
+                  <option *ngFor="let s of filteredStations" [ngValue]="s">{{s.station_code}} - {{s.station_site_name}} ({{s.station_start_year}})
                   </option>
                 </select>
               </div>
@@ -249,7 +249,7 @@
         <div class="field is-grouped is-grouped-multiline">
           <div *ngFor="let s of getAvailableChannels();" class="control">
             <div class="tags">
-              <span class="tag is-small">{{ s.channelCode }} ({{ s.appearances }})</span>
+              <span class="tag is-small">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
             </div>
           </div>
         </div>
@@ -260,7 +260,7 @@
         <div class="field is-grouped is-grouped-multiline">
           <div *ngFor="let s of getWorksetChannels(true);" class="control">
             <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+              <span class="tag is-dark">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
               <a class="tag is-warning" (click)="handleChannelSelection(s);">-</a>
             </div>
           </div>
@@ -272,7 +272,7 @@
         <div class="field is-grouped is-grouped-multiline">
           <div *ngFor="let s of getWorksetChannels(false);" class="control">
             <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.channelCode }} ({{ s.appearances }})</span>
+              <span class="tag is-dark">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
               <a class="tag is-success" (click)="handleChannelSelection(s);">+</a>
             </div>
           </div>
@@ -400,14 +400,14 @@
         <tbody>
           <tr *ngFor="let station of paginator.getCurrentPage()">
             <td>
-              <a (click)="focusOnStation(station)">{{station.network_code}} / {{station.code}}</a>
-              <p class="is-size-7">{{station.site_name}} ({{station.getCoordinates()}})</p>
+              <a (click)="focusOnStation(station)">{{station.station_network_code}} / {{station.station_code}}</a>
+              <p class="is-size-7">{{station.station_site_name}} ({{station.getCoordinates()}})</p>
             </td>
             <td>
               <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)"
-                [ngClass]="station.selected ? 'button is-small is-success' : 'button is-small is-light'"
+                [ngClass]="station.station_selected ? 'button is-small is-success' : 'button is-small is-light'"
                 [attr.data-tippy-content]="textService.getText('stations-tip-toggle-select')">
-                {{station.selected ? "Selected" : "Skipped"}}</button>
+                {{station.station_selected ? "Selected" : "Skipped"}}</button>
             </td>
             <td>
               <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)"

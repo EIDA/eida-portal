@@ -70,24 +70,28 @@ export class StationsComponent implements OnInit {
     const n = this.stationsService.stationsModel.selectedNetwork;
     if (n === 'All') {
       switch (this.stationsService.stationsModel.selectedNetworkType.id) {
+        // All networks
         case 0:
             this.filteredStations = this.stationsService.allStations;
             break;
+        // Permanent networks
         case 1:
             this.filteredStations = this.stationsService.allStations.filter(
-              s => s.station_network_temporary === false
+              s => !s.station_network_temporary
             );
             break;
+        // Temporary networks
         case 2:
             this.filteredStations = this.stationsService.allStations.filter(
-              s => s.station_network_temporary === true
+              s => s.station_network_temporary
             );
             break;
       }
     } else {
       this.stationsService.stationsModel.selectedNetwork = n;
       this.filteredStations = this.stationsService.allStations.filter(
-        s => s.station_network_code === n.code && s.station_network_start_year === n.start_year
+        s => s.station_network_code === n.network_code
+        && s.station_network_start_year === n.network_start_year
       );
     }
 
@@ -120,12 +124,14 @@ export class StationsComponent implements OnInit {
   }
 
   getWorksetChannels(selected: boolean) {
-    return this.stationsService.stationsModel.worksetChannels.filter(x => x.selected === selected);
+    return this.stationsService.stationsModel.worksetChannels.filter(
+      x => x.channel_selected === selected
+    );
   }
 
   handleChannelSelection(s) : void {
     this.stationsService.stationsModel.worksetChannels.find(
-      e => e.channelCode === s.channelCode).selected = !s.selected;
+      e => e.channel_code === s.channelCode).channel_selected = !s.selected;
   }
 
   add() {
@@ -166,14 +172,17 @@ export class StationsComponent implements OnInit {
    * Refresh availalbe streams for selected network / station
    */
   refreshAvailableStreams(): void {
-    if ((this.stationsService.stationsModel.stationSelectionMethod !== Enums.StationSelectionMethods.Code)) {
+    if (
+      this.stationsService.stationsModel.stationSelectionMethod
+      !== Enums.StationSelectionMethods.Code
+    ) {
       return;
     }
 
     this.stationsService.getAvailableChannels(
-      this.stationsService.stationsModel.selectedNetwork.code,
-      this.stationsService.stationsModel.selectedNetwork.start_year,
-      this.stationsService.stationsModel.selectedStation.code,
+      this.stationsService.stationsModel.selectedNetwork.network_code,
+      this.stationsService.stationsModel.selectedNetwork.network_start_year,
+      this.stationsService.stationsModel.selectedStation.station_code,
       this.stationsService.stationsModel.selectedNetworkType).subscribe(
         val => this.importStationChannels(val)
     );
@@ -184,8 +193,8 @@ export class StationsComponent implements OnInit {
 
     for (let a in array) {
       let s = new StationChannelModel();
-      s.channelCode = a;
-      s.appearances = array[a];
+      s.channel_code = a;
+      s.channel_appearances = array[a];
       this.stationsService.stationsModel.availableChannels.push(s);
     }
   }
@@ -210,8 +219,8 @@ export class StationsComponent implements OnInit {
 
     for (let a in array) {
       let s = new StationChannelModel();
-      s.channelCode = a;
-      s.appearances = array[a];
+      s.channel_code = a;
+      s.channel_appearances = array[a];
       this.stationsService.stationsModel.worksetChannels.push(s);
     }
   }
