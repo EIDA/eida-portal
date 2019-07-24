@@ -91,7 +91,8 @@ export class StationsComponent implements OnInit {
 
   handleChannelSelection(s) : void {
     this.stationsService.stationsModel.worksetChannels.find(
-      e => e.channel_code === s.channelCode).channel_selected = !s.selected;
+      e => e.channel_code === s.channel_code
+    ).channel_selected = !s.channel_selected;
   }
 
   add() {

@@ -54,19 +54,28 @@ export class RequestService {
   private _downloadMiniSeed(): void {
     const urls = Array<{}>();
 
-    const selectedChannels = this._stationsService.stationsModel.getSelectedChannels();
-    const allChannelsSelected = this._stationsService.stationsModel.allChannelsSelected();
+    const selectedChannels =
+      this._stationsService.stationsModel.getSelectedChannels();
+    const allChannelsSelected =
+      this._stationsService.stationsModel.allChannelsSelected();
 
-    for (const e of this._eventsService.selectedEvents.value.filter(n => n.selected === true)) {
+    for (const e of this._eventsService.selectedEvents.value.filter(
+      n => n.selected === true
+    )) {
       let urlSta = null;
       let urlChannel = null;
 
-      const selectedStations = this._stationsService.selectedStations.value.filter(n => n.station_selected === true);
+      const selectedStations =
+      this._stationsService.selectedStations.value.filter(
+        n => n.station_selected === true
+      );
 
       // Check if there are stations selected and
       // create a comma-separated list of them for the URL query
       if (selectedStations.length > 0) {
-        urlSta = Object.keys(selectedStations).map(k => selectedStations[k].code).join(',');
+        urlSta = Object.keys(selectedStations).map(
+          k => selectedStations[k].station_code
+        ).join(',');
       }
 
       // Check if there are channels selected and create a comma-separated
@@ -74,7 +83,7 @@ export class RequestService {
       // channel code to include all channel components
       if (!allChannelsSelected && selectedChannels.length > 0) {
         urlChannel = Object.keys(selectedChannels)
-          .map(k => selectedChannels[k].channelCode + '?')
+          .map(k => selectedChannels[k].channel_code + '?')
           .join(',');
       }
 
@@ -105,10 +114,16 @@ export class RequestService {
 
     // Check if there are stations selected and
     // create a comma-separated list of them for the URL query
-    if (this._stationsService.selectedStations.value.filter(n => n.station_selected === true).length > 0) {
+    if (this._stationsService.selectedStations.value.filter(
+      n => n.station_selected === true
+    ).length > 0) {
       urlSta = Object.keys(
-        this._stationsService.selectedStations.value.filter(n => n.station_selected === true)
-      ).map(k => this._stationsService.selectedStations.value[k].code).join(',');
+        this._stationsService.selectedStations.value.filter(
+          n => n.station_selected === true
+        )
+      ).map(
+        k => this._stationsService.selectedStations.value[k].station_code
+      ).join(',');
     }
 
     let url = '';
