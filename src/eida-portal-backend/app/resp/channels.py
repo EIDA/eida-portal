@@ -19,9 +19,9 @@ class ChannelsResp(object):
         for p in post_data:
             response.extend(
                 FdsnStationChannel.query.join(FdsnStation).join(FdsnNetwork).filter(
-                    FdsnNetwork.network_code == p['network_code'],
-                    FdsnNetwork.network_start_year == p['network_start_year'],
-                    FdsnStation.station_code == p['code']).all())
+                    FdsnNetwork.network_code == p['station_network_code'],
+                    FdsnNetwork.network_start_year == p['station_network_start_year'],
+                    FdsnStation.station_code == p['station_code']).all())
 
         data = self._aggregate(response)
         return data
