@@ -34,8 +34,6 @@ export class StationsService {
 
   // Stations filtered to be added to the station working set
   private _filteredStations = new Array<FdsnStationExt>();
-  // Stations rendered on the map, used also to fill selectedStations
-  private _mapStations = new Array<FdsnStationExt>();
 
   constructor(
     private _eidaService: EidaService,
@@ -86,19 +84,19 @@ export class StationsService {
   // Add filtered stations to the working set and skip the duplicates
   updateStations(filteredStations: FdsnStationExt[]) {
     for (const fs of filteredStations) {
-      if (this._mapStations.filter(
+      if (this.selectedStations.value.filter(
         e => (
           e.station_network_code === fs.station_network_code
           && e.station_code === fs.station_code
         )).length === 0) {
-          this._mapStations.push(fs);
+          this.selectedStations.value.push(fs);
         }
     }
-    this.selectedStations.next(this._mapStations);
+    this.selectedStations.next(this.selectedStations.value);
   }
 
-  refreshStations(mapStations: FdsnStationExt[]) {
-    this.selectedStations.next(mapStations);
+  refreshStations(stations: FdsnStationExt[]) {
+    this.selectedStations.next(stations);
   }
 
   updateFocusedStation(s: FdsnStationExt) {
@@ -113,15 +111,19 @@ export class StationsService {
   }
 
   networkTypeChanged(n) {
-    this.stationsModel.selectedNetwork = new FdsnNetwork();
-    this.stationsModel.selectedStation = new FdsnStationExt();
+    this.stationsModel.selectedNetwork = 'All';
+    this.stationsModel.selectedStation = 'All';
 
     if (n.id === 0) {
       this.filteredNetworks.next(this.allNetworks);
     } else if (n.id === 1) {
-      this.filteredNetworks.next(this.allNetworks.filter(m => !m.network_temporary));
+      this.filteredNetworks.next(this.allNetworks.filter(
+        m => !m.network_temporary
+      ));
     } else {
-      this.filteredNetworks.next(this.allNetworks.filter(m => m.network_temporary));
+      this.filteredNetworks.next(this.allNetworks.filter(
+        m => m.network_temporary
+      ));
     }
 
     this.networkChanged();
@@ -264,7 +266,7 @@ export class StationsService {
 
       // Add all networks or selected network based on the combo selection
       if (sm.selectedNetwork !== 'All') {
-        this._filteredStations = this._mapStations.concat(
+        this._filteredStations = this.selectedStations.value.concat(
           this.allStations.filter(
             m => m.station_network_code === sm.selectedNetwork.network_code
             && m.station_network_start_year === sm.selectedNetwork.network_start_year
@@ -325,36 +327,42 @@ export class StationsService {
   }
 
   toggleStationSelection(s: FdsnStationExt) {
-    this._mapStations.find(
-      p => p.station_network_code === s.station_network_code && p.station_code === s.station_code
+    this.selectedStations.value.find(
+      p => p.station_network_code === s.station_network_code
+      && p.station_code === s.station_code
     ).station_selected = !s.station_selected;
-    this.refreshStations(this._mapStations);
+    this.refreshStations(this.selectedStations.value);
   }
 
   removeStationSelection(s: FdsnStation) {
-    const i = this._mapStations.indexOf(
-      this._mapStations.find(p => p.station_network_code === s.station_network_code && p.station_code === s.station_code)
+    const i = this.selectedStations.value.indexOf(
+      this.selectedStations.value.find(
+        p => p.station_network_code === s.station_network_code
+        && p.station_code === s.station_code
+      )
     );
-    this._mapStations.splice(i, 1);
-    this.refreshStations(this._mapStations);
+    this.selectedStations.value.splice(i, 1);
+    this.refreshStations(this.selectedStations.value);
   }
 
   removeAllStations() {
-    this._mapStations.splice(0, this._mapStations.length);
-    this.refreshStations(this._mapStations);
+    this.selectedStations.value.splice(0, this.selectedStations.value.length);
+    this.refreshStations(this.selectedStations.value);
   }
 
   removeSelectedStations() {
-    this._mapStations = this._mapStations.filter(e => e.station_selected !== true);
-    this.refreshStations(this._mapStations);
+    this.selectedStations.next(
+      this.selectedStations.value.filter(e => e.station_selected !== true)
+    );
+    this.refreshStations(this.selectedStations.value);
   }
 
   invertStationsSelection() {
-    for (const s of this._mapStations) {
+    for (const s of this.selectedStations.value) {
       s.station_selected = !s.station_selected;
     }
 
-    this.refreshStations(this._mapStations);
+    this.refreshStations(this.selectedStations.value);
   }
 
   getNetworksStations(): Observable<FdsnNetwork[]> {
