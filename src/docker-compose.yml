@@ -5,9 +5,9 @@ services:
     build: ./eida-portal-backend/
     user: "994:1019"
     ports:
-      - "8010:8080"
-    volumes:
-      - ./eida-portal-backend/app/db:/data/epb/app/db
+      - "49160:8080"
+    # volumes:
+    #   - ./eida-portal-backend/app/db:/data/epb/app/db
     networks:
       - epb_net
     command: gunicorn -b 0.0.0.0:8080 -w 2 app:app
