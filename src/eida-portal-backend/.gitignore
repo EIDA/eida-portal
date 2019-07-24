@@ -1,5 +1,4 @@
-# DB and DB migrations
-app/db/epb.db*
+# DB migrations
 migrations/
 
 # Byte-compiled / optimized / DLL files
