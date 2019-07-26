@@ -18,7 +18,7 @@ class NetworksResp(object):
         query = db.session.query(FdsnNetwork)
         for qp in self.query:
             query = query.filter(getattr(FdsnNetwork, qp) == self.query[qp])
-        result = query.all()
+        result = query.order_by("network_code").all()
         return self._dump(result)
 
     def _dump(self, data):

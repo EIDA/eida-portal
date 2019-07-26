@@ -23,7 +23,7 @@ class StationsResp(object):
             elif hasattr(FdsnNetwork, qp):
                 query = query.filter(
                     getattr(FdsnNetwork, qp) == self.query[qp])
-        result = query.all()
+        result = query.order_by("network_code", "station_code").all()
         return self._dump(result)
 
     def _dump(self, data):
