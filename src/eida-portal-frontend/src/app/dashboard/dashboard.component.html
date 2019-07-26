@@ -4,11 +4,11 @@
     display: none;
   }
 
-  #events:checked~.tab-content>.content-events,
-  #stations:checked~.tab-content>.content-stations,
-  #request:checked~.tab-content>.content-request,
-  #metrics:checked~.tab-content>.content-metrics,
-  #help:checked~.tab-content>.content-help {
+  #events:checked ~ .tab-content > .content-events,
+  #stations:checked ~ .tab-content > .content-stations,
+  #request:checked ~ .tab-content > .content-request,
+  #metrics:checked ~ .tab-content > .content-metrics,
+  #help:checked ~ .tab-content > .content-help {
     display: block;
   }
 </style>
@@ -18,7 +18,10 @@
     <a class="navbar-item">
       <h1 class="title">EIDA Portal</h1>
     </a>
-    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+    <div
+      class="navbar-burger burger"
+      data-target="navbarExampleTransparentExample"
+    >
       <span></span>
       <span></span>
       <span></span>
@@ -36,28 +39,31 @@
           </span>
         </a> -->
       <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            <span class="icon">
-              <i class="fas fa-compass"></i>
-            </span>
-            <span>
-              Menu
-            </span>
+        <a class="navbar-link">
+          <span class="icon">
+            <i class="fas fa-compass"></i>
+          </span>
+          <span>
+            Menu
+          </span>
+        </a>
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item">
+            Menu entry 1
           </a>
-          <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item">
-              Menu entry 1
-            </a>
-            <a class="navbar-item">
-              Menu entry 2
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              Menu entry 3
-            </a>
-          </div>
+          <a class="navbar-item">
+            Menu entry 2
+          </a>
+          <hr class="navbar-divider" />
+          <a class="navbar-item">
+            Menu entry 3
+          </a>
         </div>
-      <a class="navbar-item" (click)="uiService.toggleVisibility('mapToggler', 'mapContainer');">
+      </div>
+      <a
+        class="navbar-item"
+        (click)="uiService.toggleVisibility('mapToggler', 'mapContainer')"
+      >
         <span class="icon">
           <i class="fas fa-toggle-off" id="mapToggler"></i>
         </span>
@@ -66,7 +72,10 @@
         </span>
       </a>
 
-      <a class="navbar-item" (click)="uiService.toggleTooltips('tooltipsToggler');">
+      <a
+        class="navbar-item"
+        (click)="uiService.toggleTooltips('tooltipsToggler')"
+      >
         <span class="icon">
           <i class="fas fa-toggle-off" id="tooltipsToggler"></i>
         </span>
@@ -80,7 +89,12 @@
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <a class="bd-tw-button button" [attr.data-tippy-content]="textService.getText('dash-tip-authenticate')">
+            <a
+              class="bd-tw-button button"
+              [attr.data-tippy-content]="
+                textService.getText('dash-tip-authenticate')
+              "
+            >
               <span class="icon"><i class="fas fa-lock-open"></i></span>
               <span>
                 Authenticate
@@ -107,13 +121,16 @@
   <div class="tile is-ancestor">
     <div class="tile is-vertical is-parent">
       <!-- Nav tabs -->
-      <input type="radio" id="events" name="nav-tab" checked="checked">
-      <input type="radio" id="stations" name="nav-tab">
-      <input type="radio" id="request" name="nav-tab">
-      <input type="radio" id="metrics" name="nav-tab">
-      <input type="radio" id="help" name="nav-tab">
+      <input type="radio" id="events" name="nav-tab" checked="checked" />
+      <input type="radio" id="stations" name="nav-tab" />
+      <input type="radio" id="request" name="nav-tab" />
+      <input type="radio" id="metrics" name="nav-tab" />
+      <input type="radio" id="help" name="nav-tab" />
 
-      <div class="tabs is-boxed" [attr.data-tippy-content]="textService.getText('dash-tip-tabs')">
+      <div
+        class="tabs is-boxed"
+        [attr.data-tippy-content]="textService.getText('dash-tip-tabs')"
+      >
         <ul id="menuTabs">
           <li class="is-active" id="eventsTab">
             <label for="events">

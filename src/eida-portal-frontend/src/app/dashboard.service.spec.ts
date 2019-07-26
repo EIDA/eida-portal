@@ -1,15 +1,18 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import { DashboardService } from './dashboard.service';
+import { DashboardService } from "./dashboard.service";
 
-describe('DashboardService', () => {
+describe("DashboardService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [DashboardService]
     });
   });
 
-  it('should be created', inject([DashboardService], (service: DashboardService) => {
-    expect(service).toBeTruthy();
-  }));
+  it("should be created", inject(
+    [DashboardService],
+    (service: DashboardService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

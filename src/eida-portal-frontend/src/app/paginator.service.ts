@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class PaginatorService {
   private _currentPage = 0;
   private _pageSize = 10;
   private _pages = new Array();
 
-  constructor() { }
+  constructor() {}
 
   paginate(data) {
     this._pages = new Array();

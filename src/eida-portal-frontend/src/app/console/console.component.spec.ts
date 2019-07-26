@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ConsoleComponent } from './console.component';
+import { ConsoleComponent } from "./console.component";
 
-describe('ConsoleComponent', () => {
+describe("ConsoleComponent", () => {
   let component: ConsoleComponent;
   let fixture: ComponentFixture<ConsoleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConsoleComponent ]
-    })
-    .compileComponents();
+      declarations: [ConsoleComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ConsoleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,14 +1,14 @@
-import { Injectable, Input } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
-import { EidaService } from './eida.service';
-import { EventsModel } from './modules/models';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
-import { Parser } from 'xml2js';
-import { SerializationHelper } from './helpers/serialization.helper';
+import { Injectable, Input } from "@angular/core";
+import { catchError, tap } from "rxjs/operators";
+import { EidaService } from "./eida.service";
+import { EventsModel } from "./modules/models";
+import { Subject, BehaviorSubject } from "rxjs";
+import { FdsnEventsResponseModels } from "../app/modules/models.fdsn-events";
+import { Parser } from "xml2js";
+import { SerializationHelper } from "./helpers/serialization.helper";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class EventsService {
   /*
@@ -28,38 +28,41 @@ export class EventsService {
   // Binding object for the Events tab
   @Input() public eventsModel = new EventsModel();
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
-  public selectedEvents = new BehaviorSubject(new Array<FdsnEventsResponseModels.EventExt>());
+  public selectedEvents = new BehaviorSubject(
+    new Array<FdsnEventsResponseModels.EventExt>()
+  );
   public eventsResponse = new Subject<Object>();
   // Focued event for the map
   public focusedEvent = new Subject<FdsnEventsResponseModels.EventExt>();
 
-  constructor(
-    private _eidaService: EidaService
-  ) {
-    this.eventsResponse.subscribe(
-      resp => this.eventsXmlToObjGraph(resp, this.allEvents)
+  constructor(private _eidaService: EidaService) {
+    this.eventsResponse.subscribe(resp =>
+      this.eventsXmlToObjGraph(resp, this.allEvents)
     );
 
-    this.allEvents.subscribe(
-      e => this.addReceivedEvents(e)
-    );
+    this.allEvents.subscribe(e => this.addReceivedEvents(e));
   }
 
   // Extract json data to object graph for easier operation (map rendering etc)
   eventsXmlToObjGraph(resp, allEvents) {
     const p = new Parser();
-    p.parseString(resp, function(err, result) {
-      if (err) {throw err; }
+    p.parseString(
+      resp,
+      function(err, result) {
+        if (err) {
+          throw err;
+        }
 
-      try {
-        const json = JSON.parse(JSON.stringify(result));
-        const objGraph = SerializationHelper.eventsJsonToObjGraph(json);
-        allEvents.next(objGraph.quakeml.eventParameters.event);
-      } catch (ex) {
-        this.log(ex);
-        allEvents.next(new FdsnEventsResponseModels.FdsnEventsRoot());
-      }
-    }.bind(this._eidaService));
+        try {
+          const json = JSON.parse(JSON.stringify(result));
+          const objGraph = SerializationHelper.eventsJsonToObjGraph(json);
+          allEvents.next(objGraph.quakeml.eventParameters.event);
+        } catch (ex) {
+          this.log(ex);
+          allEvents.next(new FdsnEventsResponseModels.FdsnEventsRoot());
+        }
+      }.bind(this._eidaService)
+    );
   }
 
   addReceivedEvents(events: FdsnEventsResponseModels.EventExt[]) {
@@ -81,28 +84,30 @@ export class EventsService {
     //   headers: headers
     // };
 
-    this._eidaService.http.get(url, {responseType: 'text'})
+    this._eidaService.http
+      .get(url, { responseType: "text" })
       .pipe(
-        tap(_ => this._eidaService.log('fetched events data')),
-        catchError(this._eidaService.handleError('getEvents', []))
-      ).subscribe(
-        r => this.eventsResponse.next(r)
-      );
+        tap(_ => this._eidaService.log("fetched events data")),
+        catchError(this._eidaService.handleError("getEvents", []))
+      )
+      .subscribe(r => this.eventsResponse.next(r));
   }
 
   // Build the URL from base URL and payload
   buildEventsUrl(e: EventsModel): string {
-    return `${e.getSelCatUrl()}` +
-    `&minmag=${e.minimumMagnitude}` +
-    `&start=${e.dateFrom}` +
-    `&end=${e.dateTo}` +
-    `&mindepth=${e.depthFrom}` +
-    `&maxdepth=${e.depthTo}` +
-    `&minlat=${e.coordinateS}` +
-    `&maxlat=${e.coordinateN}` +
-    `&minlon=${e.coordinateW}` +
-    `&maxlon=${e.coordinateE}` +
-    `&limit=${e.resultLimit}`;
+    return (
+      `${e.getSelCatUrl()}` +
+      `&minmag=${e.minimumMagnitude}` +
+      `&start=${e.dateFrom}` +
+      `&end=${e.dateTo}` +
+      `&mindepth=${e.depthFrom}` +
+      `&maxdepth=${e.depthTo}` +
+      `&minlat=${e.coordinateS}` +
+      `&maxlat=${e.coordinateN}` +
+      `&minlon=${e.coordinateW}` +
+      `&maxlon=${e.coordinateE}` +
+      `&limit=${e.resultLimit}`
+    );
   }
 
   toggleEventSelection(s: FdsnEventsResponseModels.EventExt) {
@@ -128,7 +133,6 @@ export class EventsService {
   removeSelectedEvents() {
     this._mapEvents = this._mapEvents.filter(e => e.selected !== true);
     this.updateEvents(this._mapEvents);
-
   }
 
   invertEventsSelection() {

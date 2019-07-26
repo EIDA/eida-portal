@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { MapDragBoxCoordinates } from './modules/models';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { MapDragBoxCoordinates } from "./modules/models";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MapService {
   public dragBoxCoordinates = new Subject<MapDragBoxCoordinates>();
   public mapResizeTrigger = new Subject<boolean>();
   public mapZoomResetTrigger = new Subject<boolean>();
 
-  constructor() { }
+  constructor() {}
 
   updateDragBoxCoordinates(dbc: MapDragBoxCoordinates) {
     this.dragBoxCoordinates.next(dbc);

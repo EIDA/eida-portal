@@ -1,16 +1,37 @@
 <div class="columns">
   <div class="column is-5">
-    <div class="tabs is-toggle is-small is-fullwidth"
-      [attr.data-tippy-content]="textService.getText('stations-tip-tabs-data-source')">
+    <div
+      class="tabs is-toggle is-small is-fullwidth"
+      [attr.data-tippy-content]="
+        textService.getText('stations-tip-tabs-data-source')
+      "
+    >
       <ul id="dataSourceTabs">
-        <li id="browseInventoryTab" class="is-active"
-          (click)="handleGeneralInputTypeChange('browseInventoryTab', 'browseInventoryContent'); stationDataSourceChanged(0);">
-          <a>Browse
-            inventory</a></li>
-        <li id="userSuppliedTab"
-          (click)="handleGeneralInputTypeChange('userSuppliedTab', 'userSuppliedContent'); stationDataSourceChanged(1);">
-          <a>User
-            supplied</a></li>
+        <li
+          id="browseInventoryTab"
+          class="is-active"
+          (click)="
+            handleGeneralInputTypeChange(
+              'browseInventoryTab',
+              'browseInventoryContent'
+            );
+            stationDataSourceChanged(0)
+          "
+        >
+          <a>Browse inventory</a>
+        </li>
+        <li
+          id="userSuppliedTab"
+          (click)="
+            handleGeneralInputTypeChange(
+              'userSuppliedTab',
+              'userSuppliedContent'
+            );
+            stationDataSourceChanged(1)
+          "
+        >
+          <a>User supplied</a>
+        </li>
       </ul>
     </div>
 
@@ -22,9 +43,19 @@
           <label class="label">Year from</label>
         </div>
         <div class="field-body">
-          <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-from')">
+          <div
+            class="field"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-year-from')
+            "
+          >
             <div class="control">
-              <input [(ngModel)]="stationsService.stationsModel.yearFrom" class="input" type="text" placeholder="1980">
+              <input
+                [(ngModel)]="stationsService.stationsModel.yearFrom"
+                class="input"
+                type="text"
+                placeholder="1980"
+              />
             </div>
           </div>
         </div>
@@ -35,9 +66,19 @@
           <label class="label">Year to</label>
         </div>
         <div class="field-body">
-          <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-year-to')">
+          <div
+            class="field"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-year-to')
+            "
+          >
             <div class="control">
-              <input [(ngModel)]="stationsService.stationsModel.yearTo" class="input" type="text" placeholder="2018">
+              <input
+                [(ngModel)]="stationsService.stationsModel.yearTo"
+                class="input"
+                type="text"
+                placeholder="2018"
+              />
             </div>
           </div>
         </div>
@@ -49,9 +90,20 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network-type')">
-              <select [(ngModel)]="stationsService.stationsModel.selectedNetworkType" (ngModelChange)="stationsService.networkTypeChanged($event);">
-                <option *ngFor="let nt of stationsService.stationsModel.networkTypes" [ngValue]="nt">{{nt.name}}
+            <div
+              class="select"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-network-type')
+              "
+            >
+              <select
+                [(ngModel)]="stationsService.stationsModel.selectedNetworkType"
+                (ngModelChange)="stationsService.networkTypeChanged($event)"
+              >
+                <option
+                  *ngFor="let nt of stationsService.stationsModel.networkTypes"
+                  [ngValue]="nt"
+                  >{{ nt.name }}
                 </option>
               </select>
             </div>
@@ -65,32 +117,80 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-network')">
-              <select [(ngModel)]="stationsService.stationsModel.selectedNetwork" (ngModelChange)="stationsService.networkChanged($event)"
-                style="width:100%;">
+            <div
+              class="select"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-network')
+              "
+            >
+              <select
+                [(ngModel)]="stationsService.stationsModel.selectedNetwork"
+                (ngModelChange)="stationsService.networkChanged($event)"
+                style="width:100%;"
+              >
                 <option selected>All</option>
-                <option *ngFor="let n of stationsService.filteredNetworks.value" [ngValue]="n">{{n.network_code}} - ({{n.network_start_year}}) - {{n.network_description}}</option>
+                <option
+                  *ngFor="let n of stationsService.filteredNetworks.value"
+                  [ngValue]="n"
+                  >{{ n.network_code }} - ({{ n.network_start_year }}) -
+                  {{ n.network_description }}</option
+                >
               </select>
             </div>
           </div>
         </div>
       </div>
 
-      <hr>
+      <hr />
 
       <h1 class="title is-5 has-text-centered">Stations</h1>
-      <div class="tabs is-toggle is-small is-fullwidth"
-        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-stations')">
+      <div
+        class="tabs is-toggle is-small is-fullwidth"
+        [attr.data-tippy-content]="
+          textService.getText('stations-tip-tabs-stations')
+        "
+      >
         <ul id="stationsTabs">
-          <li id="stationsByCodeTab" class="is-active"
-            (click)="handleStationsTabChange('stationsByCodeTab', 'stationsByCodeContent'); stationSelectionMethod(0); handleAvailableChannelsVisibility(true)">
-            <a>By code</a></li>
-          <li id="stationsByRegionTab"
-            (click)="handleStationsTabChange('stationsByRegionTab', 'stationsByRegionContent'); stationSelectionMethod(1); handleAvailableChannelsVisibility(false)">
-            <a>By region</a></li>
-          <li id="stationsByEventsTab"
-            (click)="handleStationsTabChange('stationsByEventsTab', 'stationsByEventsContent'); stationSelectionMethod(2); handleAvailableChannelsVisibility(false)">
-            <a>By events</a></li>
+          <li
+            id="stationsByCodeTab"
+            class="is-active"
+            (click)="
+              handleStationsTabChange(
+                'stationsByCodeTab',
+                'stationsByCodeContent'
+              );
+              stationSelectionMethod(0);
+              handleAvailableChannelsVisibility(true)
+            "
+          >
+            <a>By code</a>
+          </li>
+          <li
+            id="stationsByRegionTab"
+            (click)="
+              handleStationsTabChange(
+                'stationsByRegionTab',
+                'stationsByRegionContent'
+              );
+              stationSelectionMethod(1);
+              handleAvailableChannelsVisibility(false)
+            "
+          >
+            <a>By region</a>
+          </li>
+          <li
+            id="stationsByEventsTab"
+            (click)="
+              handleStationsTabChange(
+                'stationsByEventsTab',
+                'stationsByEventsContent'
+              );
+              stationSelectionMethod(2);
+              handleAvailableChannelsVisibility(false)
+            "
+          >
+            <a>By events</a>
+          </li>
         </ul>
       </div>
 
@@ -101,11 +201,24 @@
           </div>
           <div class="field-body">
             <div class="field">
-              <div class="select" [attr.data-tippy-content]="textService.getText('stations-tip-station')">
-                <select [(ngModel)]="stationsService.stationsModel.selectedStation" (ngModelChange)="stationChanged($event)"
-                  style="width:100%;">
+              <div
+                class="select"
+                [attr.data-tippy-content]="
+                  textService.getText('stations-tip-station')
+                "
+              >
+                <select
+                  [(ngModel)]="stationsService.stationsModel.selectedStation"
+                  (ngModelChange)="stationChanged($event)"
+                  style="width:100%;"
+                >
                   <option selected>All</option>
-                  <option *ngFor="let s of stationsService.filteredStations" [ngValue]="s">{{s.station_code}} - {{s.station_site_name}} ({{s.station_start_year}})
+                  <option
+                    *ngFor="let s of stationsService.filteredStations"
+                    [ngValue]="s"
+                    >{{ s.station_code }} - {{ s.station_site_name }} ({{
+                      s.station_start_year
+                    }})
                   </option>
                 </select>
               </div>
@@ -120,9 +233,19 @@
             <label class="label">Coordinate (N)</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-n')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-coord-n')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.coordinateN" class="input" type="text" placeholder="90">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.coordinateN"
+                  class="input"
+                  type="text"
+                  placeholder="90"
+                />
               </div>
             </div>
           </div>
@@ -133,23 +256,42 @@
             <label class="label">Coordinate (S)</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-s')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-coord-s')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.coordinateS" class="input" type="text" placeholder="-90">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.coordinateS"
+                  class="input"
+                  type="text"
+                  placeholder="-90"
+                />
               </div>
             </div>
           </div>
         </div>
-
 
         <div class="field is-horizontal">
           <div class="field-label">
             <label class="label">Coordinate (E)</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-e')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-coord-e')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.coordinateE" class="input" type="text" placeholder="180">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.coordinateE"
+                  class="input"
+                  type="text"
+                  placeholder="180"
+                />
               </div>
             </div>
           </div>
@@ -160,9 +302,19 @@
             <label class="label">Coordinate (W)</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-coord-w')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-coord-w')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.coordinateW" class="input" type="text" placeholder="-180">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.coordinateW"
+                  class="input"
+                  type="text"
+                  placeholder="-180"
+                />
               </div>
             </div>
           </div>
@@ -175,9 +327,19 @@
             <label class="label">Distance from</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-from')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-distance-from')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.eventDistanceFrom" class="input" type="text" placeholder="0">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.eventDistanceFrom"
+                  class="input"
+                  type="text"
+                  placeholder="0"
+                />
               </div>
             </div>
           </div>
@@ -187,9 +349,19 @@
             <label class="label">Distance to</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-distance-to')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-distance-to')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.eventDistanceTo" class="input" type="text" placeholder="180">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.eventDistanceTo"
+                  class="input"
+                  type="text"
+                  placeholder="180"
+                />
               </div>
             </div>
           </div>
@@ -199,9 +371,19 @@
             <label class="label">Azimuth from</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-from')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-azimuth-from')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.eventAzimuthFrom" class="input" type="text" placeholder="0">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.eventAzimuthFrom"
+                  class="input"
+                  type="text"
+                  placeholder="0"
+                />
               </div>
             </div>
           </div>
@@ -211,28 +393,61 @@
             <label class="label">Azimuth to</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-azimuth-to')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-azimuth-to')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.eventAzimuthTo" class="input" type="text" placeholder="360">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.eventAzimuthTo"
+                  class="input"
+                  type="text"
+                  placeholder="360"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <hr>
+      <hr />
 
       <h1 class="title is-5 has-text-centered">Channels</h1>
 
-      <div class="tabs is-toggle is-small is-fullwidth"
-        [attr.data-tippy-content]="textService.getText('stations-tip-tabs-channels')">
+      <div
+        class="tabs is-toggle is-small is-fullwidth"
+        [attr.data-tippy-content]="
+          textService.getText('stations-tip-tabs-channels')
+        "
+      >
         <ul id="channelsTabs">
-          <li id="channelsByCodeTab" class="is-active"
-            (click)="handleChannelTabChange('channelsByCodeTab', 'channelsByCodeContent'); stationChannelSelectionMethod(0);">
-            <a>By code</a></li>
-          <li id="channelsBySamplingTab"
-            (click)="handleChannelTabChange('channelsBySamplingTab', 'channelsBySamplingContent'); stationChannelSelectionMethod(1);">
-            <a>By sampling</a></li>
+          <li
+            id="channelsByCodeTab"
+            class="is-active"
+            (click)="
+              handleChannelTabChange(
+                'channelsByCodeTab',
+                'channelsByCodeContent'
+              );
+              stationChannelSelectionMethod(0)
+            "
+          >
+            <a>By code</a>
+          </li>
+          <li
+            id="channelsBySamplingTab"
+            (click)="
+              handleChannelTabChange(
+                'channelsBySamplingTab',
+                'channelsBySamplingContent'
+              );
+              stationChannelSelectionMethod(1)
+            "
+          >
+            <a>By sampling</a>
+          </li>
         </ul>
       </div>
 
@@ -245,35 +460,51 @@
         </div> -->
 
         <div id="available-channels">
-        <h1 class="title is-6 has-text-centered">Channels available in selection</h1>
+          <h1 class="title is-6 has-text-centered">
+            Channels available in selection
+          </h1>
+          <div class="field is-grouped is-grouped-multiline">
+            <div *ngFor="let s of getAvailableChannels()" class="control">
+              <div class="tags">
+                <span class="tag is-small"
+                  >{{ s.channel_code }} ({{ s.channel_appearances }})</span
+                >
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+
+        <h1 class="title is-6 has-text-centered">
+          Channels <b>included</b> in the working set
+        </h1>
         <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getAvailableChannels();" class="control">
-            <div class="tags">
-              <span class="tag is-small">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
+          <div *ngFor="let s of getWorksetChannels(true)" class="control">
+            <div class="tags has-addons">
+              <span class="tag is-dark"
+                >{{ s.channel_code }} ({{ s.channel_appearances }})</span
+              >
+              <a class="tag is-warning" (click)="handleChannelSelection(s)"
+                >-</a
+              >
             </div>
           </div>
         </div>
-        <hr>
-        </div>
 
-        <h1 class="title is-6 has-text-centered">Channels <b>included</b> in the working set</h1>
+        <hr />
+
+        <h1 class="title is-6 has-text-centered">
+          Channels <b>excluded</b> from the working set
+        </h1>
         <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getWorksetChannels(true);" class="control">
+          <div *ngFor="let s of getWorksetChannels(false)" class="control">
             <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
-              <a class="tag is-warning" (click)="handleChannelSelection(s);">-</a>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-
-        <h1 class="title is-6 has-text-centered">Channels <b>excluded</b> from the working set</h1>
-        <div class="field is-grouped is-grouped-multiline">
-          <div *ngFor="let s of getWorksetChannels(false);" class="control">
-            <div class="tags has-addons">
-              <span class="tag is-dark">{{ s.channel_code }} ({{ s.channel_appearances }})</span>
-              <a class="tag is-success" (click)="handleChannelSelection(s);">+</a>
+              <span class="tag is-dark"
+                >{{ s.channel_code }} ({{ s.channel_appearances }})</span
+              >
+              <a class="tag is-success" (click)="handleChannelSelection(s)"
+                >+</a
+              >
             </div>
           </div>
         </div>
@@ -285,46 +516,80 @@
             <label class="label">Sampling rate</label>
           </div>
           <div class="field-body">
-            <div class="field" [attr.data-tippy-content]="textService.getText('stations-tip-sampling-rate')">
+            <div
+              class="field"
+              [attr.data-tippy-content]="
+                textService.getText('stations-tip-sampling-rate')
+              "
+            >
               <div class="control">
-                <input [(ngModel)]="stationsService.stationsModel.targetSamplingRate" class="input" type="text" placeholder="20">
+                <input
+                  [(ngModel)]="stationsService.stationsModel.targetSamplingRate"
+                  class="input"
+                  type="text"
+                  placeholder="20"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <hr>
+      <hr />
       <div class="columns">
         <div class="column is-half">
-          <span class="button is-danger is-fullwidth" (click)="reset();"
-            [attr.data-tippy-content]="textService.getText('stations-tip-reset')">
+          <span
+            class="button is-danger is-fullwidth"
+            (click)="reset()"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-reset')
+            "
+          >
             Reset form
           </span>
         </div>
         <div class="column is-half">
-          <span id="addButton" class="button is-success is-fullwidth" (click)="add();"
-            [attr.data-tippy-content]="textService.getText('stations-tip-add')">
+          <span
+            id="addButton"
+            class="button is-success is-fullwidth"
+            (click)="add()"
+            [attr.data-tippy-content]="textService.getText('stations-tip-add')"
+          >
             Add
           </span>
         </div>
       </div>
       <div class="columns" *ngIf="paginator.getTotalPages() > 0">
         <div class="column is-third">
-          <span class="button is-small is-danger is-fullwidth" (click)="removeAllStations();"
-            [attr.data-tippy-content]="textService.getText('stations-tip-remove-all-stations')">
+          <span
+            class="button is-small is-danger is-fullwidth"
+            (click)="removeAllStations()"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-remove-all-stations')
+            "
+          >
             Remove all ({{ stationsService.selectedStations.value.length }})
           </span>
         </div>
         <div class="column is-third">
-          <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedStations();"
-            [attr.data-tippy-content]="textService.getText('stations-tip-remove-selected-stations')">
+          <span
+            class="button is-small is-danger is-fullwidth"
+            (click)="removeSelectedStations()"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-remove-selected-stations')
+            "
+          >
             Remove selected ({{ countSelectedStations() }})
           </span>
         </div>
         <div class="column is-third">
-          <span class="button is-small is-link is-fullwidth" (click)="invertStationsSelection();"
-            [attr.data-tippy-content]="textService.getText('stations-tip-invert-selection')">
+          <span
+            class="button is-small is-link is-fullwidth"
+            (click)="invertStationsSelection()"
+            [attr.data-tippy-content]="
+              textService.getText('stations-tip-invert-selection')
+            "
+          >
             Invert selection
           </span>
         </div>
@@ -337,17 +602,22 @@
       <div class="content">
         <ol type="1">
           <li>
-            A list of stations previously saved here. (Use the "Save Stations" button in the "Event and Station List").
+            A list of stations previously saved here. (Use the "Save Stations"
+            button in the "Event and Station List").
           </li>
           <li>
-            A file retrieved from any FDSN compliant fdsnws-station Web Service in text format.
+            A file retrieved from any FDSN compliant fdsnws-station Web Service
+            in text format.
           </li>
         </ol>
       </div>
 
       <div class="file has-name">
-        <label class="file-label" [attr.data-tippy-content]="textService.getText('stations-tip-upload')">
-          <input class="file-input" type="file" name="resume">
+        <label
+          class="file-label"
+          [attr.data-tippy-content]="textService.getText('stations-tip-upload')"
+        >
+          <input class="file-input" type="file" name="resume" />
           <span class="file-cta">
             <span class="file-icon">
               <i class="fas fa-upload"></i>
@@ -362,10 +632,15 @@
         </label>
       </div>
 
-      <hr>
+      <hr />
 
-      <button style="width: 100%;" class="button is-success is-fullwidth"
-        [attr.data-tippy-content]="textService.getText('stations-tip-send')">Send</button>
+      <button
+        style="width: 100%;"
+        class="button is-success is-fullwidth"
+        [attr.data-tippy-content]="textService.getText('stations-tip-send')"
+      >
+        Send
+      </button>
     </div>
   </div>
 
@@ -377,47 +652,112 @@
       </div>
     </article>
     <div *ngIf="paginator.getTotalPages() > 0">
-      <nav class="pagination is-right" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()"
-          [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
-        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()"
-          [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+      <nav
+        class="pagination is-right"
+        role="navigation"
+        aria-label="pagination"
+      >
+        <a
+          class="pagination-previous"
+          id="previousPageButton"
+          (click)="paginator.getPreviousPage()"
+          [attr.disabled]="paginator.previousPageExists() ? null : true"
+          >Previous</a
+        >
+        <a
+          class="pagination-next"
+          id="nextPageButton"
+          (click)="paginator.getNextPage()"
+          [attr.disabled]="paginator.nextPageExists() ? null : true"
+          >Next</a
+        >
         <ul class="pagination-list">
-          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1"
-              (click)="paginator.getFirstPage()">1</a></li>
-          <li><span *ngIf="paginator.previousPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <li>
+            <a
+              *ngIf="paginator.previousPageExists()"
+              class="pagination-link"
+              aria-label="Goto page 1"
+              (click)="paginator.getFirstPage()"
+              >1</a
+            >
+          </li>
+          <li>
+            <span
+              *ngIf="paginator.previousPageExists()"
+              class="pagination-ellipsis"
+              >&hellip;</span
+            >
+          </li>
           <!-- <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 45">45</a></li> -->
-          <li><a class="pagination-link is-current" aria-label="Page 46"
-              aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <li>
+            <a
+              class="pagination-link is-current"
+              aria-label="Page 46"
+              aria-current="page"
+              >{{ paginator.getCurrentPageNumber() }}</a
+            >
+          </li>
           <!-- <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 47">47</a></li> -->
-          <li><span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis">&hellip;</span></li>
-          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86"
-              (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
+          <li>
+            <span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis"
+              >&hellip;</span
+            >
+          </li>
+          <li>
+            <a
+              *ngIf="paginator.nextPageExists()"
+              class="pagination-link"
+              aria-label="Goto page 86"
+              (click)="paginator.getLastPage()"
+              >{{ paginator.getLastPageNumber() }}</a
+            >
+          </li>
         </ul>
       </nav>
-      <hr>
+      <hr />
       <table class="table is-fullwidth" id="stationsTable">
         <tbody>
           <tr *ngFor="let station of paginator.getCurrentPage()">
             <td>
-              <a (click)="focusOnStation(station)">{{station.station_network_code}} / {{station.station_code}}</a>
-              <p class="is-size-7">{{station.station_site_name}} ({{station.getCoordinates()}})</p>
+              <a (click)="focusOnStation(station)"
+                >{{ station.station_network_code }} /
+                {{ station.station_code }}</a
+              >
+              <p class="is-size-7">
+                {{ station.station_site_name }} ({{ station.getCoordinates() }})
+              </p>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.toggleStationSelection(station)"
-                [ngClass]="station.station_selected ? 'button is-small is-success' : 'button is-small is-light'"
-                [attr.data-tippy-content]="textService.getText('stations-tip-toggle-select')">
-                {{station.station_selected ? "Selected" : "Skipped"}}</button>
+              <button
+                style="width: 100%;"
+                (click)="stationsService.toggleStationSelection(station)"
+                [ngClass]="
+                  station.station_selected
+                    ? 'button is-small is-success'
+                    : 'button is-small is-light'
+                "
+                [attr.data-tippy-content]="
+                  textService.getText('stations-tip-toggle-select')
+                "
+              >
+                {{ station.station_selected ? "Selected" : "Skipped" }}
+              </button>
             </td>
             <td>
-              <button style="width: 100%;" (click)="stationsService.removeStationSelection(station)"
+              <button
+                style="width: 100%;"
+                (click)="stationsService.removeStationSelection(station)"
                 class="button is-small is-danger is-inverted"
-                [attr.data-tippy-content]="textService.getText('stations-tip-remove')">Remove</button>
+                [attr.data-tippy-content]="
+                  textService.getText('stations-tip-remove')
+                "
+              >
+                Remove
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
-
     </div>
   </div>
   <!-- /List of stations -->

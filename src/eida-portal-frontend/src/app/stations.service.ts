@@ -1,18 +1,22 @@
-import { Injectable, Input } from '@angular/core';
-import { Subject, BehaviorSubject,  Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { EidaService } from './eida.service';
-import { EventsService } from './events.service';
+import { Injectable, Input } from "@angular/core";
+import { Subject, BehaviorSubject, Observable } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+import { EidaService } from "./eida.service";
+import { EventsService } from "./events.service";
 import {
-  FdsnNetwork, FdsnStation, FdsnStationExt, StationsModel, StationChannelModel
-} from './modules/models';
-import { environment } from '../environments/environment';
-import { Enums } from './modules/enums';
-import { GisHelper } from './helpers/gis.helper';
-import { HttpHeaders } from '@angular/common/http';
+  FdsnNetwork,
+  FdsnStation,
+  FdsnStationExt,
+  StationsModel,
+  StationChannelModel
+} from "./modules/models";
+import { environment } from "../environments/environment";
+import { Enums } from "./modules/enums";
+import { GisHelper } from "./helpers/gis.helper";
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class StationsService {
   // Binding object for stations tab
@@ -38,7 +42,7 @@ export class StationsService {
   constructor(
     private _eidaService: EidaService,
     private _eventsService: EventsService
-  ) { }
+  ) {}
 
   private _networksUrl = environment.networksUrl;
   private _stationsUrl = environment.stationsUrl;
@@ -84,13 +88,15 @@ export class StationsService {
   // Add filtered stations to the working set and skip the duplicates
   updateStations(filteredStations: FdsnStationExt[]) {
     for (const fs of filteredStations) {
-      if (this.selectedStations.value.filter(
-        e => (
-          e.station_network_code === fs.station_network_code
-          && e.station_code === fs.station_code
-        )).length === 0) {
-          this.selectedStations.value.push(fs);
-        }
+      if (
+        this.selectedStations.value.filter(
+          e =>
+            e.station_network_code === fs.station_network_code &&
+            e.station_code === fs.station_code
+        ).length === 0
+      ) {
+        this.selectedStations.value.push(fs);
+      }
     }
     this.selectedStations.next(this.selectedStations.value);
   }
@@ -105,25 +111,25 @@ export class StationsService {
 
   getNetworks(): Observable<FdsnNetwork[]> {
     return this._eidaService.http.get<FdsnNetwork[]>(this._networksUrl).pipe(
-        tap(_ => this._eidaService.log('fetched networks data')),
-        catchError(this._eidaService.handleError('getNetworks', []))
-      );
+      tap(_ => this._eidaService.log("fetched networks data")),
+      catchError(this._eidaService.handleError("getNetworks", []))
+    );
   }
 
   networkTypeChanged(n) {
-    this.stationsModel.selectedNetwork = 'All';
-    this.stationsModel.selectedStation = 'All';
+    this.stationsModel.selectedNetwork = "All";
+    this.stationsModel.selectedStation = "All";
 
     if (n.id === 0) {
       this.filteredNetworks.next(this.allNetworks);
     } else if (n.id === 1) {
-      this.filteredNetworks.next(this.allNetworks.filter(
-        m => !m.network_temporary
-      ));
+      this.filteredNetworks.next(
+        this.allNetworks.filter(m => !m.network_temporary)
+      );
     } else {
-      this.filteredNetworks.next(this.allNetworks.filter(
-        m => m.network_temporary
-      ));
+      this.filteredNetworks.next(
+        this.allNetworks.filter(m => m.network_temporary)
+      );
     }
 
     this.networkChanged();
@@ -135,33 +141,31 @@ export class StationsService {
    */
   networkChanged() {
     const n = this.stationsModel.selectedNetwork;
-    if (n === 'All') {
+    if (n === "All") {
       switch (this.stationsModel.selectedNetworkType.id) {
         // All networks
         case 0:
-            this.filteredStations =
-            this.allStations;
-            break;
+          this.filteredStations = this.allStations;
+          break;
         // Permanent networks
         case 1:
-            this.filteredStations =
-            this.allStations.filter(
-              s => !s.station_network_temporary
-            );
-            break;
+          this.filteredStations = this.allStations.filter(
+            s => !s.station_network_temporary
+          );
+          break;
         // Temporary networks
         case 2:
-            this.filteredStations =
-            this.allStations.filter(
-              s => s.station_network_temporary
-            );
-            break;
+          this.filteredStations = this.allStations.filter(
+            s => s.station_network_temporary
+          );
+          break;
       }
     } else {
       this.stationsModel.selectedNetwork = n;
       this.filteredStations = this.allStations.filter(
-        s => s.station_network_code === n.network_code
-        && s.station_network_start_year === n.network_start_year
+        s =>
+          s.station_network_code === n.network_code &&
+          s.station_network_start_year === n.network_start_year
       );
     }
 
@@ -174,8 +178,8 @@ export class StationsService {
    */
   refreshAvailableStreams(): void {
     if (
-      this.stationsModel.stationSelectionMethod
-      !== Enums.StationSelectionMethods.Code
+      this.stationsModel.stationSelectionMethod !==
+      Enums.StationSelectionMethods.Code
     ) {
       return;
     }
@@ -184,9 +188,8 @@ export class StationsService {
       this.stationsModel.selectedNetwork.network_code,
       this.stationsModel.selectedNetwork.network_start_year,
       this.stationsModel.selectedStation.station_code,
-      this.stationsModel.selectedNetworkType).subscribe(
-        val => this.importStationChannels(val)
-    );
+      this.stationsModel.selectedNetworkType
+    ).subscribe(val => this.importStationChannels(val));
   }
 
   importStationChannels(array): void {
@@ -202,9 +205,9 @@ export class StationsService {
 
   getStations(): Observable<FdsnStation[]> {
     return this._eidaService.http.get<FdsnStation[]>(this._stationsUrl).pipe(
-        tap(_ => this._eidaService.log('fetched stations data')),
-        catchError(this._eidaService.handleError('getStations', []))
-      );
+      tap(_ => this._eidaService.log("fetched stations data")),
+      catchError(this._eidaService.handleError("getStations", []))
+    );
   }
 
   getAvailableChannels(net, netStartYear, stat, netType): Observable<Object> {
@@ -228,21 +231,19 @@ export class StationsService {
 
     return this._eidaService.http.get<Object>(url).pipe(
       tap(_ => this._eidaService.log(`fetched channels data: ${net}/${stat}`)),
-      catchError(this._eidaService.handleError('getAvailableChannels', []))
+      catchError(this._eidaService.handleError("getAvailableChannels", []))
     );
   }
 
   getChannelsForWorkingSet(st: FdsnStationExt[]) {
-    return this._eidaService.http.post(
-      this._channelsUrl,
-      JSON.stringify(st),
-      {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')
-      }
-    ).pipe(
-      tap(_ => this._eidaService.log('fetched workset streams data')),
-      catchError(this._eidaService.handleError('getStreamsForWorkingSet', []))
-    );
+    return this._eidaService.http
+      .post(this._channelsUrl, JSON.stringify(st), {
+        headers: new HttpHeaders().set("Content-Type", "application/json")
+      })
+      .pipe(
+        tap(_ => this._eidaService.log("fetched workset streams data")),
+        catchError(this._eidaService.handleError("getStreamsForWorkingSet", []))
+      );
   }
 
   // Add selected station(s) to map and notify subscribers
@@ -265,38 +266,43 @@ export class StationsService {
       }
 
       // Add all networks or selected network based on the combo selection
-      if (sm.selectedNetwork !== 'All') {
+      if (sm.selectedNetwork !== "All") {
         this._filteredStations = this.selectedStations.value.concat(
           this.allStations.filter(
-            m => m.station_network_code === sm.selectedNetwork.network_code
-            && m.station_network_start_year === sm.selectedNetwork.network_start_year
+            m =>
+              m.station_network_code === sm.selectedNetwork.network_code &&
+              m.station_network_start_year ===
+                sm.selectedNetwork.network_start_year
           )
         );
       }
 
       // Station selection method-dependent
       if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Code) {
-        if (sm.selectedStation !== 'All') {
+        if (sm.selectedStation !== "All") {
           this._filteredStations = this._filteredStations.filter(
             m => m.station_code === sm.selectedStation.station_code
           );
         }
-      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Region) {
+      } else if (
+        sm.stationSelectionMethod === Enums.StationSelectionMethods.Region
+      ) {
         this._filteredStations = this._filteredStations.filter(
-          m => m.station_latitude >= sm.coordinateS
-          && m.station_latitude <= sm.coordinateN
-          && m.station_longitude >= sm.coordinateW
-          && m.station_longitude <= sm.coordinateE
+          m =>
+            m.station_latitude >= sm.coordinateS &&
+            m.station_latitude <= sm.coordinateN &&
+            m.station_longitude >= sm.coordinateW &&
+            m.station_longitude <= sm.coordinateE
         );
-      } else if (sm.stationSelectionMethod === Enums.StationSelectionMethods.Events) {
+      } else if (
+        sm.stationSelectionMethod === Enums.StationSelectionMethods.Events
+      ) {
         for (let i = this._filteredStations.length - 1; i >= 0; i--) {
           if (!this._stationHasEvent(this._filteredStations[i], sm)) {
             this._filteredStations.splice(i, 1);
           }
         }
       }
-
-
     } else if (sm.dataSource === Enums.StationDataSource.File) {
       // TODO: uploaded file containing station catalog
     }
@@ -310,10 +316,14 @@ export class StationsService {
       const distance = GisHelper.coordinatesToDistance(e.origin, s);
       const bearing = GisHelper.coordinatesToAzimuth(e.origin, s);
 
-      if (!(distance < sm.eventDistanceFrom
-        || distance > sm.eventDistanceTo
-        || bearing < sm.eventAzimuthFrom
-        || bearing > sm.eventAzimuthTo)) {
+      if (
+        !(
+          distance < sm.eventDistanceFrom ||
+          distance > sm.eventDistanceTo ||
+          bearing < sm.eventAzimuthFrom ||
+          bearing > sm.eventAzimuthTo
+        )
+      ) {
         event = e;
         break;
       }
@@ -328,8 +338,9 @@ export class StationsService {
 
   toggleStationSelection(s: FdsnStationExt) {
     this.selectedStations.value.find(
-      p => p.station_network_code === s.station_network_code
-      && p.station_code === s.station_code
+      p =>
+        p.station_network_code === s.station_network_code &&
+        p.station_code === s.station_code
     ).station_selected = !s.station_selected;
     this.refreshStations(this.selectedStations.value);
   }
@@ -337,8 +348,9 @@ export class StationsService {
   removeStationSelection(s: FdsnStation) {
     const i = this.selectedStations.value.indexOf(
       this.selectedStations.value.find(
-        p => p.station_network_code === s.station_network_code
-        && p.station_code === s.station_code
+        p =>
+          p.station_network_code === s.station_network_code &&
+          p.station_code === s.station_code
       )
     );
     this.selectedStations.value.splice(i, 1);
@@ -366,10 +378,11 @@ export class StationsService {
   }
 
   getNetworksStations(): Observable<FdsnNetwork[]> {
-    return this._eidaService.http.get<FdsnNetwork[]>(this._networksStationsUrl)
+    return this._eidaService.http
+      .get<FdsnNetwork[]>(this._networksStationsUrl)
       .pipe(
-        tap(_ => this._eidaService.log('fetched networks and stations data')),
-        catchError(this._eidaService.handleError('getNetworksStations', []))
+        tap(_ => this._eidaService.log("fetched networks and stations data")),
+        catchError(this._eidaService.handleError("getNetworksStations", []))
       );
   }
 }

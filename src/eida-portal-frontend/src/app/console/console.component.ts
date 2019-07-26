@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ConsoleService } from '../console.service';
+import { Component, OnInit } from "@angular/core";
+import { ConsoleService } from "../console.service";
 
 @Component({
-  selector: 'app-console',
-  templateUrl: './console.component.html',
+  selector: "app-console",
+  templateUrl: "./console.component.html"
 })
 export class ConsoleComponent implements OnInit {
+  constructor(public consoleService: ConsoleService) {}
 
-  constructor(public consoleService: ConsoleService) { }
-
-  ngOnInit() { }
-
+  ngOnInit() {}
 }

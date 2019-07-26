@@ -2,16 +2,30 @@
   <div class="column is-5">
     <h1 class="title is-5 has-text-centered">Time window section</h1>
 
-    <div class="tabs is-toggle is-small is-fullwidth"
-      [attr.data-tippy-content]="textService.getText('request-tip-tabs-mode')">
+    <div
+      class="tabs is-toggle is-small is-fullwidth"
+      [attr.data-tippy-content]="textService.getText('request-tip-tabs-mode')"
+    >
       <ul id="modesTabs">
-        <li id="absoluteModeTab" class="is-active"
-          (click)="handleModeChange('absoluteModeTab', 'absoluteModeContent'); timeWindowSelectionModeChanges(0);">
-          <a>Absolute
-            mode</a></li>
-        <li id="relativeModeTab"
-          (click)="handleModeChange('relativeModeTab', 'relativeModeContent'); timeWindowSelectionModeChanges(1);">
-          <a>Relative mode</a></li>
+        <li
+          id="absoluteModeTab"
+          class="is-active"
+          (click)="
+            handleModeChange('absoluteModeTab', 'absoluteModeContent');
+            timeWindowSelectionModeChanges(0)
+          "
+        >
+          <a>Absolute mode</a>
+        </li>
+        <li
+          id="relativeModeTab"
+          (click)="
+            handleModeChange('relativeModeTab', 'relativeModeContent');
+            timeWindowSelectionModeChanges(1)
+          "
+        >
+          <a>Relative mode</a>
+        </li>
       </ul>
     </div>
 
@@ -22,10 +36,27 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-start-type')">
-              <select [(ngModel)]="requestService.requestModel.selectedAbsoluteModeStartTimeMethod">
-                <option *ngFor="let tm of requestService.requestModel.absoluteModeTimeMethods" [ngValue]="tm">
-                  {{tm.name}}</option>
+            <div
+              class="select"
+              [attr.data-tippy-content]="
+                textService.getText('request-tip-start-type')
+              "
+            >
+              <select
+                [(ngModel)]="
+                  requestService.requestModel
+                    .selectedAbsoluteModeStartTimeMethod
+                "
+              >
+                <option
+                  *ngFor="
+                    let tm of requestService.requestModel
+                      .absoluteModeTimeMethods
+                  "
+                  [ngValue]="tm"
+                >
+                  {{ tm.name }}</option
+                >
               </select>
             </div>
           </div>
@@ -36,9 +67,19 @@
           <label class="label">-</label>
         </div>
         <div class="field-body">
-          <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-start-value')">
+          <div
+            class="field"
+            [attr.data-tippy-content]="
+              textService.getText('request-tip-start-value')
+            "
+          >
             <div class="control">
-              <input [(ngModel)]="requestService.requestModel.absoluteModeStart" class="input" type="text" placeholder="2">
+              <input
+                [(ngModel)]="requestService.requestModel.absoluteModeStart"
+                class="input"
+                type="text"
+                placeholder="2"
+              />
             </div>
           </div>
         </div>
@@ -50,10 +91,26 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-end-type')">
-              <select [(ngModel)]="requestService.requestModel.selectedAbsoluteModeEndTimeMethod">
-                <option *ngFor="let tm of requestService.requestModel.absoluteModeTimeMethods" [ngValue]="tm">
-                  {{tm.name}}</option>
+            <div
+              class="select"
+              [attr.data-tippy-content]="
+                textService.getText('request-tip-end-type')
+              "
+            >
+              <select
+                [(ngModel)]="
+                  requestService.requestModel.selectedAbsoluteModeEndTimeMethod
+                "
+              >
+                <option
+                  *ngFor="
+                    let tm of requestService.requestModel
+                      .absoluteModeTimeMethods
+                  "
+                  [ngValue]="tm"
+                >
+                  {{ tm.name }}</option
+                >
               </select>
             </div>
           </div>
@@ -64,9 +121,19 @@
           <label class="label">+</label>
         </div>
         <div class="field-body">
-          <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-end-value')">
+          <div
+            class="field"
+            [attr.data-tippy-content]="
+              textService.getText('request-tip-end-value')
+            "
+          >
             <div class="control">
-              <input [(ngModel)]="requestService.requestModel.absoluteModeEnd" class="input" type="text" placeholder="10">
+              <input
+                [(ngModel)]="requestService.requestModel.absoluteModeEnd"
+                class="input"
+                type="text"
+                placeholder="10"
+              />
             </div>
           </div>
         </div>
@@ -74,26 +141,44 @@
     </div>
 
     <div id="relativeModeContent" hidden>
-      <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-from')">
+      <div
+        class="field"
+        [attr.data-tippy-content]="
+          textService.getText('request-tip-datetime-from')
+        "
+      >
         <label class="label">Datetime from</label>
         <div class="control">
-          <input [(ngModel)]="requestService.requestModel.datetimeFrom" class="input" type="text"
-            placeholder="YYYY-MM-DDTHH:MM:SS">
+          <input
+            [(ngModel)]="requestService.requestModel.datetimeFrom"
+            class="input"
+            type="text"
+            placeholder="YYYY-MM-DDTHH:MM:SS"
+          />
         </div>
         <p class="help">Example: "2017-01-01T12:00:00"</p>
       </div>
 
-      <div class="field" [attr.data-tippy-content]="textService.getText('request-tip-datetime-to')">
+      <div
+        class="field"
+        [attr.data-tippy-content]="
+          textService.getText('request-tip-datetime-to')
+        "
+      >
         <label class="label">Datetime to</label>
         <div class="control">
-          <input [(ngModel)]="requestService.requestModel.datetimeTo" class="input" type="text"
-            placeholder="YYYY-MM-DDTHH:MM:SS">
+          <input
+            [(ngModel)]="requestService.requestModel.datetimeTo"
+            class="input"
+            type="text"
+            placeholder="YYYY-MM-DDTHH:MM:SS"
+          />
         </div>
         <p class="help">Example: "2018-01-01T12:00:00"</p>
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <h1 class="title is-5 has-text-centered">Request information</h1>
 
@@ -103,9 +188,19 @@
       </div>
       <div class="field-body">
         <div class="field">
-          <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-request-type')">
-            <select [(ngModel)]="requestService.requestModel.selectedFdsnRequestType">
-              <option *ngFor="let rt of requestService.requestModel.fdsnRequestTypes" [ngValue]="rt">{{rt.name}}
+          <div
+            class="select"
+            [attr.data-tippy-content]="
+              textService.getText('request-tip-request-type')
+            "
+          >
+            <select
+              [(ngModel)]="requestService.requestModel.selectedFdsnRequestType"
+            >
+              <option
+                *ngFor="let rt of requestService.requestModel.fdsnRequestTypes"
+                [ngValue]="rt"
+                >{{ rt.name }}
               </option>
             </select>
           </div>
@@ -113,7 +208,7 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <div class="columns">
       <!-- <div class="column">
@@ -121,16 +216,37 @@
           [attr.data-tippy-content]="textService.getText('request-tip-review')">Review</span>
       </div> -->
       <div class="column">
-        <span id="request-button-download" class="button is-success is-fullwidth" (click)="download();"
-          [attr.data-tippy-content]="textService.getText('request-tip-download')">Download</span>
+        <span
+          id="request-button-download"
+          class="button is-success is-fullwidth"
+          (click)="download()"
+          [attr.data-tippy-content]="
+            textService.getText('request-tip-download')
+          "
+          >Download</span
+        >
       </div>
       <div class="column">
-        <span id="modalDemo" class="button is-info is-fullwidth" (click)="toggleModal();"
-          [attr.data-tippy-content]="textService.getText('request-tip-cloud-staging')">Cloud staging</span>
+        <span
+          id="modalDemo"
+          class="button is-info is-fullwidth"
+          (click)="toggleModal()"
+          [attr.data-tippy-content]="
+            textService.getText('request-tip-cloud-staging')
+          "
+          >Cloud staging</span
+        >
       </div>
     </div>
-    <progress id="request-download-progress" class="progress" value="0" max="100"
-      [attr.data-tippy-content]="textService.getText('request-download-progress')"></progress>
+    <progress
+      id="request-download-progress"
+      class="progress"
+      value="0"
+      max="100"
+      [attr.data-tippy-content]="
+        textService.getText('request-download-progress')
+      "
+    ></progress>
   </div>
   <div class="column">
     <article class="message is-info">
@@ -146,18 +262,27 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Stage in Cloud</p>
-      <button class="delete" aria-label="close" (click)="toggleModal();"></button>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="toggleModal()"
+      ></button>
     </header>
     <section class="modal-card-body">
       <p>Select one of the nodes to stage data in the Cloud.</p>
-      <hr>
+      <hr />
       <div class="field is-horizontal">
         <div class="field-label">
           <label class="label">Node</label>
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="select" [attr.data-tippy-content]="textService.getText('request-tip-node')">
+            <div
+              class="select"
+              [attr.data-tippy-content]="
+                textService.getText('request-tip-node')
+              "
+            >
               <select>
                 <option selected>Node 1</option>
                 <option selected>Node 2</option>
@@ -170,10 +295,23 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-info" [attr.data-tippy-content]="textService.getText('request-tip-stage-in-cloud')">Stage
-        in cloud</button>
-      <button class="button" (click)="toggleModal();"
-        [attr.data-tippy-content]="textService.getText('request-tip-stage-cancel')">Cancel</button>
+      <button
+        class="button is-info"
+        [attr.data-tippy-content]="
+          textService.getText('request-tip-stage-in-cloud')
+        "
+      >
+        Stage in cloud
+      </button>
+      <button
+        class="button"
+        (click)="toggleModal()"
+        [attr.data-tippy-content]="
+          textService.getText('request-tip-stage-cancel')
+        "
+      >
+        Cancel
+      </button>
     </footer>
   </div>
 </div>

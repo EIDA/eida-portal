@@ -7,9 +7,18 @@
       </div>
       <div class="field-body">
         <div class="field">
-          <div class="select" [attr.data-tippy-content]="textService.getText('events-tip-catalog')">
+          <div
+            class="select"
+            [attr.data-tippy-content]="
+              textService.getText('events-tip-catalog')
+            "
+          >
             <select [(ngModel)]="eventsService.eventsModel.selectedCatalog">
-              <option *ngFor="let c of eventsService.eventsModel.catalogs" [ngValue]="c">{{c.name}}</option>
+              <option
+                *ngFor="let c of eventsService.eventsModel.catalogs"
+                [ngValue]="c"
+                >{{ c.name }}</option
+              >
             </select>
           </div>
         </div>
@@ -21,9 +30,17 @@
         <label class="label">Minimum magnitude</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-mag-min')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-mag-min')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.minimumMagnitude" class="input" type="text" placeholder="0">
+            <input
+              [(ngModel)]="eventsService.eventsModel.minimumMagnitude"
+              class="input"
+              type="text"
+              placeholder="0"
+            />
           </div>
         </div>
       </div>
@@ -34,9 +51,19 @@
         <label class="label">Date from</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-date-from')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-date-from')
+          "
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.dateFrom" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.dateFrom"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -47,9 +74,17 @@
         <label class="label">Date to</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-date-to')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-date-to')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.dateTo" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.dateTo"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -60,9 +95,19 @@
         <label class="label">Depth from</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-depth-from')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-depth-from')
+          "
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.depthFrom" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.depthFrom"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -73,9 +118,17 @@
         <label class="label">Depth to</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-depth-to')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-depth-to')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.depthTo" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.depthTo"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -86,9 +139,17 @@
         <label class="label">Coordinate (N)</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-n')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-coord-n')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.coordinateN" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.coordinateN"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -99,9 +160,17 @@
         <label class="label">Coordinate (S)</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-s')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-coord-s')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.coordinateS" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.coordinateS"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -112,9 +181,17 @@
         <label class="label">Coordinate (E)</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-e')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-coord-e')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.coordinateE" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.coordinateE"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -125,9 +202,17 @@
         <label class="label">Coordinate (W)</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-coord-w')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="textService.getText('events-tip-coord-w')"
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.coordinateW" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.coordinateW"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
@@ -138,44 +223,80 @@
         <label class="label">Result limit</label>
       </div>
       <div class="field-body">
-        <div class="field" [attr.data-tippy-content]="textService.getText('events-tip-result-limit')">
+        <div
+          class="field"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-result-limit')
+          "
+        >
           <div class="control">
-            <input [(ngModel)]="eventsService.eventsModel.resultLimit" class="input" type="text" placeholder="1">
+            <input
+              [(ngModel)]="eventsService.eventsModel.resultLimit"
+              class="input"
+              type="text"
+              placeholder="1"
+            />
           </div>
         </div>
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="columns">
       <div class="column is-half">
-        <span class="button is-danger is-fullwidth" (click)="reset();" [attr.data-tippy-content]="textService.getText('events-tip-reset')">
+        <span
+          class="button is-danger is-fullwidth"
+          (click)="reset()"
+          [attr.data-tippy-content]="textService.getText('events-tip-reset')"
+        >
           Reset form
         </span>
       </div>
       <div class="column is-half">
-        <span id="searchButton" class="button is-success is-fullwidth" (click)="search();" [attr.data-tippy-content]="textService.getText('events-tip-search')">
+        <span
+          id="searchButton"
+          class="button is-success is-fullwidth"
+          (click)="search()"
+          [attr.data-tippy-content]="textService.getText('events-tip-search')"
+        >
           Search
         </span>
       </div>
     </div>
     <div class="columns" *ngIf="paginator.getTotalPages() > 0">
       <div class="column is-third">
-          <span class="button is-small is-danger is-fullwidth" (click)="removeAllEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-all-events')">
-            Remove all ({{ eventsService.selectedEvents.value.length }})
-          </span>
+        <span
+          class="button is-small is-danger is-fullwidth"
+          (click)="removeAllEvents()"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-remove-all-events')
+          "
+        >
+          Remove all ({{ eventsService.selectedEvents.value.length }})
+        </span>
       </div>
       <div class="column is-third">
-        <span class="button is-small is-danger is-fullwidth" (click)="removeSelectedEvents();" [attr.data-tippy-content]="textService.getText('events-tip-remove-selected-events')">
+        <span
+          class="button is-small is-danger is-fullwidth"
+          (click)="removeSelectedEvents()"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-remove-selected-events')
+          "
+        >
           Remove selected ({{ countSelectedEvents() }})
         </span>
-    </div>
+      </div>
       <div class="column is-third">
-        <span class="button is-small is-link is-fullwidth" (click)="invertEventsSelection();" [attr.data-tippy-content]="textService.getText('events-tip-invert-selection')">
+        <span
+          class="button is-small is-link is-fullwidth"
+          (click)="invertEventsSelection()"
+          [attr.data-tippy-content]="
+            textService.getText('events-tip-invert-selection')
+          "
+        >
           Invert selection
         </span>
       </div>
     </div>
-
   </div>
   <div class="column">
     <article *ngIf="paginator.getTotalPages() === 0" class="message is-info">
@@ -184,33 +305,108 @@
       </div>
     </article>
     <div *ngIf="paginator.getTotalPages() > 0">
-      <nav class="pagination is-right" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" id="previousPageButton" (click)="paginator.getPreviousPage()" [attr.disabled]="paginator.previousPageExists() ? null : true">Previous</a>
-        <a class="pagination-next" id="nextPageButton" (click)="paginator.getNextPage()" [attr.disabled]="paginator.nextPageExists() ? null : true">Next</a>
+      <nav
+        class="pagination is-right"
+        role="navigation"
+        aria-label="pagination"
+      >
+        <a
+          class="pagination-previous"
+          id="previousPageButton"
+          (click)="paginator.getPreviousPage()"
+          [attr.disabled]="paginator.previousPageExists() ? null : true"
+          >Previous</a
+        >
+        <a
+          class="pagination-next"
+          id="nextPageButton"
+          (click)="paginator.getNextPage()"
+          [attr.disabled]="paginator.nextPageExists() ? null : true"
+          >Next</a
+        >
         <ul class="pagination-list">
-          <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 1" (click)="paginator.getFirstPage()">1</a></li>
-          <li><span *ngIf="paginator.previousPageExists()" class="pagination-ellipsis">&hellip;</span></li>
+          <li>
+            <a
+              *ngIf="paginator.previousPageExists()"
+              class="pagination-link"
+              aria-label="Goto page 1"
+              (click)="paginator.getFirstPage()"
+              >1</a
+            >
+          </li>
+          <li>
+            <span
+              *ngIf="paginator.previousPageExists()"
+              class="pagination-ellipsis"
+              >&hellip;</span
+            >
+          </li>
           <!-- <li><a *ngIf="paginator.previousPageExists()" class="pagination-link" aria-label="Goto page 45">45</a></li> -->
-          <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{paginator.getCurrentPageNumber()}}</a></li>
+          <li>
+            <a
+              class="pagination-link is-current"
+              aria-label="Page 46"
+              aria-current="page"
+              >{{ paginator.getCurrentPageNumber() }}</a
+            >
+          </li>
           <!-- <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 47">47</a></li> -->
-          <li><span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis">&hellip;</span></li>
-          <li><a *ngIf="paginator.nextPageExists()" class="pagination-link" aria-label="Goto page 86" (click)="paginator.getLastPage()">{{paginator.getLastPageNumber()}}</a></li>
+          <li>
+            <span *ngIf="paginator.nextPageExists()" class="pagination-ellipsis"
+              >&hellip;</span
+            >
+          </li>
+          <li>
+            <a
+              *ngIf="paginator.nextPageExists()"
+              class="pagination-link"
+              aria-label="Goto page 86"
+              (click)="paginator.getLastPage()"
+              >{{ paginator.getLastPageNumber() }}</a
+            >
+          </li>
         </ul>
       </nav>
-      <hr>
+      <hr />
       <table class="table is-fullwidth" id="eventsTable">
         <tbody>
           <tr *ngFor="let event of paginator.getCurrentPage()">
             <td>
-              <a (click)="focusOnEvent(event)">{{event.description.text | titlecase}}</a>
-              <p class="is-size-7">{{event.origin.time.value | date:'medium'}}<br>Mag. {{event.magnitude.mag.value}} ({{event.getCoordinates()}})</p>
+              <a (click)="focusOnEvent(event)">{{
+                event.description.text | titlecase
+              }}</a>
+              <p class="is-size-7">
+                {{ event.origin.time.value | date: "medium" }}<br />Mag.
+                {{ event.magnitude.mag.value }} ({{ event.getCoordinates() }})
+              </p>
             </td>
             <td>
-              <button style="width: 100%;" (click)="eventsService.toggleEventSelection(event)" [ngClass]="event.selected ? 'button is-small is-success' : 'button is-small is-light'" [attr.data-tippy-content]="textService.getText('events-tip-toggle-select')">
-                {{event.selected ? "Selected" : "Skipped"}}</button>
+              <button
+                style="width: 100%;"
+                (click)="eventsService.toggleEventSelection(event)"
+                [ngClass]="
+                  event.selected
+                    ? 'button is-small is-success'
+                    : 'button is-small is-light'
+                "
+                [attr.data-tippy-content]="
+                  textService.getText('events-tip-toggle-select')
+                "
+              >
+                {{ event.selected ? "Selected" : "Skipped" }}
+              </button>
             </td>
             <td>
-              <button style="width: 100%;" (click)="eventsService.removeEventSelection(event)" class="button is-small is-danger is-inverted" [attr.data-tippy-content]="textService.getText('events-tip-remove')">Remove</button>
+              <button
+                style="width: 100%;"
+                (click)="eventsService.removeEventSelection(event)"
+                class="button is-small is-danger is-inverted"
+                [attr.data-tippy-content]="
+                  textService.getText('events-tip-remove')
+                "
+              >
+                Remove
+              </button>
             </td>
           </tr>
         </tbody>

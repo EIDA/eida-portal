@@ -1,17 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ConsoleService } from '../console.service';
-import { MapService } from '../map.service';
-import { EventsService } from '../events.service';
-import { EventsModel, MapDragBoxCoordinates } from '../modules/models';
-import { TextService } from '../text.service';
-import { FdsnEventsResponseModels } from '../modules/models.fdsn-events';
-import { PaginatorService } from '../paginator.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { ConsoleService } from "../console.service";
+import { MapService } from "../map.service";
+import { EventsService } from "../events.service";
+import { EventsModel, MapDragBoxCoordinates } from "../modules/models";
+import { TextService } from "../text.service";
+import { FdsnEventsResponseModels } from "../modules/models.fdsn-events";
+import { PaginatorService } from "../paginator.service";
 
 declare var $: any;
 
 @Component({
-  selector: 'app-events',
-  templateUrl: './events.component.html',
+  selector: "app-events",
+  templateUrl: "./events.component.html"
 })
 export class EventsComponent implements OnInit {
   paginator = new PaginatorService();
@@ -20,26 +20,27 @@ export class EventsComponent implements OnInit {
     private _mapService: MapService,
     private _consoleService: ConsoleService,
     public eventsService: EventsService,
-    public textService: TextService) { }
+    public textService: TextService
+  ) {}
 
   ngOnInit() {
-    this._mapService.dragBoxCoordinates.subscribe(
-      s => this.updateCoordinatesFromDragBox(s)
+    this._mapService.dragBoxCoordinates.subscribe(s =>
+      this.updateCoordinatesFromDragBox(s)
     );
 
-    this.eventsService.selectedEvents.subscribe(
-      n => this.updateSelectedEventsTable(n)
+    this.eventsService.selectedEvents.subscribe(n =>
+      this.updateSelectedEventsTable(n)
     );
   }
 
   search() {
-    $('#searchButton').addClass('is-loading');
+    $("#searchButton").addClass("is-loading");
     this.eventsService.getEvents(this.eventsService.eventsModel);
   }
 
   reset() {
     this.eventsService.eventsModel = new EventsModel();
-    this._consoleService.add('Events/reset clicked');
+    this._consoleService.add("Events/reset clicked");
   }
 
   updateCoordinatesFromDragBox(mdbc: MapDragBoxCoordinates): void {
@@ -51,7 +52,7 @@ export class EventsComponent implements OnInit {
 
   updateSelectedEventsTable(e: FdsnEventsResponseModels.EventExt[]) {
     this.refreshPaginator();
-    $('#searchButton').removeClass('is-loading');
+    $("#searchButton").removeClass("is-loading");
   }
 
   refreshPaginator(): void {
@@ -80,5 +81,4 @@ export class EventsComponent implements OnInit {
   invertEventsSelection(): void {
     this.eventsService.invertEventsSelection();
   }
-
 }

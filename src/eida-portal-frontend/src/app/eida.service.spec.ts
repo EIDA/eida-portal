@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import { EidaService } from './eida.service';
+import { EidaService } from "./eida.service";
 
-describe('EidaService', () => {
+describe("EidaService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [EidaService]
     });
   });
 
-  it('should be created', inject([EidaService], (service: EidaService) => {
+  it("should be created", inject([EidaService], (service: EidaService) => {
     expect(service).toBeTruthy();
   }));
 });

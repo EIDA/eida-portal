@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { Subject, Subscription } from "rxjs";
 import {
-  StationsModel, StationChannelModel, FdsnNetwork, FdsnStationExt,
+  StationsModel,
+  StationChannelModel,
+  FdsnNetwork,
+  FdsnStationExt,
   MapDragBoxCoordinates
-} from '../modules/models';
-import { ConsoleService } from '../console.service';
-import { StationsService } from '../stations.service';
-import { MapService } from '../map.service';
-import { TextService } from '../text.service';
-import { PaginatorService } from '../paginator.service';
-import { Enums } from '../modules/enums';
+} from "../modules/models";
+import { ConsoleService } from "../console.service";
+import { StationsService } from "../stations.service";
+import { MapService } from "../map.service";
+import { TextService } from "../text.service";
+import { PaginatorService } from "../paginator.service";
+import { Enums } from "../modules/enums";
 
 declare var $: any;
 
 @Component({
-  selector: 'app-stations',
-  templateUrl: './stations.component.html',
+  selector: "app-stations",
+  templateUrl: "./stations.component.html"
 })
 export class StationsComponent implements OnInit {
   paginator = new PaginatorService();
@@ -27,22 +30,23 @@ export class StationsComponent implements OnInit {
     private _consoleService: ConsoleService,
     private _mapService: MapService,
     public stationsService: StationsService,
-    public textService: TextService) { }
+    public textService: TextService
+  ) {}
 
   ngOnInit() {
-    this.stationsService.getNetworks().subscribe(
-      n => this.stationsService.addAllNetworks(n)
-    );
-    this.stationsService.getStations().subscribe(
-      s => this.stationsService.addAllStations(s)
+    this.stationsService
+      .getNetworks()
+      .subscribe(n => this.stationsService.addAllNetworks(n));
+    this.stationsService
+      .getStations()
+      .subscribe(s => this.stationsService.addAllStations(s));
+
+    this.stationsService.selectedStations.subscribe(s =>
+      this.updateSelectedStationsTable(s)
     );
 
-    this.stationsService.selectedStations.subscribe(
-      s => this.updateSelectedStationsTable(s)
-    );
-
-    this._mapService.dragBoxCoordinates.subscribe(
-      s => this.updateCoordinatesFromDragBox(s)
+    this._mapService.dragBoxCoordinates.subscribe(s =>
+      this.updateCoordinatesFromDragBox(s)
     );
   }
 
@@ -67,7 +71,7 @@ export class StationsComponent implements OnInit {
   updateSelectedStationsTable(s: FdsnStationExt[]) {
     this.refreshPaginator();
     this.stationsService.refreshAvailableStreams();
-    $('#addButton').removeClass('is-loading');
+    $("#addButton").removeClass("is-loading");
   }
 
   focusOnStation(s: FdsnStationExt) {
@@ -89,14 +93,14 @@ export class StationsComponent implements OnInit {
     );
   }
 
-  handleChannelSelection(s) : void {
+  handleChannelSelection(s): void {
     this.stationsService.stationsModel.worksetChannels.find(
       e => e.channel_code === s.channel_code
     ).channel_selected = !s.channel_selected;
   }
 
   add() {
-    $('#addButton').addClass('is-loading');
+    $("#addButton").addClass("is-loading");
     this.stationsService.addSelectedStation(this.stationsService.stationsModel);
   }
 
@@ -138,14 +142,14 @@ export class StationsComponent implements OnInit {
     if (this._channelSubscription) {
       this._channelSubscription.unsubscribe();
     }
-  
-    this._channelSubscription = this.stationsService.getChannelsForWorkingSet(
-      this.stationsService.selectedStations.value.filter(
-        n => n.station_selected === true
+
+    this._channelSubscription = this.stationsService
+      .getChannelsForWorkingSet(
+        this.stationsService.selectedStations.value.filter(
+          n => n.station_selected === true
+        )
       )
-    ).subscribe(
-      result => this.importWorksetStationChannels(result)
-    );
+      .subscribe(result => this.importWorksetStationChannels(result));
   }
 
   importWorksetStationChannels(array): void {
@@ -179,31 +183,39 @@ export class StationsComponent implements OnInit {
   }
 
   handleGeneralInputTypeChange(btn: string, target: string): void {
-    $('#browseInventoryContent, #userSuppliedContent').hide();
-    $('#dataSourceTabs').find('li').removeClass('is-active');
-    $(`#${btn}`).addClass('is-active');
+    $("#browseInventoryContent, #userSuppliedContent").hide();
+    $("#dataSourceTabs")
+      .find("li")
+      .removeClass("is-active");
+    $(`#${btn}`).addClass("is-active");
     $(`#${target}`).show("fast");
   }
 
   handleStationsTabChange(btn: string, target: string): void {
-    $('#stationsByCodeContent, #stationsByRegionContent, #stationsByEventsContent').hide();
-    $('#stationsTabs').find('li').removeClass('is-active');
-    $(`#${btn}`).addClass('is-active');
+    $(
+      "#stationsByCodeContent, #stationsByRegionContent, #stationsByEventsContent"
+    ).hide();
+    $("#stationsTabs")
+      .find("li")
+      .removeClass("is-active");
+    $(`#${btn}`).addClass("is-active");
     $(`#${target}`).show("fast");
   }
 
   handleChannelTabChange(btn: string, target: string): void {
-    $('#channelsByCodeContent, #channelsBySamplingContent').hide();
-    $('#channelsTabs').find('li').removeClass('is-active');
-    $(`#${btn}`).addClass('is-active');
+    $("#channelsByCodeContent, #channelsBySamplingContent").hide();
+    $("#channelsTabs")
+      .find("li")
+      .removeClass("is-active");
+    $(`#${btn}`).addClass("is-active");
     $(`#${target}`).show("fast");
   }
 
   handleAvailableChannelsVisibility(v: boolean) {
     if (v) {
-      $('#available-channels').show();
+      $("#available-channels").show();
     } else {
-      $('#available-channels').hide();
+      $("#available-channels").hide();
     }
   }
 }
