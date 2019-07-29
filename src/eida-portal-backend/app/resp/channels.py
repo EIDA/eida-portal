@@ -13,7 +13,10 @@ class ChannelsResp(object):
 
     def __init__(self, query_parameters):
         self.query = query_parameters
-        self.query_hash = hash(str(query_parameters))
+        if (query_parameters):
+            self.query_hash = hash(str(query_parameters))
+        else:
+            self.query_hash = hash("channels")
 
     def channels_post_resp(self, post_data):
         # If data has been requested before,

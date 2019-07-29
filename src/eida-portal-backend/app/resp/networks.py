@@ -13,7 +13,10 @@ class NetworksResp(object):
 
     def __init__(self, query_parameters):
         self.query = query_parameters
-        self.query_hash = hash(str(query_parameters))
+        if (query_parameters):
+            self.query_hash = hash(str(query_parameters))
+        else:
+            self.query_hash = hash("networks")
 
     def networks_resp(self):
         cached = cache.get(self.query_hash)
