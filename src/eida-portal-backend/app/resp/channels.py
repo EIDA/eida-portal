@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from app import db
+from app import db, cache
 from sqlalchemy import extract
 from sqlalchemy.orm.exc import NoResultFound
 from marshmallow import pprint
@@ -13,8 +13,16 @@ class ChannelsResp(object):
 
     def __init__(self, query_parameters):
         self.query = query_parameters
+        self.query_hash = hash(str(query_parameters))
 
     def channels_post_resp(self, post_data):
+        # If data has been requested before,
+        # try to provide it directly from the cache
+        post_data_hash = hash(str(post_data))
+        cached = cache.get(post_data_hash)
+        if (cached):
+            return cached
+
         response = []
         for p in post_data:
             response.extend(
@@ -24,9 +32,14 @@ class ChannelsResp(object):
                     FdsnStation.station_code == p['station_code']).all())
 
         data = self._aggregate(response)
+        cache.set(post_data_hash, data)
         return data
 
     def channels_get_resp(self):
+        cached = cache.get(self.query_hash)
+        if (cached):
+            return cached
+
         result = []
         query = db.session.query(FdsnStationChannel).join(FdsnStation)
         for qp in self.query:
@@ -36,12 +49,15 @@ class ChannelsResp(object):
             elif hasattr(FdsnStation, qp):
                 query = query.filter(
                     getattr(FdsnStation, qp) == self.query[qp])
-        result = query.all()
+        data = query.all()
 
         if 'aggregate' in self.query:
-            return self._aggregate(result)
+            result = self._aggregate(data)
         else:
-            return self._dump(result)
+            result = self._dump(data)
+
+        cache.set(self.query_hash, result)
+        return result
 
     def _aggregate(self, data):
         result = {}

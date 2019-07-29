@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from app import db
+from app import db, cache
 from sqlalchemy import extract
 from sqlalchemy.orm.exc import NoResultFound
 from marshmallow import pprint
@@ -13,13 +13,21 @@ class NetworksResp(object):
 
     def __init__(self, query_parameters):
         self.query = query_parameters
+        self.query_hash = hash(str(query_parameters))
 
     def networks_resp(self):
+        cached = cache.get(self.query_hash)
+        if (cached):
+            return cached
+
         query = db.session.query(FdsnNetwork)
         for qp in self.query:
             query = query.filter(getattr(FdsnNetwork, qp) == self.query[qp])
-        result = query.order_by("network_code").all()
-        return self._dump(result)
+
+        data = query.order_by("network_code").all()
+        result = self._dump(data)
+        cache.set(self.query_hash, result)
+        return result
 
     def _dump(self, data):
         schema = FdsnNetworkSchema(many=True)

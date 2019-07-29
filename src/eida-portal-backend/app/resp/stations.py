@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from app import db
+from app import db, cache
 from sqlalchemy import extract
 from sqlalchemy.orm.exc import NoResultFound
 from marshmallow import pprint
@@ -13,8 +13,13 @@ class StationsResp(object):
 
     def __init__(self, query_parameters):
         self.query = query_parameters
+        self.query_hash = hash(str(query_parameters))
 
     def stations_resp(self):
+        cached = cache.get(self.query_hash)
+        if (cached):
+            return cached
+
         query = db.session.query(FdsnStation).join(FdsnNetwork)
         for qp in self.query:
             if hasattr(FdsnStation, qp):
@@ -23,8 +28,11 @@ class StationsResp(object):
             elif hasattr(FdsnNetwork, qp):
                 query = query.filter(
                     getattr(FdsnNetwork, qp) == self.query[qp])
-        result = query.order_by("network_code", "station_code").all()
-        return self._dump(result)
+
+        data = query.order_by("network_code", "station_code").all()
+        result = self._dump(data)
+        cache.set(self.query_hash, result)
+        return result
 
     def _dump(self, data):
         schema = FdsnStationSchema(many=True)
