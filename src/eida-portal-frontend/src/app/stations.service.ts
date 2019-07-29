@@ -14,6 +14,7 @@ import { environment } from "../environments/environment";
 import { Enums } from "./modules/enums";
 import { GisHelper } from "./helpers/gis.helper";
 import { HttpHeaders } from "@angular/common/http";
+import * as _ from '../assets/js/lodash/lodash.js';
 
 @Injectable({
   providedIn: "root"
@@ -42,7 +43,7 @@ export class StationsService {
   constructor(
     private _eidaService: EidaService,
     private _eventsService: EventsService
-  ) {}
+  ) { }
 
   private _networksUrl = environment.networksUrl;
   private _stationsUrl = environment.stationsUrl;
@@ -240,8 +241,16 @@ export class StationsService {
   }
 
   getChannelsForWorkingSet(st: FdsnStationExt[]) {
+    let recomposed = _.map(st, n =>
+      _.pick(n, [
+        "station_code",
+        "station_network_code",
+        "station_network_start_year"
+      ])
+    );
+
     return this._eidaService.http
-      .post(this._channelsUrl, JSON.stringify(st), {
+      .post(this._channelsUrl, JSON.stringify(recomposed), {
         headers: new HttpHeaders().set("Content-Type", "application/json")
       })
       .pipe(
@@ -276,7 +285,7 @@ export class StationsService {
             m =>
               m.station_network_code === sm.selectedNetwork.network_code &&
               m.station_network_start_year ===
-                sm.selectedNetwork.network_start_year
+              sm.selectedNetwork.network_start_year
           )
         );
       }
