@@ -125,7 +125,7 @@
             >
               <select
                 [(ngModel)]="stationsService.stationsModel.selectedNetwork"
-                (ngModelChange)="stationsService.networkChanged($event)"
+                (ngModelChange)="stationsService.networkChanged()"
                 style="width:100%;"
               >
                 <option selected>All</option>
