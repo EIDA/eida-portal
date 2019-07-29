@@ -222,7 +222,11 @@ export class StationsService {
     }
 
     if (netType) {
-      url += `station_network_type=${netType.id}&`;
+      if (netType.id === 1) {
+        url += `station_network_temporary=0&`;
+      } else if (netType.id === 2) {
+        url += `station_network_temporary=1&`;
+      }
     }
 
     if (stat) {
