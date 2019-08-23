@@ -1,20 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-import { AppComponent } from './app.component';
-import { StationsComponent } from './stations/stations.component';
-import { EventsComponent } from './events/events.component';
-import { ConsoleComponent } from './console/console.component';
-import { MapComponent } from './map/map.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { RequestComponent } from './request/request.component';
-import { MetricsComponent } from './metrics/metrics.component';
-import { HelpComponent } from './help/help.component';
-import { KeysPipe } from './pipes/keys-pipe.pipe';
-import { EnumKeyValueListPipe } from './pipes/enum-key-value.pipe';
+import { AppComponent } from "./app.component";
+import { StationsComponent } from "./stations/stations.component";
+import { EventsComponent } from "./events/events.component";
+import { ConsoleComponent } from "./console/console.component";
+import { MapComponent } from "./map/map.component";
+import { AppRoutingModule } from ".//app-routing.module";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { RequestComponent } from "./request/request.component";
+import { MetricsComponent } from "./metrics/metrics.component";
+import { HelpComponent } from "./help/help.component";
+import { KeysPipe } from "./pipes/keys-pipe.pipe";
+import { EnumKeyValueListPipe } from "./pipes/enum-key-value.pipe";
+
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -34,9 +36,10 @@ import { EnumKeyValueListPipe } from './pipes/enum-key-value.pipe';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
