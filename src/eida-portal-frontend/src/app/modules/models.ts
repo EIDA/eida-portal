@@ -175,8 +175,8 @@ export class MapModel {}
 export class RequestModel {
   fdsnRequestTypes: {};
   absoluteModeTimeMethods: {};
-  datetimeFrom: string;
-  datetimeTo: string;
+  relativeModeFrom: string;
+  relativeModeTo: string;
   absoluteModeStart: number;
   absoluteModeEnd: number;
   timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
@@ -199,8 +199,8 @@ export class RequestModel {
       { id: 2, name: "S/Sdiff" }
     ];
 
-    this.datetimeFrom = dh.getDateTimeWithOffset(null, -1);
-    this.datetimeTo = dh.getDateTimeWithOffset();
+    this.relativeModeFrom = dh.getDateTimeWithOffset(null, null, -1);
+    this.relativeModeTo = dh.getDateTimeWithOffset();
     this.absoluteModeStart = 2;
     this.absoluteModeEnd = 10;
     this.timeWindowSelectionMode =
@@ -211,7 +211,7 @@ export class RequestModel {
   }
 
   toString() {
-    return `Datetime: ${this.datetimeFrom} - ${this.datetimeTo},
+    return `Datetime: ${this.relativeModeFrom} - ${this.relativeModeTo},
         request type: ${this.selectedFdsnRequestType}`;
   }
 }

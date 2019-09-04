@@ -4,7 +4,7 @@ import { environment } from "../environments/environment";
 import { ConsoleService } from "./console.service";
 import { EventsService } from "./events.service";
 import { StationsService } from "./stations.service";
-import { RequestModel } from "./modules/models";
+import { RequestModel, StationChannelModel } from "./modules/models";
 import { ProgressBar } from "./modules/models";
 import { FdsnEventsResponseModels } from "./modules/models.fdsn-events";
 import { Enums } from "./modules/enums";
@@ -57,51 +57,67 @@ export class RequestService {
     const selectedChannels = this._stationsService.stationsModel.getSelectedChannels();
     const allChannelsSelected = this._stationsService.stationsModel.allChannelsSelected();
 
-    for (const e of this._eventsService.selectedEvents.value.filter(
-      n => n.selected === true
-    )) {
-      let urlSta = null;
-      let urlChannel = null;
-
-      const selectedStations = this._stationsService.selectedStations.value.filter(
-        n => n.station_selected === true
-      );
-
-      // Check if there are stations selected and
-      // create a comma-separated list of them for the URL query
-      if (selectedStations.length > 0) {
-        urlSta = Object.keys(selectedStations)
-          .map(k => selectedStations[k].station_code)
-          .join(",");
-      }
-
-      // Check if there are channels selected and create a comma-separated
-      // list of them for the URL query Add question mark on at the end of
-      // channel code to include all channel components
-      if (!allChannelsSelected && selectedChannels.length > 0) {
-        urlChannel = Object.keys(selectedChannels)
-          .map(k => selectedChannels[k].channel_code + "?")
-          .join(",");
-      }
-
-      // Build the url to get data
-      let url = "";
-      if (urlSta) {
-        url = `${this._fedDataselectUrl}sta=${urlSta}`;
-      }
-
-      if (!allChannelsSelected) {
-        url += `&channel=${urlChannel}`;
-      }
-
-      // Get the time window based on event
-      const t = this._getTimeWindow(e);
-      url += `&${t}`;
-
-      urls.push({ filename: `${e._publicID}.mseed`, url: url });
+    switch (this.requestModel.timeWindowSelectionMode) {
+      case Enums.RequestTimeWindowSelectionModes.Absolute:
+        urls.push(
+          this._prepareUrl(null, allChannelsSelected, selectedChannels)
+        );
+      case Enums.RequestTimeWindowSelectionModes.Relative:
+        for (const e of this._eventsService.selectedEvents.value.filter(
+          n => n.selected === true
+        )) {
+          urls.push(this._prepareUrl(e, allChannelsSelected, selectedChannels));
+        }
     }
 
     this._saveToZip("event-data.zip", urls);
+  }
+
+  private _prepareUrl(
+    e: FdsnEventsResponseModels.EventExt,
+    allChannelsSelected: boolean,
+    selectedChannels: StationChannelModel[],
+    filename: string = "data"
+  ): {} {
+    let urlSta = null;
+    let urlChannel = null;
+
+    const selectedStations = this._stationsService.selectedStations.value.filter(
+      n => n.station_selected === true
+    );
+
+    // Check if there are stations selected and
+    // create a comma-separated list of them for the URL query
+    if (selectedStations.length > 0) {
+      urlSta = Object.keys(selectedStations)
+        .map(k => selectedStations[k].station_code)
+        .join(",");
+    }
+
+    // Check if there are channels selected and create a comma-separated
+    // list of them for the URL query Add question mark on at the end of
+    // channel code to include all channel components
+    if (!allChannelsSelected && selectedChannels.length > 0) {
+      urlChannel = Object.keys(selectedChannels)
+        .map(k => selectedChannels[k].channel_code + "?")
+        .join(",");
+    }
+
+    // Build the url to get data
+    let url = "";
+    if (urlSta) {
+      url = `${this._fedDataselectUrl}sta=${urlSta}`;
+    }
+
+    if (!allChannelsSelected) {
+      url += `&channel=${urlChannel}`;
+    }
+
+    // Get the time window based on event
+    const t = this._getTimeWindow(e);
+    url += `&${t}`;
+
+    return { filename: `${filename}.mseed`, url: url };
   }
 
   private _downloadMetadata(format: Enums.MetadataFormats): void {
@@ -152,20 +168,26 @@ export class RequestService {
 
     switch (this.requestModel.timeWindowSelectionMode) {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
-        const momentStart = dh.getDate(e.origin.time.value);
-        const momentEnd = dh.getDate(e.origin.time.value);
+        const absoluteMomentStart = dh.getDate(e.origin.time.value);
+        const absoluteMomentEnd = dh.getDate(e.origin.time.value);
 
-        const startTime = momentStart
+        const absoluteStartTime = absoluteMomentStart
           .add(-this.requestModel.absoluteModeStart, "minutes")
           .format("YYYY-MM-DDTHH:mm:ss");
 
-        const endTime = momentEnd
+        const absoluteEndTime = absoluteMomentEnd
           .add(this.requestModel.absoluteModeEnd, "minutes")
           .format("YYYY-MM-DDTHH:mm:ss");
 
-        return `starttime=${startTime}&endtime=${endTime}`;
+        return `starttime=${absoluteStartTime}&endtime=${absoluteEndTime}`;
       case Enums.RequestTimeWindowSelectionModes.Relative:
-        return;
+        const relativeMomentStart = dh
+          .getDate(this.requestModel.relativeModeFrom)
+          .format("YYYY-MM-DDTHH:mm:ss");
+        const relativeMomentEnd = dh
+          .getDate(this.requestModel.relativeModeTo)
+          .format("YYYY-MM-DDTHH:mm:ss");
+        return `starttime=${relativeMomentStart}&endtime=${relativeMomentEnd}`;
     }
   }
 
