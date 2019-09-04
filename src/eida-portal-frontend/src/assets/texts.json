@@ -290,7 +290,7 @@
     {
         "key": "request-tip-tabs-mode",
         "values": {
-            "en": "<b style='color:gold'>Absolute mode</b>: define time window based on the origin time or wave arrival time and apply optional time offsets<br><b style='color:gold'>Relative mode</b>: define time window based on explicit from/to timestamps"
+            "en": "<b style='color:gold'>Relative mode</b>: define time window based on the origin time or wave arrival time and apply optional time offsets<br><b style='color:gold'>Absolute mode</b>: define time window based on explicit from/to timestamps (selecting events is not needed in case of absolute time window selection mode)"
         }
     },
     {

@@ -62,12 +62,14 @@ export class RequestService {
         urls.push(
           this._prepareUrl(null, allChannelsSelected, selectedChannels)
         );
+        break;
       case Enums.RequestTimeWindowSelectionModes.Relative:
         for (const e of this._eventsService.selectedEvents.value.filter(
           n => n.selected === true
         )) {
           urls.push(this._prepareUrl(e, allChannelsSelected, selectedChannels));
         }
+        break;
     }
 
     this._saveToZip("event-data.zip", urls);
@@ -168,26 +170,26 @@ export class RequestService {
 
     switch (this.requestModel.timeWindowSelectionMode) {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
+        const relativeMomentStart = dh
+          .getDate(this.requestModel.absoluteModeFrom)
+          .format("YYYY-MM-DDTHH:mm:ss");
+        const relativeMomentEnd = dh
+          .getDate(this.requestModel.absoluteModeTo)
+          .format("YYYY-MM-DDTHH:mm:ss");
+        return `starttime=${relativeMomentStart}&endtime=${relativeMomentEnd}`;
+      case Enums.RequestTimeWindowSelectionModes.Relative:
         const absoluteMomentStart = dh.getDate(e.origin.time.value);
         const absoluteMomentEnd = dh.getDate(e.origin.time.value);
 
         const absoluteStartTime = absoluteMomentStart
-          .add(-this.requestModel.absoluteModeStart, "minutes")
+          .add(-this.requestModel.relativeModeStart, "minutes")
           .format("YYYY-MM-DDTHH:mm:ss");
 
         const absoluteEndTime = absoluteMomentEnd
-          .add(this.requestModel.absoluteModeEnd, "minutes")
+          .add(this.requestModel.relativeModeEnd, "minutes")
           .format("YYYY-MM-DDTHH:mm:ss");
 
         return `starttime=${absoluteStartTime}&endtime=${absoluteEndTime}`;
-      case Enums.RequestTimeWindowSelectionModes.Relative:
-        const relativeMomentStart = dh
-          .getDate(this.requestModel.relativeModeFrom)
-          .format("YYYY-MM-DDTHH:mm:ss");
-        const relativeMomentEnd = dh
-          .getDate(this.requestModel.relativeModeTo)
-          .format("YYYY-MM-DDTHH:mm:ss");
-        return `starttime=${relativeMomentStart}&endtime=${relativeMomentEnd}`;
     }
   }
 

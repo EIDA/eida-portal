@@ -174,15 +174,15 @@ export class MapModel {}
 
 export class RequestModel {
   fdsnRequestTypes: {};
-  absoluteModeTimeMethods: {};
-  relativeModeFrom: string;
-  relativeModeTo: string;
-  absoluteModeStart: number;
-  absoluteModeEnd: number;
   timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
+  relativeModeTimeMethods: {};
+  relativeModeStart: number;
+  relativeModeEnd: number;
   selectedFdsnRequestType;
-  selectedAbsoluteModeStartTimeMethod;
-  selectedAbsoluteModeEndTimeMethod;
+  selectedRelativeModeStartTimeMethod;
+  selectedRelativeModeEndTimeMethod;
+  absoluteModeFrom: string;
+  absoluteModeTo: string;
 
   constructor() {
     const dh = new DateHelper();
@@ -193,25 +193,25 @@ export class RequestModel {
       { id: 2, name: "Metadata (Text)" }
     ];
 
-    this.absoluteModeTimeMethods = [
+    this.relativeModeTimeMethods = [
       { id: 0, name: "Origin Time" },
       { id: 1, name: "P/Pdiff" },
       { id: 2, name: "S/Sdiff" }
     ];
 
-    this.relativeModeFrom = dh.getDateTimeWithOffset(null, null, -1);
-    this.relativeModeTo = dh.getDateTimeWithOffset();
-    this.absoluteModeStart = 2;
-    this.absoluteModeEnd = 10;
+    this.absoluteModeFrom = dh.getDateTimeWithOffset(null, null, -1);
+    this.absoluteModeTo = dh.getDateTimeWithOffset();
+    this.relativeModeStart = 2;
+    this.relativeModeEnd = 10;
     this.timeWindowSelectionMode =
       Enums.RequestTimeWindowSelectionModes.Absolute;
     this.selectedFdsnRequestType = this.fdsnRequestTypes[0];
-    this.selectedAbsoluteModeStartTimeMethod = this.absoluteModeTimeMethods[0];
-    this.selectedAbsoluteModeEndTimeMethod = this.absoluteModeTimeMethods[0];
+    this.selectedRelativeModeStartTimeMethod = this.relativeModeTimeMethods[0];
+    this.selectedRelativeModeEndTimeMethod = this.relativeModeTimeMethods[0];
   }
 
   toString() {
-    return `Datetime: ${this.relativeModeFrom} - ${this.relativeModeTo},
+    return `Datetime: ${this.absoluteModeFrom} - ${this.absoluteModeTo},
         request type: ${this.selectedFdsnRequestType}`;
   }
 }
