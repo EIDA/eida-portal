@@ -88,25 +88,27 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
-          <p class="control">
-            <a
-              class="bd-tw-button button"
-              [attr.data-tippy-content]="
-                textService.getText('dash-tip-authenticate')
-              "
-            >
-              <span class="icon"><i class="fas fa-lock-open"></i></span>
-              <span>
-                Authenticate
-              </span>
-            </a>
-          </p>
-          <!-- <p class="control">
-              <a class="button is-info">
-                <span class="icon"><i class="fas fa-cog"></i></span>
-                <span>Settings</span>
-              </a>
-            </p> -->
+          <div class="field">
+            <div class="file is-warning">
+              <label class="file-label">
+                <input
+                  id="fdsn-token-input"
+                  class="file-input"
+                  type="file"
+                  name="fdsnws-token"
+                  (change)="uploadFdsnwsToken($event.target.files)"
+                />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                  <span class="file-label">
+                    FDSNWS Token
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -94,6 +94,11 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  uploadFdsnwsToken(t) {
+    const file = t.item(0);
+    console.log(file);
+  }
+
   tabSelected(s) {
     $("#menuTabs")
       .find("li")
