@@ -67,12 +67,8 @@ export class StationsModel {
 
   toString() {
     return `Year: ${this.yearFrom} - ${this.yearTo}, 
-        coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${
-      this.coordinateE
-    }E, ${this.coordinateW}W,
-        network: ${this.selectedNetwork.code}, station: ${
-      this.selectedStation.code
-    }`;
+        coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W,
+        network: ${this.selectedNetwork.code}, station: ${this.selectedStation.code}`;
   }
 
   clearStationSelection() {
@@ -155,9 +151,7 @@ export class EventsModel {
         minimum magnitude: ${this.minimumMagnitude},
         date: ${this.dateFrom} - ${this.dateTo},
         depth: ${this.depthFrom} - ${this.depthTo},
-        coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${
-      this.coordinateE
-    }E, ${this.coordinateW}W`;
+        coordinates: ${this.coordinateN}N, ${this.coordinateS}S, ${this.coordinateE}E, ${this.coordinateW}W`;
   }
 
   // Get selected catalog URL
@@ -174,11 +168,13 @@ export class MapModel {}
 
 export class RequestModel {
   fdsnRequestTypes: {};
+  fdsnDataSources: {};
   timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
   relativeModeTimeMethods: {};
   relativeModeStart: number;
   relativeModeEnd: number;
   selectedFdsnRequestType;
+  selectedFdsnDataSource;
   selectedRelativeModeStartTimeMethod;
   selectedRelativeModeEndTimeMethod;
   absoluteModeFrom: string;
@@ -193,6 +189,75 @@ export class RequestModel {
       { id: 2, name: "Metadata (Text)" }
     ];
 
+    this.fdsnDataSources = [
+      {
+        id: 0,
+        name: "EIDA Federator",
+        dataselectUrl: environment.federatorDataselectUrl,
+        stationUrl: environment.federatorStationUrl
+      },
+      {
+        id: 1,
+        name: "ODC (The Netherlands)",
+        dataselectUrl: environment.odcDataselectUrl,
+        stationUrl: environment.odcStationUrl
+      },
+      {
+        id: 2,
+        name: "GFZ (Germany)",
+        dataselectUrl: environment.gfzDataselectUrl,
+        stationUrl: environment.gfzStationUrl
+      },
+      {
+        id: 3,
+        name: "RESIF (France)",
+        dataselectUrl: environment.resifDataselectUrl,
+        stationUrl: environment.resifStationUrl
+      },
+      {
+        id: 4,
+        name: "INGV (Italy)",
+        dataselectUrl: environment.ingvDataselectUrl,
+        stationUrl: environment.ingvStationUrl
+      },
+      {
+        id: 5,
+        name: "ETHZ (Switzerland)",
+        dataselectUrl: environment.ethzDataselectUrl,
+        stationUrl: environment.ethzStationUrl
+      },
+      {
+        id: 6,
+        name: "BGR (Germany)",
+        dataselectUrl: environment.bgrDataselectUrl,
+        stationUrl: environment.bgrStationUrl
+      },
+      {
+        id: 7,
+        name: "NIEP (Romania)",
+        dataselectUrl: environment.niepDataselectUrl,
+        stationUrl: environment.niepStationUrl
+      },
+      {
+        id: 8,
+        name: "KOERI (Turkey)",
+        dataselectUrl: environment.koeriDataselectUrl,
+        stationUrl: environment.koeriStationUrl
+      },
+      {
+        id: 9,
+        name: "LMU (Germany)",
+        dataselectUrl: environment.lmuDataselectUrl,
+        stationUrl: environment.lmuStationUrl
+      },
+      {
+        id: 10,
+        name: "NOA (Greece)",
+        dataselectUrl: environment.noaDataselectUrl,
+        stationUrl: environment.noaStationUrl
+      }
+    ];
+
     this.relativeModeTimeMethods = [
       { id: 0, name: "Origin Time" },
       { id: 1, name: "P/Pdiff" },
@@ -205,6 +270,7 @@ export class RequestModel {
     this.relativeModeEnd = 10;
     this.timeWindowSelectionMode =
       Enums.RequestTimeWindowSelectionModes.Absolute;
+      this.selectedFdsnDataSource = this.fdsnDataSources[0];
     this.selectedFdsnRequestType = this.fdsnRequestTypes[0];
     this.selectedRelativeModeStartTimeMethod = this.relativeModeTimeMethods[0];
     this.selectedRelativeModeEndTimeMethod = this.relativeModeTimeMethods[0];

@@ -1,6 +1,6 @@
 import { Injectable, Input } from "@angular/core";
 import { Subject } from "rxjs";
-import { environment } from "../environments/environment";
+
 import { ConsoleService } from "./console.service";
 import { EventsService } from "./events.service";
 import { StationsService } from "./stations.service";
@@ -17,8 +17,6 @@ import { distinct } from "rxjs/operators";
   providedIn: "root"
 })
 export class RequestService {
-  private _fedDataselectUrl = environment.federatorDataselectUrl;
-  private _fedStationUrl = environment.federatorStationUrl;
   public progressReporter = new Subject<ProgressBar>();
 
   // Binding object for Request tab
@@ -105,7 +103,7 @@ export class RequestService {
 
     return {
       filename: `${filename}.mseed`,
-      url: this._fedDataselectUrl,
+      url: this.requestModel.selectedFdsnDataSource.dataselectUrl,
       body: body
     };
   }
@@ -173,7 +171,7 @@ export class RequestService {
 
     return {
       filename: filename,
-      url: this._fedStationUrl,
+      url: this.requestModel.selectedFdsnDataSource.stationUrl,
       body: body
     };
   }
@@ -237,7 +235,7 @@ export class RequestService {
         this.reportProgress(null, null, true);
         saveAs(blob, filename);
       })
-      .catch(e => console.log(e));
+      .catch(e => this.reportProgress(null, null, true, false, e));
   }
 
   /**

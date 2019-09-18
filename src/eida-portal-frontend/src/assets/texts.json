@@ -330,6 +330,12 @@
         }
     },
     {
+        "key": "request-tip-datacenter",
+        "values": {
+            "en": "Datacenter <br><b style='color:gold'>EIDA Federator</b>: use EIDA Federator service to automatically resolve data location<br><b style='color:gold'>Specific datacenter</b>: download data directly from selected datacenter"
+        }
+    },
+    {
         "key": "request-tip-request-type",
         "values": {
             "en": "Request type<br><b style='color:gold'>Waveform (mini-SEED)</b>: retrieve waveform data in miniSEED format<br><b style='color:gold'>Metadata (StationXML)</b>: retrieve station metadata in StationXML format<br><b style='color:gold'>Metadata (Text)</b>: retrieve station metadata in text format"
