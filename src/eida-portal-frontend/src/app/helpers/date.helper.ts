@@ -15,6 +15,11 @@ export class DateHelper {
     return moment(t);
   }
 
+  public getTimestamp(): string {
+    let m = moment();
+    return m.format("YYYY-MM-DD HH:mm:ss");
+  }
+
   /**
    * Get the future/past datetime as string after applying year/month/offset
    * on current date

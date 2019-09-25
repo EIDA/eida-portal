@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ConsoleService } from "../console.service";
 import { UiService } from "../ui.service";
 import { TextService } from "../text.service";
+import * as swal from '../../assets/js/sweetalert/sweetalert.min.js';
+import { Notification } from '../modules/models';
+import { Enums } from '../modules/enums';
 
 declare var $: any;
 declare var Mousetrap: any;
@@ -18,6 +21,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.consoleService.notifications.subscribe(
+      n => this.notify(n)
+    )
+
     Mousetrap.bind("1", function(e) {
       $("#menuTabs")
         .find("li")
@@ -104,5 +111,21 @@ export class DashboardComponent implements OnInit {
       .find("li")
       .removeClass("is-active");
     $(s).addClass("is-active");
+  }
+
+  notify(n: Notification) {
+    switch (n.level) {
+      case Enums.NotificationLevels.Undefined:
+        break;
+      case Enums.NotificationLevels.Info:
+        swal('Information', n.message, 'info');
+        break;
+      case Enums.NotificationLevels.Warning:
+        swal('Warning', n.message, 'warning');
+        break;
+      case Enums.NotificationLevels.Error:
+        swal('Error', n.message, 'error');
+        break;
+    }
   }
 }

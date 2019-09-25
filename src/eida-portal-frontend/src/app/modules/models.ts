@@ -375,6 +375,16 @@ export class MapDragBoxCoordinates {
   }
 }
 
+export class Notification {
+  level: Enums.NotificationLevels;
+  timestamp: string;
+  message: string;
+
+  getMessage() {
+    return `${this.timestamp} - ${this.message}`;
+  }
+}
+
 export class ProgressBar {
   dividend: string;
   divisor: string;

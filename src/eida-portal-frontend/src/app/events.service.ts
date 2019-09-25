@@ -150,4 +150,8 @@ export class EventsService {
   updateFocusedEvent(e: FdsnEventsResponseModels.EventExt) {
     this.focusedEvent.next(e);
   }
+
+  countSelectedEvents(): number {
+    return this.selectedEvents.value.filter(n => n.selected).length;
+  }
 }

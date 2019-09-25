@@ -32,6 +32,27 @@ export class RequestComponent implements OnInit {
   }
 
   download() {
+    if (this.requestService.stationsService.countSelectedStations() <= 0) {
+      this._consoleService.addNotification(
+        Enums.NotificationLevels.Error,
+        "At least one station needs to be selected!"
+      );
+      return;
+    }
+
+    switch (this.requestService.requestModel.timeWindowSelectionMode) {
+      case Enums.RequestTimeWindowSelectionModes.Absolute:
+        break;
+      case Enums.RequestTimeWindowSelectionModes.Relative:
+        if (this.requestService.eventsService.countSelectedEvents() <= 0) {
+          this._consoleService.addNotification(
+            Enums.NotificationLevels.Error,
+            "In relative mode at least one event needs to be selected!"
+          );
+          return;
+        }
+    }
+
     this.requestService.download();
   }
 

@@ -23,8 +23,8 @@ export class RequestService {
   @Input() requestModel = new RequestModel();
   constructor(
     private _consoleService: ConsoleService,
-    private _eventsService: EventsService,
-    private _stationsService: StationsService
+    public eventsService: EventsService,
+    public stationsService: StationsService
   ) {}
 
   public log(message: string) {
@@ -53,8 +53,8 @@ export class RequestService {
   private _downloadMiniSeed(): void {
     const urls = Array<{}>();
 
-    const selectedChannels = this._stationsService.stationsModel.getSelectedChannels();
-    const allChannelsSelected = this._stationsService.stationsModel.allChannelsSelected();
+    const selectedChannels = this.stationsService.stationsModel.getSelectedChannels();
+    const allChannelsSelected = this.stationsService.stationsModel.allChannelsSelected();
 
     switch (this.requestModel.timeWindowSelectionMode) {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
@@ -63,7 +63,7 @@ export class RequestService {
         );
         break;
       case Enums.RequestTimeWindowSelectionModes.Relative:
-        for (const e of this._eventsService.selectedEvents.value.filter(
+        for (const e of this.eventsService.selectedEvents.value.filter(
           n => n.selected === true
         )) {
           urls.push(
@@ -85,7 +85,7 @@ export class RequestService {
     let body = "";
     let channels = "*";
 
-    const selectedStations = this._stationsService.selectedStations.value.filter(
+    const selectedStations = this.stationsService.selectedStations.value.filter(
       n => n.station_selected === true
     );
 
@@ -116,7 +116,7 @@ export class RequestService {
         urls.push(this._prepareMetadataUrl(null, format));
         break;
       case Enums.RequestTimeWindowSelectionModes.Relative:
-        for (const e of this._eventsService.selectedEvents.value.filter(
+        for (const e of this.eventsService.selectedEvents.value.filter(
           n => n.selected === true
         )) {
           urls.push(this._prepareMetadataUrl(e, format));
@@ -140,7 +140,7 @@ export class RequestService {
     // Check if there are stations selected and
     // create a comma-separated list of them for the URL query
     if (
-      this._stationsService.selectedStations.value.filter(
+      this.stationsService.selectedStations.value.filter(
         n => n.station_selected === true
       ).length <= 0
     ) {
@@ -163,7 +163,7 @@ export class RequestService {
 
     const t = this._getTimeWindow(e);
 
-    for (const s of this._stationsService.selectedStations.value.filter(
+    for (const s of this.stationsService.selectedStations.value.filter(
       n => n.station_selected === true
     )) {
       body += `${s.station_network_code} ${s.station_code} * * ${t}\n`;

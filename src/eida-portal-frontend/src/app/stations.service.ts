@@ -398,4 +398,8 @@ export class StationsService {
         catchError(this._eidaService.handleError("getNetworksStations", []))
       );
   }
+
+  countSelectedStations(): number {
+    return this.selectedStations.value.filter(n => n.station_selected).length;
+  }
 }

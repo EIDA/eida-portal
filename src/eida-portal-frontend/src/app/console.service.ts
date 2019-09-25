@@ -1,24 +1,29 @@
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { Notification } from './modules/models';
+import { DateHelper } from './helpers/date.helper';
+import * as _ from '../assets/js/lodash/lodash.js';
 
 @Injectable({
   providedIn: "root"
 })
 export class ConsoleService {
-  messages: string[] = [];
+  public notifications = new Subject<Notification>();
 
   constructor() {}
 
   add(message: string) {
     const _date = new Date().toLocaleString();
-    this.messages.push(_date + " - " + message);
     console.log(_date + " - " + message);
   }
 
-  clear() {
-    this.messages = [];
-  }
-
-  getMsgCount() {
-    return this.messages.length;
+  addNotification(lvl: number, msg: string) {
+    // Add and broadcast new notification
+    const dh = new DateHelper();
+    let notification = new Notification();
+    notification.timestamp = dh.getTimestamp();
+    notification.level = lvl;
+    notification.message = msg;
+    this.notifications.next(notification);
   }
 }

@@ -30,4 +30,11 @@ export namespace Enums {
     StationXML = 0,
     Text = 1
   }
+
+  export enum NotificationLevels {
+    Undefined = 0,
+    Info = 1,
+    Warning = 2,
+    Error = 3
+  }
 }
