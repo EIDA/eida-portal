@@ -1,16 +1,17 @@
-import { Injectable, Input } from "@angular/core";
-import { catchError, tap } from "rxjs/operators";
-import { EidaService } from "./eida.service";
-import { EventsModel } from "./modules/models";
-import { Subject, BehaviorSubject } from "rxjs";
-import { FdsnEventsResponseModels } from "../app/modules/models.fdsn-events";
-import { Parser } from "xml2js";
-import { SerializationHelper } from "./helpers/serialization.helper";
+import { Injectable, Input } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
+import { EidaService } from './eida.service';
+import { EventsModel } from './modules/models';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { FdsnEventsResponseModels } from '../app/modules/models.fdsn-events';
+import { Parser } from 'xml2js';
+import { SerializationHelper } from './helpers/serialization.helper';
+import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class EventsService {
+export class EventsService extends BaseService {
   /*
   The idea behind obtaining the events is following:
   - FDSN WS XML response is converted to JSON
@@ -24,7 +25,6 @@ export class EventsService {
     insert it to selectedEvents Subject
   */
 
-  private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
   // Binding object for the Events tab
   @Input() public eventsModel = new EventsModel();
   public allEvents = new Subject<FdsnEventsResponseModels.EventExt[]>();
@@ -34,8 +34,10 @@ export class EventsService {
   public eventsResponse = new Subject<Object>();
   // Focued event for the map
   public focusedEvent = new Subject<FdsnEventsResponseModels.EventExt>();
+  private _mapEvents = new Array<FdsnEventsResponseModels.EventExt>();
 
   constructor(private _eidaService: EidaService) {
+    super();
     this.eventsResponse.subscribe(resp =>
       this.eventsXmlToObjGraph(resp, this.allEvents)
     );
@@ -50,6 +52,7 @@ export class EventsService {
       resp,
       function(err, result) {
         if (err) {
+          this.reportProgress(null, null, true, true);
           throw err;
         }
 
@@ -58,10 +61,11 @@ export class EventsService {
           const objGraph = SerializationHelper.eventsJsonToObjGraph(json);
           allEvents.next(objGraph.quakeml.eventParameters.event);
         } catch (ex) {
-          this.log(ex);
+          this._log(ex);
+          this.reportProgress(null, null, true, true);
           allEvents.next(new FdsnEventsResponseModels.FdsnEventsRoot());
         }
-      }.bind(this._eidaService)
+      }.bind(this)
     );
   }
 
@@ -85,10 +89,10 @@ export class EventsService {
     // };
 
     this._eidaService.http
-      .get(url, { responseType: "text" })
+      .get(url, { responseType: 'text' })
       .pipe(
-        tap(_ => this._eidaService.log("fetched events data")),
-        catchError(this._eidaService.handleError("getEvents", []))
+        tap(_ => this._eidaService.log('fetched events data')),
+        catchError(this._eidaService.handleError('getEvents', []))
       )
       .subscribe(r => this.eventsResponse.next(r));
   }
@@ -153,5 +157,9 @@ export class EventsService {
 
   countSelectedEvents(): number {
     return this.selectedEvents.value.filter(n => n.selected).length;
+  }
+
+  private _log(ex): void {
+    this._eidaService.log(ex);
   }
 }

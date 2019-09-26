@@ -1,23 +1,23 @@
-import { Injectable, Input } from "@angular/core";
-import { Subject } from "rxjs";
+import { Injectable, Input } from '@angular/core';
+import { Subject } from 'rxjs';
 
-import { ConsoleService } from "./console.service";
-import { EventsService } from "./events.service";
-import { StationsService } from "./stations.service";
-import { RequestModel, StationChannelModel } from "./modules/models";
-import { ProgressBar } from "./modules/models";
-import { FdsnEventsResponseModels } from "./modules/models.fdsn-events";
-import { Enums } from "./modules/enums";
-import { DateHelper } from "./helpers/date.helper";
-import * as JSZip from "jszip";
-import { saveAs } from "file-saver";
-import { distinct } from "rxjs/operators";
+import { ConsoleService } from './console.service';
+import { EventsService } from './events.service';
+import { StationsService } from './stations.service';
+import { RequestModel, StationChannelModel } from './modules/models';
+import { ProgressNotification } from './modules/models';
+import { FdsnEventsResponseModels } from './modules/models.fdsn-events';
+import { Enums } from './modules/enums';
+import { DateHelper } from './helpers/date.helper';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { distinct } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class RequestService {
-  public progressReporter = new Subject<ProgressBar>();
+  public progressReporter = new Subject<ProgressNotification>();
 
   // Binding object for Request tab
   @Input() requestModel = new RequestModel();
@@ -73,17 +73,17 @@ export class RequestService {
         break;
     }
 
-    this._saveToZip("event-data.zip", urls);
+    this._saveToZip('event-data.zip', urls);
   }
 
   private _prepareMiniseedUrl(
     e: FdsnEventsResponseModels.EventExt,
     allChannelsSelected: boolean,
     selectedChannels: StationChannelModel[],
-    filename: string = "data"
+    filename: string = 'data'
   ): {} {
-    let body = "";
-    let channels = "*";
+    let body = '';
+    let channels = '*';
 
     const selectedStations = this.stationsService.selectedStations.value.filter(
       n => n.station_selected === true
@@ -93,8 +93,8 @@ export class RequestService {
 
     if (!allChannelsSelected) {
       channels = Object.keys(selectedChannels)
-        .map(k => selectedChannels[k].channel_code + "*")
-        .join(",");
+        .map(k => selectedChannels[k].channel_code + '*')
+        .join(',');
     }
 
     for (const s of selectedStations) {
@@ -134,8 +134,8 @@ export class RequestService {
     e: FdsnEventsResponseModels.EventExt,
     format: Enums.MetadataFormats
   ) {
-    let body = "";
-    let filename = "";
+    let body = '';
+    let filename = '';
 
     // Check if there are stations selected and
     // create a comma-separated list of them for the URL query
@@ -150,14 +150,14 @@ export class RequestService {
     switch (format) {
       case Enums.MetadataFormats.StationXML:
         body += `level=channel\nformat=xml\n`;
-        filename = "metadata.xml";
+        filename = 'metadata.xml';
         break;
       case Enums.MetadataFormats.Text:
         body += `level=channel\nformat=text\n`;
-        filename = "metadata.txt";
+        filename = 'metadata.txt';
         break;
       default:
-        filename = "metadata";
+        filename = 'metadata';
         break;
     }
 
@@ -183,22 +183,22 @@ export class RequestService {
       case Enums.RequestTimeWindowSelectionModes.Absolute:
         const relativeMomentStart = dh
           .getDate(this.requestModel.absoluteModeFrom)
-          .format("YYYY-MM-DDTHH:mm:ss");
+          .format('YYYY-MM-DDTHH:mm:ss');
         const relativeMomentEnd = dh
           .getDate(this.requestModel.absoluteModeTo)
-          .format("YYYY-MM-DDTHH:mm:ss");
+          .format('YYYY-MM-DDTHH:mm:ss');
         return `${relativeMomentStart} ${relativeMomentEnd}`;
       case Enums.RequestTimeWindowSelectionModes.Relative:
         const absoluteMomentStart = dh.getDate(e.origin.time.value);
         const absoluteMomentEnd = dh.getDate(e.origin.time.value);
 
         const absoluteStartTime = absoluteMomentStart
-          .add(-this.requestModel.relativeModeStart, "minutes")
-          .format("YYYY-MM-DDTHH:mm:ss");
+          .add(-this.requestModel.relativeModeStart, 'minutes')
+          .format('YYYY-MM-DDTHH:mm:ss');
 
         const absoluteEndTime = absoluteMomentEnd
-          .add(this.requestModel.relativeModeEnd, "minutes")
-          .format("YYYY-MM-DDTHH:mm:ss");
+          .add(this.requestModel.relativeModeEnd, 'minutes')
+          .format('YYYY-MM-DDTHH:mm:ss');
 
         return `${absoluteStartTime} ${absoluteEndTime}`;
     }
@@ -209,13 +209,13 @@ export class RequestService {
       `Downloading and packing: ${JSON.stringify(urls)}`
     );
     const zip = new JSZip();
-    const folder = zip.folder("data");
+    const folder = zip.folder('data');
     this.reportProgress(null, null, false, true);
     let progressCount = 1;
 
     urls.forEach(url => {
       const blobPromise = fetch(url.url, {
-        method: "POST",
+        method: 'POST',
         body: url.body
       }).then(r => {
         if (r.status === 200) {
@@ -230,7 +230,7 @@ export class RequestService {
     });
 
     zip
-      .generateAsync({ type: "blob" })
+      .generateAsync({ type: 'blob' })
       .then(blob => {
         this.reportProgress(null, null, true);
         saveAs(blob, filename);
@@ -251,9 +251,9 @@ export class RequestService {
     divisor,
     completed = false,
     indeterminate = false,
-    message = ""
+    message = ''
   ): void {
-    const pb = new ProgressBar();
+    const pb = new ProgressNotification();
     pb.dividend = dividend;
     pb.divisor = divisor;
     pb.completed = completed;

@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ConsoleService } from "./console.service";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConsoleService } from './console.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class EidaService {
   constructor(
@@ -13,7 +13,7 @@ export class EidaService {
   ) {}
 
   public httpOptions = {
-    headers: new HttpHeaders({ "Content-Type": "application/json" })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   public log(message: string) {
@@ -26,7 +26,7 @@ export class EidaService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  public handleError<T>(operation = "operation", result?: T) {
+  public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

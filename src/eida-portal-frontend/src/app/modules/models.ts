@@ -385,10 +385,11 @@ export class Notification {
   }
 }
 
-export class ProgressBar {
+export class ProgressNotification {
   dividend: string;
   divisor: string;
   completed: boolean;
+  error: boolean;
   indeterminate: boolean;
   message: string;
 
@@ -396,6 +397,7 @@ export class ProgressBar {
     this.dividend = "1";
     this.divisor = "100";
     this.completed = false;
+    this.error = false;
     this.indeterminate = false;
     this.message = "";
   }
