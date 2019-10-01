@@ -402,3 +402,10 @@ export class ProgressNotification {
     this.message = "";
   }
 }
+
+export class EidaToken {
+  file;
+  text;
+  meta;
+  status: Enums.EidaTokenAuthenticationStatus;
+}

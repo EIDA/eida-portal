@@ -37,4 +37,11 @@ export namespace Enums {
     Warning = 2,
     Error = 3
   }
+
+  export enum EidaTokenAuthenticationStatus {
+    Undefined = 0,
+    Processing = 1,
+    Valid = 2,
+    Invalid = 3
+  }
 }

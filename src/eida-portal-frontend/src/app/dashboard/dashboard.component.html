@@ -57,29 +57,43 @@
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="field is-grouped">
-          <div class="field">
-            <div class="file is-warning">
-              <label class="file-label">
-                <input
-                  id="fdsn-token-input"
-                  class="file-input"
-                  type="file"
-                  name="fdsnws-token"
-                  (change)="uploadFdsnwsToken($event.target.files)"
-                />
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fas fa-lock"></i>
-                  </span>
-                  <span class="file-label">
-                    FDSNWS Token
-                  </span>
-                </span>
-              </label>
-            </div>
-          </div>
+        <div
+          id="tokenAttachButton"
+          class="file"
+          [attr.data-tippy-content]="
+            textService.getText('dash-attach-token')
+          "
+        >
+          <label class="file-label">
+            <input
+              id="fdsn-token-input"
+              class="file-input"
+              type="file"
+              name="fdsnws-token"
+              (change)="attachEidaToken($event.target.files[0])"
+            />
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-unlock"></i>
+              </span>
+              <span id="tokenAttachButtonText" class="file-label">
+                Attach EIDA Token
+              </span>
+            </span>
+          </label>
         </div>
+      </div>
+      <div
+        id="tokenDetachButton"
+        class="navbar-item"
+        [attr.data-tippy-content]="
+          textService.getText('dash-detach-token')
+        "
+      >
+        <a class="button is-danger" (click)="detachEidaToken()"
+          ><span class="file-icon"> <i class="fas fa-lock"></i> </span>Detach
+          Token</a
+        >
       </div>
     </div>
   </div>

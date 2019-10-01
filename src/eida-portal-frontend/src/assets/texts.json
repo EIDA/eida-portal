@@ -18,6 +18,18 @@
         }
     },
     {
+        "key": "dash-attach-token",
+        "values": {
+            "en": "Attach EIDA token.<br><b style='color:red'>EIDA Token cannot be used when downloading data using the EIDA Federator, only downloading data directly from particular datacenter is supported.</b>"
+        }
+    },
+    {
+        "key": "dash-detach-token",
+        "values": {
+            "en": "Detach EIDA token and continue as an anonymous user."
+        }
+    },
+    {
         "key": "events-tip-catalog",
         "values": {
             "en": "Data source catalog"

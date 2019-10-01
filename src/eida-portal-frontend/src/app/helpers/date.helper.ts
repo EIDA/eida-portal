@@ -1,11 +1,15 @@
 // Created manually
-import moment from "moment";
+import moment from 'moment';
 
 export class DateHelper {
   /**
    * DateHelper class constructor
    */
   constructor() {}
+
+  public now(): moment.Moment {
+    return moment();
+  }
 
   /**
    * Get the moment instance from datetime string
@@ -16,8 +20,8 @@ export class DateHelper {
   }
 
   public getTimestamp(): string {
-    let m = moment();
-    return m.format("YYYY-MM-DD HH:mm:ss");
+    const m = moment();
+    return m.format('YYYY-MM-DD HH:mm:ss');
   }
 
   /**
@@ -35,15 +39,15 @@ export class DateHelper {
     monthOffset = 0,
     dayOffset = 0
   ): string {
-    if (!yearOffset) yearOffset = 0;
-    if (!monthOffset) monthOffset = 0;
-    if (!dayOffset) dayOffset = 0;
+    if (!yearOffset) { yearOffset = 0; }
+    if (!monthOffset) { monthOffset = 0; }
+    if (!dayOffset) { dayOffset = 0; }
 
-    let m = moment();
-    m.add(yearOffset, "years");
-    m.add(monthOffset, "months");
-    m.add(dayOffset, "days");
-    return m.format("YYYY-MM-DDTHH:mm:ss");
+    const m = moment();
+    m.add(yearOffset, 'years');
+    m.add(monthOffset, 'months');
+    m.add(dayOffset, 'days');
+    return m.format('YYYY-MM-DDTHH:mm:ss');
   }
 
   /**
@@ -61,15 +65,15 @@ export class DateHelper {
     monthOffset = 0,
     dayOffset = 0
   ): string {
-    if (!yearOffset) yearOffset = 0;
-    if (!monthOffset) monthOffset = 0;
-    if (!dayOffset) dayOffset = 0;
+    if (!yearOffset) { yearOffset = 0; }
+    if (!monthOffset) { monthOffset = 0; }
+    if (!dayOffset) { dayOffset = 0; }
 
-    let m = moment();
-    m.add(yearOffset, "years");
-    m.add(monthOffset, "months");
-    m.add(dayOffset, "days");
-    return m.format("YYYY-MM-DD");
+    const m = moment();
+    m.add(yearOffset, 'years');
+    m.add(monthOffset, 'months');
+    m.add(dayOffset, 'days');
+    return m.format('YYYY-MM-DD');
   }
 
   /**
@@ -79,10 +83,10 @@ export class DateHelper {
    * positive for future and negative for past dates
    */
   public getYearWithOffset(yearOffset = 0): string {
-    if (!yearOffset) yearOffset = 0;
+    if (!yearOffset) { yearOffset = 0; }
 
-    let m = moment();
-    m.add(yearOffset, "years");
-    return m.format("YYYY");
+    const m = moment();
+    m.add(yearOffset, 'years');
+    return m.format('YYYY');
   }
 }

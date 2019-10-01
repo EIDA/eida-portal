@@ -34,7 +34,7 @@ export class RequestComponent implements OnInit {
   download() {
     if (this.requestService.stationsService.countSelectedStations() <= 0) {
       this._consoleService.addNotification(
-        Enums.NotificationLevels.Error,
+        Enums.NotificationLevels.Warning,
         'At least one station needs to be selected!'
       );
       return;
@@ -46,7 +46,7 @@ export class RequestComponent implements OnInit {
       case Enums.RequestTimeWindowSelectionModes.Relative:
         if (this.requestService.eventsService.countSelectedEvents() <= 0) {
           this._consoleService.addNotification(
-            Enums.NotificationLevels.Error,
+            Enums.NotificationLevels.Warning,
             'In relative mode at least one event needs to be selected!'
           );
           return;
