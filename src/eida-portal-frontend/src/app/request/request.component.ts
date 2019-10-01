@@ -70,7 +70,12 @@ export class RequestComponent implements OnInit {
   }
 
   _handleProgressBar(n: ProgressNotification): void {
-    this._consoleService.add(n.message);
+    if (n.error) {
+      this._consoleService.addNotification(
+        Enums.NotificationLevels.Error,
+        `Error during request: ${n.message}`
+      );
+    }
 
     if (n.completed) {
       $('#request-button-download').removeClass('is-loading');

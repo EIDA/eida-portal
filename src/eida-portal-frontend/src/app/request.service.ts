@@ -12,12 +12,12 @@ import { DateHelper } from './helpers/date.helper';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { distinct } from 'rxjs/operators';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RequestService {
-  public progressReporter = new Subject<ProgressNotification>();
+export class RequestService extends BaseService {
   public eidaToken = new BehaviorSubject(new EidaToken());
   public tokenTimeout = new Subject<string>();
   public tokenAuthenticated = new Subject<boolean>();
@@ -28,7 +28,9 @@ export class RequestService {
     private _consoleService: ConsoleService,
     public eventsService: EventsService,
     public stationsService: StationsService
-  ) {}
+  ) {
+    super();
+  }
 
   public log(message: string) {
     this._consoleService.add(`RequestService: ${message}`);
@@ -213,7 +215,7 @@ export class RequestService {
     );
     const zip = new JSZip();
     const folder = zip.folder('data');
-    this.reportProgress(null, null, false, true);
+    this.reportProgress(null, null, false, false, true);
     let progressCount = 1;
 
     urls.forEach(url => {
@@ -225,7 +227,7 @@ export class RequestService {
           this.reportProgress(progressCount++, urls.length);
           return r.blob();
         }
-        this.reportProgress(null, null, true, null, r.statusText);
+        this.reportProgress(null, null, true, false, true, r.statusText);
         return Promise.reject(new Error(r.statusText));
       });
       const name = url.filename;
@@ -238,31 +240,7 @@ export class RequestService {
         this.reportProgress(null, null, true);
         saveAs(blob, filename);
       })
-      .catch(e => this.reportProgress(null, null, true, false, e));
-  }
-
-  /**
-   * Report the download progress to the listeners
-   * @param dividend {number} Dividend
-   * @param divisor {number} Divisor
-   * @param completed {boolean} True for completer, false otherwise
-   * @param indeterminate {boolean} True if progress is uknown, false otherwise
-   * @param message {string} Message to be rendered on the screen
-   */
-  reportProgress(
-    dividend,
-    divisor,
-    completed = false,
-    indeterminate = false,
-    message = ''
-  ): void {
-    const pb = new ProgressNotification();
-    pb.dividend = dividend;
-    pb.divisor = divisor;
-    pb.completed = completed;
-    pb.indeterminate = indeterminate;
-    pb.message = message;
-    this.progressReporter.next(pb);
+      .catch(e => this.reportProgress(null, null, true, true, false, e));
   }
 
   public parseToken(file): void {
