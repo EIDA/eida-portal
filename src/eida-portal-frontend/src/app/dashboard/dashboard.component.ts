@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsoleService } from '../console.service';
 import { RequestService } from '../request.service';
+import { EidaService } from '../eida.service';
 import { UiService } from '../ui.service';
 import { TextService } from '../text.service';
 import * as swal from '../../assets/js/sweetalert/sweetalert.min.js';
@@ -19,13 +20,14 @@ export class DashboardComponent implements OnInit {
     public consoleService: ConsoleService,
     public uiService: UiService,
     public textService: TextService,
-    private _requestService: RequestService
+    private _requestService: RequestService,
+    private _eidaService: EidaService
   ) {}
 
   ngOnInit() {
     this.consoleService.notifications.subscribe(n => this.notify(n));
 
-    this._requestService.tokenTimeout.subscribe(t =>
+    this._eidaService.tokenTimeout.subscribe(t =>
       this._handleTokenTimeoutUpdate(t)
     );
 
@@ -111,11 +113,11 @@ export class DashboardComponent implements OnInit {
     }
 
     const file = t;
-    this._requestService.parseToken(file);
+    this._eidaService.parseToken(file);
   }
 
   public detachEidaToken(): void {
-    this._requestService.parseToken(null);
+    this._eidaService.parseToken(null);
     $('#tokenAttachButtonText').text('Attach EIDA Token');
   }
 
