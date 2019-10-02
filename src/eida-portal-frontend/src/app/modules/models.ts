@@ -1,8 +1,8 @@
 // Created manually
 
-import { Enums } from "./enums";
-import { environment } from "../../environments/environment";
-import { DateHelper } from "../helpers/date.helper";
+import { Enums } from './enums';
+import { environment } from '../../environments/environment';
+import { DateHelper } from '../helpers/date.helper';
 
 export class StationsModel {
   networkTypes: {};
@@ -32,15 +32,15 @@ export class StationsModel {
     this.networkTypes = [
       {
         id: 0,
-        name: "All networks"
+        name: 'All networks'
       },
       {
         id: 1,
-        name: "Permanent networks"
+        name: 'Permanent networks'
       },
       {
         id: 2,
-        name: "Temporary networks"
+        name: 'Temporary networks'
       }
     ];
 
@@ -51,8 +51,8 @@ export class StationsModel {
     this.coordinateE = 180.0;
     this.coordinateW = -180.0;
     this.selectedNetworkType = this.networkTypes[0];
-    this.selectedNetwork = "All";
-    this.selectedStation = "All";
+    this.selectedNetwork = 'All';
+    this.selectedStation = 'All';
     this.dataSource = Enums.StationDataSource.Inventory;
     this.stationSelectionMethod = Enums.StationSelectionMethods.Code;
     this.channelSelectionMethod = Enums.stationChannelSelectionMethods.Code;
@@ -72,7 +72,7 @@ export class StationsModel {
   }
 
   clearStationSelection() {
-    this.selectedStation = "All";
+    this.selectedStation = 'All';
   }
 
   clearAvailableChannels() {
@@ -98,7 +98,7 @@ export class StationChannelModel {
   channel_selected: boolean;
 
   constructor() {
-    this.channel_code = "";
+    this.channel_code = '';
     this.channel_appearances = 0;
     this.channel_selected = true;
   }
@@ -124,12 +124,12 @@ export class EventsModel {
     this.catalogs = [
       {
         id: 0,
-        name: "EMSC",
+        name: 'EMSC',
         url: environment.fdsnEventEmsc
       },
       {
         id: 1,
-        name: "IRIS",
+        name: 'IRIS',
         url: environment.fdsnEventIris
       }
     ];
@@ -184,84 +184,95 @@ export class RequestModel {
     const dh = new DateHelper();
 
     this.fdsnRequestTypes = [
-      { id: 0, name: "Waveform (Mini-SEED)" },
-      { id: 1, name: "Metadata (StationXML)" },
-      { id: 2, name: "Metadata (Text)" }
+      { id: 0, name: 'Waveform (Mini-SEED)' },
+      { id: 1, name: 'Metadata (StationXML)' },
+      { id: 2, name: 'Metadata (Text)' }
     ];
 
     this.fdsnDataSources = [
       {
         id: 0,
-        name: "EIDA Federator",
+        name: 'EIDA Federator',
         dataselectUrl: environment.federatorDataselectUrl,
+        dataselectAuthUrl: environment.federatorDataselectAuthUrl,
         stationUrl: environment.federatorStationUrl
       },
       {
         id: 1,
-        name: "ODC (The Netherlands)",
+        name: 'ODC (The Netherlands)',
         dataselectUrl: environment.odcDataselectUrl,
+        dataselectAuthUrl: environment.odcDataselectAuthUrl,
         stationUrl: environment.odcStationUrl
       },
       {
         id: 2,
-        name: "GFZ (Germany)",
+        name: 'GFZ (Germany)',
         dataselectUrl: environment.gfzDataselectUrl,
+        dataselectAuthUrl: environment.gfzDataselectAuthUrl,
         stationUrl: environment.gfzStationUrl
       },
       {
         id: 3,
-        name: "RESIF (France)",
+        name: 'RESIF (France)',
         dataselectUrl: environment.resifDataselectUrl,
+        dataselectAuthUrl: environment.resifDataselectAuthUrl,
         stationUrl: environment.resifStationUrl
       },
       {
         id: 4,
-        name: "INGV (Italy)",
+        name: 'INGV (Italy)',
         dataselectUrl: environment.ingvDataselectUrl,
+        dataselectAuthUrl: environment.ingvDataselectAuthUrl,
         stationUrl: environment.ingvStationUrl
       },
       {
         id: 5,
-        name: "ETHZ (Switzerland)",
+        name: 'ETHZ (Switzerland)',
         dataselectUrl: environment.ethzDataselectUrl,
+        dataselectAuthUrl: environment.ethzDataselectAuthUrl,
         stationUrl: environment.ethzStationUrl
       },
       {
         id: 6,
-        name: "BGR (Germany)",
+        name: 'BGR (Germany)',
         dataselectUrl: environment.bgrDataselectUrl,
+        dataselectAuthUrl: environment.bgrDataselectAuthUrl,
         stationUrl: environment.bgrStationUrl
       },
       {
         id: 7,
-        name: "NIEP (Romania)",
+        name: 'NIEP (Romania)',
         dataselectUrl: environment.niepDataselectUrl,
+        dataselectAuthUrl: environment.niepDataselectAuthUrl,
         stationUrl: environment.niepStationUrl
       },
       {
         id: 8,
-        name: "KOERI (Turkey)",
+        name: 'KOERI (Turkey)',
         dataselectUrl: environment.koeriDataselectUrl,
+        dataselectAuthUrl: environment.koeriDataselectAuthUrl,
         stationUrl: environment.koeriStationUrl
       },
       {
         id: 9,
-        name: "LMU (Germany)",
+        name: 'LMU (Germany)',
         dataselectUrl: environment.lmuDataselectUrl,
+        dataselectAuthUrl: environment.lmuDataselectAuthUrl,
         stationUrl: environment.lmuStationUrl
       },
       {
         id: 10,
-        name: "NOA (Greece)",
+        name: 'NOA (Greece)',
         dataselectUrl: environment.noaDataselectUrl,
+        dataselectAuthUrl: environment.noaDataselectAuthUrl,
         stationUrl: environment.noaStationUrl
       }
     ];
 
     this.relativeModeTimeMethods = [
-      { id: 0, name: "Origin Time" },
-      { id: 1, name: "P/Pdiff" },
-      { id: 2, name: "S/Sdiff" }
+      { id: 0, name: 'Origin Time' },
+      { id: 1, name: 'P/Pdiff' },
+      { id: 2, name: 'S/Sdiff' }
     ];
 
     this.absoluteModeFrom = dh.getDateTimeWithOffset(null, null, -1);
@@ -292,12 +303,12 @@ export class FdsnNetwork {
   network_temporary: boolean;
 
   constructor() {
-    this.network_code = "ALL";
-    this.network_description = "ALL";
-    this.network_start_date = "";
-    this.network_start_year = "";
-    this.network_end_date = "";
-    this.network_end_year = "";
+    this.network_code = 'ALL';
+    this.network_description = 'ALL';
+    this.network_start_date = '';
+    this.network_start_year = '';
+    this.network_end_date = '';
+    this.network_end_year = '';
     this.network_temporary = false;
   }
 }
@@ -318,19 +329,19 @@ export class FdsnStation {
   station_restricted_status: string;
 
   constructor() {
-    this.station_network_code = "ALL";
-    this.station_network_start_year = "ALL";
+    this.station_network_code = 'ALL';
+    this.station_network_start_year = 'ALL';
     this.station_network_temporary = false;
-    this.station_code = "ALL";
+    this.station_code = 'ALL';
     this.station_latitude = 0.0;
     this.station_longitude = 0.0;
     this.station_elevation = 0.0;
-    this.station_site_name = "ALL";
-    this.station_start_date = "ALL";
-    this.station_start_year = "ALL";
-    this.station_end_date = "ALL";
-    this.station_end_year = "ALL";
-    this.station_restricted_status = "ALL";
+    this.station_site_name = 'ALL';
+    this.station_start_date = 'ALL';
+    this.station_start_year = 'ALL';
+    this.station_end_date = 'ALL';
+    this.station_end_year = 'ALL';
+    this.station_restricted_status = 'ALL';
   }
 }
 
@@ -394,12 +405,12 @@ export class ProgressNotification {
   message: string;
 
   constructor() {
-    this.dividend = "1";
-    this.divisor = "100";
+    this.dividend = '1';
+    this.divisor = '100';
     this.completed = false;
     this.error = false;
     this.indeterminate = false;
-    this.message = "";
+    this.message = '';
   }
 }
 
