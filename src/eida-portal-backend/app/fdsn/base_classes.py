@@ -115,7 +115,7 @@ class StationWrapper(object):
         self.restricted_status = NO_FDSNWS_DATA
         self.start_date = None
         self.end_date = None
-        self.creation_date = NO_FDSNWS_DATA
+        self.creation_date = None
         self.site_name = NO_FDSNWS_DATA
         self.channels = []
 
