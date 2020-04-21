@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // networksUrl: "http://127.0.0.1:5000/n",
-  // stationsUrl: "http://127.0.0.1:5000/s",
-  // channelsUrl: "http://127.0.0.1:5000/c",
+  // networksUrl: 'http://127.0.0.1:5000/n',
+  // stationsUrl: 'http://127.0.0.1:5000/s',
+  // channelsUrl: 'http://127.0.0.1:5000/c',
   networksUrl: 'https://www.orfeus-eu.org/epb/n',
   stationsUrl: 'https://www.orfeus-eu.org/epb/s',
   channelsUrl: 'https://www.orfeus-eu.org/epb/c',
@@ -14,47 +14,106 @@ export const environment = {
   routingUrl: 'https://www.orfeus-eu.org/eidaws/routing/1/query?',
   fdsnEventEmsc: 'https://seismicportal.eu/fdsnws/event/1/query?',
   fdsnEventIris: 'https://service.iris.edu/fdsnws/event/1/query?',
-  federatorStationUrl: 'https://federator.orfeus-eu.org/fdsnws/station/1/query',
-  federatorDataselectUrl:
-    'https://federator.orfeus-eu.org/fdsnws/dataselect/1/query',
-  federatorDataselectAuthUrl: null,
-  odcStationUrl: 'https://www.orfeus-eu.org/fdsnws/station/1/query',
-  odcDataselectUrl: 'https://www.orfeus-eu.org/fdsnws/dataselect/1/query',
-  odcDataselectAuthUrl: 'https://www.orfeus-eu.org/fdsnws/dataselect/1/auth',
-  gfzStationUrl: 'https://geofon.gfz-potsdam.de/fdsnws/station/1/query',
-  gfzDataselectUrl: 'https://geofon.gfz-potsdam.de/fdsnws/dataselect/1/query',
-  gfzDataselectAuthUrl:
-    'https://geofon.gfz-potsdam.de/fdsnws/dataselect/1/auth',
-  resifStationUrl: 'https://ws.resif.fr/fdsnws/station/1/query',
-  resifDataselectUrl: 'https://ws.resif.fr/fdsnws/dataselect/1/query',
-  resifDataselectAuthUrl: 'https://ws.resif.fr/fdsnws/dataselect/1/auth',
-  ingvStationUrl: 'https://webservices.ingv.it/fdsnws/station/1/query',
-  ingvDataselectUrl: 'https://webservices.ingv.it/fdsnws/dataselect/1/query',
-  ingvDataselectAuthUrl: 'https://webservices.ingv.it/fdsnws/dataselect/1/auth',
-  ethzStationUrl: 'https://eida.ethz.ch/fdsnws/station/1/query',
-  ethzDataselectUrl: 'https://eida.ethz.ch/fdsnws/dataselect/1/query',
-  ethzDataselectAuthUrl: 'https://eida.ethz.ch/fdsnws/dataselect/1/auth',
-  bgrStationUrl: 'https://eida.bgr.de/fdsnws/station/1/query',
-  bgrDataselectUrl: 'https://eida.bgr.de/fdsnws/dataselect/1/query',
-  bgrDataselectAuthUrl: 'https://eida.bgr.de/fdsnws/dataselect/1/auth',
-  niepStationUrl: 'https://eida-sc3.infp.ro/fdsnws/station/1/query',
-  niepDataselectUrl: 'https://eida-sc3.infp.ro/fdsnws/dataselect/1/query',
-  niepDataselectAuthUrl: 'https://eida-sc3.infp.ro/fdsnws/dataselect/1/auth',
-  koeriStationUrl:
-    'https://eida-service.koeri.boun.edu.tr/fdsnws/station/1/query',
-  koeriDataselectUrl:
-    'https://eida-service.koeri.boun.edu.tr/fdsnws/dataselect/1/query',
-  koeriDataselectAuthUrl:
-    'https://eida-service.koeri.boun.edu.tr/fdsnws/dataselect/1/auth',
-  lmuStationUrl:
-    'https://erde.geophysik.uni-muenchen.de/fdsnws/station/1/query',
-  lmuDataselectUrl:
-    'https://erde.geophysik.uni-muenchen.de/fdsnws/dataselect/1/query',
-  lmuDataselectAuthUrl:
-    'https://erde.geophysik.uni-muenchen.de/fdsnws/dataselect/1/auth',
-  noaStationUrl: 'https://eida.gein.noa.gr/fdsnws/station/1/query',
-  noaDataselectUrl: 'https://eida.gein.noa.gr/fdsnws/dataselect/1/query',
-  noaDataselectAuthUrl: 'https://eida.gein.noa.gr/fdsnws/dataselect/1/auth'
+  fdsnDataSources: [
+    {
+      name: 'EIDA Federator',
+      enabled: false,
+      stationUrl:
+        'https://federator.orfeus-eu.org/fdsnws/station/1/query',
+      dataselectUrl:
+        'https://federator.orfeus-eu.org/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: null,
+    },
+    {
+      name: 'ODC (The Netherlands)',
+      enabled: true,
+      stationUrl: 'https://www.orfeus-eu.org/fdsnws/station/1/query',
+      dataselectUrl: 'https://www.orfeus-eu.org/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://www.orfeus-eu.org/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'GFZ (Germany)',
+      enabled: true,
+      stationUrl: 'https://geofon.gfz-potsdam.de/fdsnws/station/1/query',
+      dataselectUrl:
+        'https://geofon.gfz-potsdam.de/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://geofon.gfz-potsdam.de/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'RESIF (France)',
+      enabled: true,
+      stationUrl: 'https://ws.resif.fr/fdsnws/station/1/query',
+      dataselectUrl: 'https://ws.resif.fr/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: 'https://ws.resif.fr/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'INGV (Italy)',
+      enabled: true,
+      stationUrl: 'https://webservices.ingv.it/fdsnws/station/1/query',
+      dataselectUrl:
+        'https://webservices.ingv.it/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://webservices.ingv.it/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'ETHZ (Switzerland)',
+      enabled: true,
+      stationUrl: 'https://eida.ethz.ch/fdsnws/station/1/query',
+      dataselectUrl: 'https://eida.ethz.ch/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: 'https://eida.ethz.ch/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'BGR (Germany)',
+      enabled: true,
+      stationUrl: 'https://eida.bgr.de/fdsnws/station/1/query',
+      dataselectUrl: 'https://eida.bgr.de/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: 'https://eida.bgr.de/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'NIEP (Romania)',
+      enabled: true,
+      stationUrl: 'https://eida-sc3.infp.ro/fdsnws/station/1/query',
+      dataselectUrl: 'https://eida-sc3.infp.ro/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://eida-sc3.infp.ro/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'KOERI (Turkey)',
+      enabled: true,
+      stationUrl:
+        'https://eida-service.koeri.boun.edu.tr/fdsnws/station/1/query',
+      dataselectUrl:
+        'https://eida-service.koeri.boun.edu.tr/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://eida-service.koeri.boun.edu.tr/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'LMU (Germany)',
+      enabled: true,
+      stationUrl:
+        'https://erde.geophysik.uni-muenchen.de/fdsnws/station/1/query',
+      dataselectUrl:
+        'https://erde.geophysik.uni-muenchen.de/fdsnws/dataselect/1/query',
+      dataselectAuthUrl:
+        'https://erde.geophysik.uni-muenchen.de/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'NOA (Greece)',
+      enabled: true,
+      stationUrl: 'https://eida.gein.noa.gr/fdsnws/station/1/query',
+      dataselectUrl: 'https://eida.gein.noa.gr/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: 'https://eida.gein.noa.gr/fdsnws/dataselect/1/auth',
+    },
+    {
+      name: 'UIB (Norway)',
+      enabled: true,
+      stationUrl: 'https://eida.geo.uib.no/fdsnws/station/1/query',
+      dataselectUrl: 'https://eida.geo.uib.no/fdsnws/dataselect/1/query',
+      dataselectAuthUrl: 'https://eida.geo.uib.no/fdsnws/dataselect/1/auth',
+    },
+  ]
 };
 
 /*

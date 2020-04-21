@@ -168,7 +168,7 @@ export class MapModel {}
 
 export class RequestModel {
   fdsnRequestTypes: {};
-  fdsnDataSources: {};
+  fdsnDataSources = new Array();
   timeWindowSelectionMode: Enums.RequestTimeWindowSelectionModes;
   relativeModeTimeMethods: {};
   relativeModeStart: number;
@@ -189,85 +189,20 @@ export class RequestModel {
       { id: 2, name: 'Metadata (Text)' }
     ];
 
-    this.fdsnDataSources = [
-      {
+    for (const f of environment.fdsnDataSources) {
+      const _obj = {
         id: 0,
-        name: 'EIDA Federator',
-        dataselectUrl: environment.federatorDataselectUrl,
-        dataselectAuthUrl: environment.federatorDataselectAuthUrl,
-        stationUrl: environment.federatorStationUrl
-      },
-      {
-        id: 1,
-        name: 'ODC (The Netherlands)',
-        dataselectUrl: environment.odcDataselectUrl,
-        dataselectAuthUrl: environment.odcDataselectAuthUrl,
-        stationUrl: environment.odcStationUrl
-      },
-      {
-        id: 2,
-        name: 'GFZ (Germany)',
-        dataselectUrl: environment.gfzDataselectUrl,
-        dataselectAuthUrl: environment.gfzDataselectAuthUrl,
-        stationUrl: environment.gfzStationUrl
-      },
-      {
-        id: 3,
-        name: 'RESIF (France)',
-        dataselectUrl: environment.resifDataselectUrl,
-        dataselectAuthUrl: environment.resifDataselectAuthUrl,
-        stationUrl: environment.resifStationUrl
-      },
-      {
-        id: 4,
-        name: 'INGV (Italy)',
-        dataselectUrl: environment.ingvDataselectUrl,
-        dataselectAuthUrl: environment.ingvDataselectAuthUrl,
-        stationUrl: environment.ingvStationUrl
-      },
-      {
-        id: 5,
-        name: 'ETHZ (Switzerland)',
-        dataselectUrl: environment.ethzDataselectUrl,
-        dataselectAuthUrl: environment.ethzDataselectAuthUrl,
-        stationUrl: environment.ethzStationUrl
-      },
-      {
-        id: 6,
-        name: 'BGR (Germany)',
-        dataselectUrl: environment.bgrDataselectUrl,
-        dataselectAuthUrl: environment.bgrDataselectAuthUrl,
-        stationUrl: environment.bgrStationUrl
-      },
-      {
-        id: 7,
-        name: 'NIEP (Romania)',
-        dataselectUrl: environment.niepDataselectUrl,
-        dataselectAuthUrl: environment.niepDataselectAuthUrl,
-        stationUrl: environment.niepStationUrl
-      },
-      {
-        id: 8,
-        name: 'KOERI (Turkey)',
-        dataselectUrl: environment.koeriDataselectUrl,
-        dataselectAuthUrl: environment.koeriDataselectAuthUrl,
-        stationUrl: environment.koeriStationUrl
-      },
-      {
-        id: 9,
-        name: 'LMU (Germany)',
-        dataselectUrl: environment.lmuDataselectUrl,
-        dataselectAuthUrl: environment.lmuDataselectAuthUrl,
-        stationUrl: environment.lmuStationUrl
-      },
-      {
-        id: 10,
-        name: 'NOA (Greece)',
-        dataselectUrl: environment.noaDataselectUrl,
-        dataselectAuthUrl: environment.noaDataselectAuthUrl,
-        stationUrl: environment.noaStationUrl
+        enabled: f.enabled,
+        name: f.name,
+        dataselectUrl: f.dataselectUrl,
+        dataselectAuthUrl: f.dataselectAuthUrl,
+        stationUrl: f.stationUrl
+      };
+
+      if (_obj.enabled) {
+        this.fdsnDataSources.push(_obj);
       }
-    ];
+    }
 
     this.relativeModeTimeMethods = [
       { id: 0, name: 'Origin Time' },
