@@ -14,6 +14,7 @@ export const environment = {
   routingUrl: 'https://www.orfeus-eu.org/eidaws/routing/1/query?',
   fdsnEventEmsc: 'https://seismicportal.eu/fdsnws/event/1/query?',
   fdsnEventIris: 'https://service.iris.edu/fdsnws/event/1/query?',
+  fdsnEventEthz: ' http://arclink.ethz.ch/fdsnws/event/1/query?',
   fdsnDataSources: [
     {
       name: 'EIDA Federator',
