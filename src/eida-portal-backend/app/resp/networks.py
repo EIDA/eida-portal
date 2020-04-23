@@ -35,4 +35,4 @@ class NetworksResp(object):
     def _dump(self, data):
         schema = FdsnNetworkSchema(many=True)
         result = schema.dump(data)
-        return result.data
+        return result

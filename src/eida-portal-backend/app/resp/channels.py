@@ -74,4 +74,4 @@ class ChannelsResp(object):
     def _dump(self, data):
         schema = FdsnStationChannelSchema(many=True)
         result = schema.dump(data)
-        return result.data
+        return result

@@ -40,4 +40,4 @@ class StationsResp(object):
     def _dump(self, data):
         schema = FdsnStationSchema(many=True)
         result = schema.dump(data)
-        return result.data
+        return result
