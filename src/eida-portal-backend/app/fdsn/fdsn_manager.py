@@ -227,11 +227,15 @@ class FdsnRoutingManager(FdsnHttpBase):
         super(FdsnRoutingManager, self).__init__()
         self.netman = FdsnNetworkManager()
 
+        # Try to get the Routing Web Service from ODC
         n = db.session.query(FdsnNode).filter(
             FdsnNode.node_code == 'ODC').first()
 
+        # If ODC does not exist, take first one from top
         if not n:
-            n = db.session.query(FdsnNode).filter().first()
+            n = db.session.query(FdsnNode).filter(
+                FdsnNode.node_url_routing != ''
+            ).first()
 
         self.routing_node_wrapper = NodeWrapper(n)
 
