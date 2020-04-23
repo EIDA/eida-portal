@@ -229,6 +229,10 @@ class FdsnRoutingManager(FdsnHttpBase):
 
         n = db.session.query(FdsnNode).filter(
             FdsnNode.node_code == 'ODC').first()
+
+        if not n:
+            n = db.session.query(FdsnNode).filter().first()
+
         self.routing_node_wrapper = NodeWrapper(n)
 
     def build_fdsn_station_url(self, url, param_wrapper):
