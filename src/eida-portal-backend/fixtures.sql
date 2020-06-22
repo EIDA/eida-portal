@@ -199,10 +199,29 @@ insert
 		"node_url_routing",
 		"node_url_wfcatalog")
 	values ('11',
-	'UiB',
+	'UIB',
 	'University of Bergen',
 	'eida.geo.uib.no',
 	'http://eida.geo.uib.no/fdsnws/dataselect/1/query?',
 	'http://eida.geo.uib.no/fdsnws/station/1/query?',
+	NULL,
+	NULL);
+
+insert
+	into
+		nodes ("node_id",
+		"node_code",
+		"node_description",
+		"node_url_base",
+		"node_url_dataselect",
+		"node_url_station",
+		"node_url_routing",
+		"node_url_wfcatalog")
+	values ('12',
+	'ICGC',
+	'Institut Cartogràfic i Geològic de Catalunya',
+	'ws.icgc.cat',
+	'http://ws.icgc.cat/fdsnws/dataselect/1/query?',
+	'http://ws.icgc.cat/fdsnws/station/1/query?',
 	NULL,
 	NULL);
