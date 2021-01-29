@@ -44,6 +44,7 @@ export class DateHelper {
     if (!dayOffset) { dayOffset = 0; }
 
     const m = moment();
+    m.utc();
     m.add(yearOffset, 'years');
     m.add(monthOffset, 'months');
     m.add(dayOffset, 'days');
