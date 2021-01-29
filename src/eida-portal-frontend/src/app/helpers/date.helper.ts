@@ -2,10 +2,15 @@
 import moment from 'moment';
 
 export class DateHelper {
+  private useUTC: boolean;
+
   /**
    * DateHelper class constructor
+   * @param useUTC {boolean} Whether or not to use UTC
    */
-  constructor() {}
+  constructor(useUTC: boolean = true) {
+    this.useUTC = useUTC;
+  }
 
   public now(): moment.Moment {
     return moment();
@@ -44,7 +49,7 @@ export class DateHelper {
     if (!dayOffset) { dayOffset = 0; }
 
     const m = moment();
-    m.utc();
+    if (this.useUTC) { m.utc(); }
     m.add(yearOffset, 'years');
     m.add(monthOffset, 'months');
     m.add(dayOffset, 'days');
