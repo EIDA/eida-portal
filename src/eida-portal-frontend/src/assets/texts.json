@@ -332,13 +332,13 @@
     {
         "key": "request-tip-datetime-from",
         "values": {
-            "en": "Time window starting datetime expressed using ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
+            "en": "Time window starting UTC datetime expressed using ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
         }
     },
     {
         "key": "request-tip-datetime-to",
         "values": {
-            "en": "Time window ending datetime expressed using ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
+            "en": "Time window ending UTC datetime expressed using ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
         }
     },
     {
