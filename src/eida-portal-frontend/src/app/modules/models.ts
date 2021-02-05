@@ -132,6 +132,18 @@ export class EventsModel {
         name: 'IRIS',
         url: environment.fdsnEventIris
       }
+      ,
+      {
+        id: 2,
+        name: 'GFZ',
+        url: environment.fdsnEventGfz
+      }
+      ,
+      {
+        id: 3,
+        name: 'KNMI',
+        url: environment.fdsnEventKnmi
+      }
     ];
     this.minimumMagnitude = 0.0;
     this.dateFrom = dh.getDateWithOffset(-1);
