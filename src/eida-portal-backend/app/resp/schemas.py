@@ -5,14 +5,19 @@ class FdsnNodeSchema(Schema):
     node_code = fields.Str()
 
 class FdsnStationChannelSchema(Schema):
+    channel_station_network_code = fields.Str()
+    channel_station_station_code = fields.Str()
+    channel_location = fields.Str()
     channel_code = fields.Str()
+    channel_start_date = fields.Str()
+    channel_end_date = fields.Str()
     channel_sample_rate = fields.Str()
-
 
 class FdsnStationSchema(Schema):
     station_code = fields.Str()
     station_network_code = fields.Str()
     station_network_start_year = fields.Str()
+    station_node_code = fields.Str()
     station_network_temporary = fields.Boolean()
     station_latitude = fields.Str()
     station_longitude = fields.Str()

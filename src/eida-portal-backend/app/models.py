@@ -115,6 +115,8 @@ class FdsnStation(db.Model):
     # channels = relationship("FdsnStationChannel", backref="station")
     station_channels = relationship("FdsnStationChannel")
 
+    station_node_code = Column(String(STRING_LENGTH_SHORT))
+
     station_network_code = Column(String(STRING_LENGTH_SHORT))
 
     station_network_start_year = Column(String(STRING_LENGTH_SHORT))
@@ -154,9 +156,20 @@ class FdsnStationChannel(db.Model):
 
     # FdsnStationChannel -> FdsnStation relation
     channel_station_id = Column(Integer, ForeignKey("stations.station_id"))
+
     channel_station = \
         relationship("FdsnStation", back_populates="station_channels")
 
+    channel_station_network_code = Column(String(STRING_LENGTH_SHORT))
+
+    channel_station_station_code = Column(String(STRING_LENGTH_SHORT))
+
+    channel_location = Column(String(STRING_LENGTH_SHORT))
+
     channel_code = Column(String(STRING_LENGTH_SHORT))
+
+    channel_start_date = Column(DateTime)
+
+    channel_end_date = Column(DateTime)
 
     channel_sample_rate = Column(String(STRING_LENGTH_SHORT))

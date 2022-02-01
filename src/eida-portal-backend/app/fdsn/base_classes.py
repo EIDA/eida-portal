@@ -1,3 +1,4 @@
+from tkinter import NO
 from dateutil import parser
 
 NO_FDSNWS_DATA = 'n/a'
@@ -144,4 +145,15 @@ class StationChannel(object):
 
     def __init__(self):
         self.code = NO_FDSNWS_DATA
+        self.location = NO_FDSNWS_DATA
+        self.start_date = None
+        self.end_date = None
         self.sample_rate = NO_FDSNWS_DATA
+
+    def parse_start_date(self):
+        return parser.parse(self.start_date) \
+            if self.start_date else None
+
+    def parse_end_date(self):
+        return parser.parse(self.end_date) \
+            if self.end_date else None

@@ -406,6 +406,18 @@ class FdsnRoutingManager(FdsnHttpBase):
                         tmp = channel.get('code')
                         if tmp is not None:
                             channel_wrapper.code = self.validate_string(tmp)
+                        
+                        tmp = channel.get('startDate')
+                        if tmp is not None:
+                            channel_wrapper.start_date = self.validate_string(tmp)
+                        
+                        tmp = channel.get('endDate')
+                        if tmp is not None:
+                            channel_wrapper.end_date = self.validate_string(tmp)
+                        
+                        tmp = channel.get('locationCode')
+                        if tmp is not None:
+                            channel_wrapper.location = self.validate_string(tmp)
 
                         tmp = channel.find('.//mw:SampleRate', namespaces=NSMAP)
                         if tmp is not None:
@@ -484,6 +496,8 @@ class FdsnRoutingManager(FdsnHttpBase):
                     network_wrapper.parse_start_date_year()).first()
 
                 # Fill data obtained from the Web Service
+                stat.station_node_code = \
+                    node_wrapper.code
                 stat.station_network_code = \
                     network_wrapper.code
                 stat.station_network_start_year = \
@@ -516,7 +530,12 @@ class FdsnRoutingManager(FdsnHttpBase):
                 for channel in station_wrapper.channels:
                     cha = FdsnStationChannel()
                     cha.channel_station = stat
+                    cha.channel_station_network_code = network_wrapper.code
+                    cha.channel_station_station_code = station_wrapper.code
+                    cha.channel_location = channel.location
                     cha.channel_code = channel.code
+                    cha.channel_start_date = channel.parse_start_date()
+                    cha.channel_end_date = channel.parse_end_date()
                     cha.channel_sample_rate = channel.sample_rate
 
             # Commit the db session changes
