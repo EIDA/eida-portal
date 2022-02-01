@@ -1,4 +1,4 @@
-from flask import request, Response, jsonify
+from flask import request, jsonify
 
 from app import app
 
@@ -14,21 +14,21 @@ def nodes():
     x = m.nodes_resp()
     return jsonify(x)
 
-@app.route('/n', methods=['GET'])
+@app.route('/networks', methods=['GET'])
 def networks():
     m = NetworksResp(request.args)
     x = m.networks_resp()
     return jsonify(x)
 
 
-@app.route('/s', methods=['GET'])
+@app.route('/stations', methods=['GET'])
 def stations():
     s = StationsResp(request.args)
     x = s.stations_resp()
     return jsonify(x)
 
 
-@app.route('/c', methods=['GET', 'POST'])
+@app.route('/channels', methods=['GET', 'POST'])
 def channels():
     s = ChannelsResp(request.args)
 
