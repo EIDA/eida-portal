@@ -1,9 +1,6 @@
 from marshmallow import Schema, fields
 
 
-class FdsnNodeSchema(Schema):
-    node_code = fields.Str()
-
 class FdsnStationChannelSchema(Schema):
     channel_station_network_code = fields.Str()
     channel_station_code = fields.Str()
@@ -33,7 +30,6 @@ class FdsnStationSchema(Schema):
 
 class FdsnNetworkSchema(Schema):
     network_code = fields.Str()
-    network_node = fields.Nested(FdsnNodeSchema, many=False)
     network_description = fields.Str()
     network_start_date = fields.Str()
     network_start_year = fields.Str()
@@ -41,4 +37,10 @@ class FdsnNetworkSchema(Schema):
     network_end_year = fields.Str()
     network_restricted_status = fields.Str()
     network_temporary = fields.Boolean()
-    # network_stations = fields.Nested(FdsnStationSchema, many=True)
+    network_stations = fields.Nested(FdsnStationSchema, many=True)
+
+
+class FdsnNodeSchema(Schema):
+    node_code = fields.Str()
+    node_description = fields.Str()
+    node_networks = fields.Nested(FdsnNetworkSchema, many=True)

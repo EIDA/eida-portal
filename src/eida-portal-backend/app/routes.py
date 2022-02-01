@@ -2,11 +2,17 @@ from flask import request, Response, jsonify
 
 from app import app
 
-from .fdsn.fdsn_manager import FdsnManager
+from .resp.nodes import NodesResp
 from .resp.networks import NetworksResp
 from .resp.stations import StationsResp
 from .resp.channels import ChannelsResp
 
+
+@app.route('/nodes', methods=['GET'])
+def nodes():
+    m = NodesResp(request.args)
+    x = m.nodes_resp()
+    return jsonify(x)
 
 @app.route('/n', methods=['GET'])
 def networks():
