@@ -6,7 +6,7 @@ class FdsnNodeSchema(Schema):
 
 class FdsnStationChannelSchema(Schema):
     channel_station_network_code = fields.Str()
-    channel_station_station_code = fields.Str()
+    channel_station_code = fields.Str()
     channel_location = fields.Str()
     channel_code = fields.Str()
     channel_start_date = fields.Str()

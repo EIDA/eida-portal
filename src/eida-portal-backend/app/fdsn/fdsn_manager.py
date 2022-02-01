@@ -531,7 +531,7 @@ class FdsnRoutingManager(FdsnHttpBase):
                     cha = FdsnStationChannel()
                     cha.channel_station = stat
                     cha.channel_station_network_code = network_wrapper.code
-                    cha.channel_station_station_code = station_wrapper.code
+                    cha.channel_station_code = station_wrapper.code
                     cha.channel_location = channel.location
                     cha.channel_code = channel.code
                     cha.channel_start_date = channel.parse_start_date()

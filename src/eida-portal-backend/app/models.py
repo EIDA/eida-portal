@@ -162,7 +162,7 @@ class FdsnStationChannel(db.Model):
 
     channel_station_network_code = Column(String(STRING_LENGTH_SHORT))
 
-    channel_station_station_code = Column(String(STRING_LENGTH_SHORT))
+    channel_station_code = Column(String(STRING_LENGTH_SHORT))
 
     channel_location = Column(String(STRING_LENGTH_SHORT))
 
