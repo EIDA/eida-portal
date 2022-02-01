@@ -43,4 +43,9 @@ class FdsnNetworkSchema(Schema):
 class FdsnNodeSchema(Schema):
     node_code = fields.Str()
     node_description = fields.Str()
+    node_url_base = fields.Str()
+    node_url_dataselect = fields.Str()
+    node_url_station = fields.Str()
+    node_url_routing = fields.Str()
+    node_url_wfcatalog = fields.Str()
     node_networks = fields.Nested(FdsnNetworkSchema, many=True)

@@ -1,6 +1,6 @@
 from app import db, cache
 
-from .schemas import FdsnNode
+from .schemas import FdsnNodeSchema
 from ..models import FdsnNode
 
 
@@ -28,6 +28,6 @@ class NodesResp(object):
         return result
 
     def _dump(self, data):
-        schema = FdsnNode(many=True)
+        schema = FdsnNodeSchema(many=True)
         result = schema.dump(data)
         return result
