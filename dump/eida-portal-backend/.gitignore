@@ -1,6 +1,0 @@
-node_modules/
-npm-debug.log
-
-# Ignore the DB file
-db/epb-db.json
-epb-db.json
