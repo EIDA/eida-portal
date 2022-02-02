@@ -10,6 +10,7 @@ class FdsnStationChannelSchema(Schema):
     channel_end_date = fields.Str()
     channel_sample_rate = fields.Str()
 
+
 class FdsnStationSchema(Schema):
     station_code = fields.Str()
     station_network_code = fields.Str()

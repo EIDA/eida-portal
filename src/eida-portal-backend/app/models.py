@@ -1,21 +1,8 @@
-from dateutil import parser
-
 from app import db
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Boolean,
-    ForeignKey,
-    DateTime,
-    Sequence,
-    Float
-)
-
-import datetime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Sequence
 
 
 STRING_LENGTH_SHORT = 256
@@ -37,7 +24,7 @@ Base = declarative_base()
 class FdsnNode(db.Model):
     __tablename__ = "nodes"
 
-    node_id = Column(Integer, Sequence('node_seq'), primary_key=True)
+    node_id = Column(Integer, Sequence("node_seq"), primary_key=True)
 
     # FdsnNode -> FdsnNetwork relation
     node_networks = relationship("FdsnNetwork")
@@ -63,9 +50,7 @@ class FdsnNode(db.Model):
 class FdsnNetwork(db.Model):
     __tablename__ = "networks"
 
-    network_id = Column(Integer,
-                        Sequence('network_seq'),
-                        primary_key=True)
+    network_id = Column(Integer, Sequence("network_seq"), primary_key=True)
 
     # FdsnNetwork -> FdsnNode relation
     network_node_id = Column(Integer, ForeignKey("nodes.node_id"))
@@ -102,14 +87,11 @@ class FdsnNetwork(db.Model):
 class FdsnStation(db.Model):
     __tablename__ = "stations"
 
-    station_id = Column(Integer,
-                        Sequence('station_seq'),
-                        primary_key=True)
+    station_id = Column(Integer, Sequence("station_seq"), primary_key=True)
 
     # FdsnStation -> FdsnNetwork relation
     station_network_id = Column(Integer, ForeignKey("networks.network_id"))
-    station_network = \
-        relationship("FdsnNetwork", back_populates="network_stations")
+    station_network = relationship("FdsnNetwork", back_populates="network_stations")
 
     # FdsnStation -> FdsnStationChannel relation
     # channels = relationship("FdsnStationChannel", backref="station")
@@ -150,15 +132,12 @@ class FdsnStation(db.Model):
 class FdsnStationChannel(db.Model):
     __tablename__ = "channels"
 
-    channel_id = Column(Integer,
-                        Sequence('channel_seq'),
-                        primary_key=True)
+    channel_id = Column(Integer, Sequence("channel_seq"), primary_key=True)
 
     # FdsnStationChannel -> FdsnStation relation
     channel_station_id = Column(Integer, ForeignKey("stations.station_id"))
 
-    channel_station = \
-        relationship("FdsnStation", back_populates="station_channels")
+    channel_station = relationship("FdsnStation", back_populates="station_channels")
 
     channel_station_network_code = Column(String(STRING_LENGTH_SHORT))
 

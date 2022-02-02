@@ -5,11 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 
-config = {
-    "DEBUG": True,
-    "CACHE_TYPE": "simple",
-    "CACHE_DEFAULT_TIMEOUT": 43200
-}
+config = {"DEBUG": True, "CACHE_TYPE": "simple", "CACHE_DEFAULT_TIMEOUT": 43200}
 
 app = Flask(__name__)
 app.config.from_mapping(config)

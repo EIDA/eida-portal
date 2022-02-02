@@ -1,25 +1,22 @@
 from tkinter import NO
 from dateutil import parser
 
-NO_FDSNWS_DATA = 'n/a'
-NSMAP = {'mw': 'http://www.fdsn.org/xml/station/1'}
+NO_FDSNWS_DATA = "n/a"
+NSMAP = {"mw": "http://www.fdsn.org/xml/station/1"}
 
 
 class RouteWrapper(object):
-
     def __init__(self):
         self.datacenters = []
 
 
 class RouteDatacenterWrapper(object):
-
     def __init__(self):
         self.url = NO_FDSNWS_DATA
         self.params = []
 
 
 class RouteParamWrapper(object):
-
     def __init__(self):
         self.loc = NO_FDSNWS_DATA
         self.end = NO_FDSNWS_DATA
@@ -32,7 +29,6 @@ class RouteParamWrapper(object):
 
 # Single node instance wrapper
 class NodeWrapper(object):
-
     def __init__(self, node):
         self.code = node.node_code
         self.description = node.node_description
@@ -43,28 +39,27 @@ class NodeWrapper(object):
         self.networks = []
 
     def build_url_station_station_level(self):
-        return self.url_station + 'network={0}&level=station'
+        return self.url_station + "network={0}&level=station"
 
-    def build_url_station_network_station_level(
-            self, network_code, station_code):
-        return self.url_station + 'network={0}&station={1}'.format(
-            network_code, station_code)
+    def build_url_station_network_station_level(self, network_code, station_code):
+        return self.url_station + "network={0}&station={1}".format(
+            network_code, station_code
+        )
 
     def build_url_station_network_level(self):
-        return self.url_station + 'network=*&level=network'
+        return self.url_station + "network=*&level=network"
 
     def build_url_station_channel_level(self, network_code, station_code):
-        return self.url_station + \
-            'network={0}&station={1}&level=channel'.format(
-                network_code, station_code)
+        return self.url_station + "network={0}&station={1}&level=channel".format(
+            network_code, station_code
+        )
 
     def build_url_routing_network_level(self, network_code):
-        return self.url_routing + 'network={0}'.format(network_code)
+        return self.url_routing + "network={0}".format(network_code)
 
 
 # Single network instance  wrapper and collection of stations
 class NetworkWrapper(object):
-
     def __init__(self):
         self.id = 0
         self.code = NO_FDSNWS_DATA
@@ -105,7 +100,6 @@ class NetworkWrapper(object):
 
 # Single station instance wrapper
 class StationWrapper(object):
-
     def __init__(self):
         self.code = NO_FDSNWS_DATA
         self.network_code = NO_FDSNWS_DATA
@@ -121,28 +115,22 @@ class StationWrapper(object):
         self.channels = []
 
     def parse_start_date(self):
-        return parser.parse(self.start_date) \
-            if self.start_date else None
+        return parser.parse(self.start_date) if self.start_date else None
 
     def parse_start_date_year(self):
-        return parser.parse(self.start_date).year \
-            if self.start_date else None
+        return parser.parse(self.start_date).year if self.start_date else None
 
     def parse_end_date(self):
-        return parser.parse(self.end_date) \
-            if self.end_date else None
+        return parser.parse(self.end_date) if self.end_date else None
 
     def parse_end_date_year(self):
-        return parser.parse(self.end_date).year \
-            if self.end_date else None
+        return parser.parse(self.end_date).year if self.end_date else None
 
     def parse_creation_date(self):
-        return parser.parse(self.creation_date) \
-            if self.creation_date else None
+        return parser.parse(self.creation_date) if self.creation_date else None
 
 
 class StationChannel(object):
-
     def __init__(self):
         self.code = NO_FDSNWS_DATA
         self.location = NO_FDSNWS_DATA
@@ -151,9 +139,7 @@ class StationChannel(object):
         self.sample_rate = NO_FDSNWS_DATA
 
     def parse_start_date(self):
-        return parser.parse(self.start_date) \
-            if self.start_date else None
+        return parser.parse(self.start_date) if self.start_date else None
 
     def parse_end_date(self):
-        return parser.parse(self.end_date) \
-            if self.end_date else None
+        return parser.parse(self.end_date) if self.end_date else None
