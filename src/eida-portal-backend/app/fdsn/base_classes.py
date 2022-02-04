@@ -1,7 +1,7 @@
 from tkinter import NO
 from dateutil import parser
 
-NO_FDSNWS_DATA = "n/a"
+NO_FDSNWS_DATA = "--"
 NSMAP = {"mw": "http://www.fdsn.org/xml/station/1"}
 
 
