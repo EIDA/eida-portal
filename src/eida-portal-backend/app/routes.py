@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, Response
 
 from app import app
 
@@ -6,6 +6,7 @@ from .resp.nodes import NodesResp
 from .resp.networks import NetworksResp
 from .resp.stations import StationsResp
 from .resp.channels import ChannelsResp
+from .resp.kml import KmlResp
 
 
 @app.route("/nodes", methods=["GET"])
@@ -39,3 +40,9 @@ def channels():
         x = s.channels_get_resp()
 
     return jsonify(x)
+
+@app.route("/kml", methods=["GET"])
+def kml():
+    s = KmlResp(request.args)
+    x = s.kml_resp()
+    return Response(x, mimetype='text/xml')
