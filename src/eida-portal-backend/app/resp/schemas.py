@@ -28,19 +28,6 @@ class FdsnStationSchema(Schema):
     station_site_name = fields.Str()
     # station_channels = fields.Nested(FdsnStationChannelSchema, many=True)
 
-
-class FdsnNetworkSchema(Schema):
-    network_code = fields.Str()
-    network_description = fields.Str()
-    network_start_date = fields.Str()
-    network_start_year = fields.Str()
-    network_end_date = fields.Str()
-    network_end_year = fields.Str()
-    network_restricted_status = fields.Str()
-    network_temporary = fields.Boolean()
-    # network_stations = fields.Nested(FdsnStationSchema, many=True)
-
-
 class FdsnNodeSchema(Schema):
     node_code = fields.Str()
     node_description = fields.Str()
@@ -50,3 +37,15 @@ class FdsnNodeSchema(Schema):
     node_url_routing = fields.Str()
     node_url_wfcatalog = fields.Str()
     # node_networks = fields.Nested(FdsnNetworkSchema, many=True)
+
+class FdsnNetworkSchema(Schema):
+    network_code = fields.Str()
+    network_node = fields.Nested(FdsnNodeSchema, many=False)
+    network_description = fields.Str()
+    network_start_date = fields.Str()
+    network_start_year = fields.Str()
+    network_end_date = fields.Str()
+    network_end_year = fields.Str()
+    network_restricted_status = fields.Str()
+    network_temporary = fields.Boolean()
+    # network_stations = fields.Nested(FdsnStationSchema, many=True)
