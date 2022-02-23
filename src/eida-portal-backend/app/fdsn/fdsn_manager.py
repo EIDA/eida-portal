@@ -70,7 +70,7 @@ class FdsnHttpBase:
                 db.session.query(FdsnNetwork)
                 .join(FdsnNode)
                 .filter(
-                    # FdsnNode.code == node_wrapper.code,
+                    FdsnNode.node_code == node_wrapper.code,
                     FdsnNetwork.network_code == network_wrapper.code,
                     extract("year", FdsnNetwork.network_start_date)
                     == network_wrapper.parse_start_date_year(),
@@ -89,7 +89,7 @@ class FdsnHttpBase:
                 FdsnStation.query.join(FdsnNetwork)
                 .join(FdsnNode)
                 .filter(
-                    # FdsnNode.code == node_wrapper.code,
+                    FdsnNode.node_code == node_wrapper.code,
                     FdsnNetwork.network_code == network_wrapper.code,
                     extract("year", FdsnNetwork.network_start_date)
                     == network_wrapper.parse_start_date_year(),
