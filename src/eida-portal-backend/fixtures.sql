@@ -144,7 +144,7 @@ insert
 	values ('8',
 	'KOERI',
 	'Kandilli Observatory and Earthquake Research Institute',
-	'eida-service.koeri.boun.edu.tr',
+	'eida.koeri.boun.edu.tr',
 	'https://eida.koeri.boun.edu.tr/fdsnws/dataselect/1/query?',
 	'https://eida.koeri.boun.edu.tr/fdsnws/station/1/query?',
 	NULL,
