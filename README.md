@@ -116,7 +116,7 @@ npm start
 
 ```bash
 cd src/eida-portal-backend/
-docker-compose -p 'epb' up -d
+docker-compose -p 'epb' up -d --no-deps --build
 ```
 
 ## CDN dependencies ##
