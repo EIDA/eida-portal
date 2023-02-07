@@ -527,8 +527,9 @@ class FdsnRoutingManager(FdsnHttpBase):
                     cha.channel_end_date = channel.parse_end_date()
                     cha.channel_sample_rate = channel.sample_rate
 
-            # Commit the db session changes
-            db.session.commit()
+                # Commit the db session changes
+                db.session.add(stat)
+                db.session.commit()
         except Exception:
             # self.log_exception(
             #     'Node: {0} Network: {1} Station: {2}'.format(
